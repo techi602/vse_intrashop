@@ -14,13 +14,13 @@ Setting Up Your VHOST
 The following is a sample VHOST you might want to consider for your project.
 
 <VirtualHost *:80>
-   DocumentRoot "/home/vasek/private/projects/skola/intrashop/app/src/public"
-   ServerName src.local
+   DocumentRoot "C:/Projects/php/intrashop/public"
+   ServerName .local
 
    # This should be omitted in the production environment
    SetEnv APPLICATION_ENV development
 
-   <Directory "/home/vasek/private/projects/skola/intrashop/app/src/public">
+   <Directory "C:/Projects/php/intrashop/public">
        Options Indexes MultiViews FollowSymLinks
        AllowOverride All
        Order allow,deny
