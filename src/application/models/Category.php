@@ -41,10 +41,22 @@ class Category {
     public function getParentCategory() {
         return $this->parentCategory;
     }
+    
+    public function hasParentCategory() {
+        return !is_null($this->parentCategory);
+    }
 
     public function setParentCategory($parentCategory) {
         $this->parentCategory = $parentCategory;
     }
 
+    /**
+     *
+     * @return integer
+     */
 
+    public function getId()
+    {
+        return $this->id;
+    }
 }

@@ -19,6 +19,13 @@ class ProductVariant {
      * @var string
      */
     protected $name;
+    
+
+    /**
+     * @Column(type="string",nullable=true)
+     * @var string
+     */
+    protected $picture;
 
     /**
      * @ManyToOne(targetEntity="ProductColor")
@@ -108,5 +115,20 @@ class ProductVariant {
         $this->quantity = $quantity;
     }
 
+    public function getPicture() {
+        return $this->picture;
+    }
 
+    public function setPicture($picture) {
+        $this->picture = $picture;
+    }
+    /**
+     *
+     * @return integer
+     */
+
+    public function getId()
+    {
+        return $this->id;
+    }
 }

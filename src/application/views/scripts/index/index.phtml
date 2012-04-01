@@ -1,8 +1,30 @@
 <div class="hero-unit">
-            <h1>Hello, world!</h1>
+            <h1>Intrashop</h1>
             <p>This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
             <p><a class="btn btn-primary btn-large">Learn more &raquo;</a></p>
           </div>
+
+
+ 
+        <div id="products">
+        <?php foreach ($this->products as $product): ?>
+        
+        <div class="product">
+            <strong>
+            <?php echo $this->escape($product->getName()) ?>            
+            </strong>
+            
+            <p>
+            <?php echo nl2br($this->escape($product->getDescription())) ?>
+                </p>
+            
+            <img src="<?php echo $product->getPicture() ?>" width="200" alt="" />
+        </div>
+        
+        <?php endforeach; ?>
+</div>
+
+
           <div class="row-fluid">
             <div class="span4">
               <h2>Heading</h2>
@@ -38,3 +60,4 @@
             </div><!--/span-->
           </div><!--/row-->
         </div><!--/span-->
+       

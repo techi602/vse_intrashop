@@ -24,6 +24,7 @@ class Service_Import
             $connection->query('SET FOREIGN_KEY_CHECKS=0');
             $q = $dbPlatform->getTruncateTableSql($cmd->getTableName());
             $connection->executeUpdate($q);
+            $connection->executeUpdate($dbPlatform->getTruncateTableSql('products_categories'));
             $connection->query('SET FOREIGN_KEY_CHECKS=1');
             $connection->commit();
         } catch (\Exception $e) {

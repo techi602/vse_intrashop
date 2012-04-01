@@ -109,5 +109,14 @@ class Product {
     public function setCredits($credits) {
         $this->credits = $credits;
     }
+    
+    /**
+     *
+     * @return integer
+     */
 
+    public function getId()
+    {
+        return $this->id;
+    }
 }

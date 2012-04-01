@@ -59,5 +59,13 @@ class ProductAvailability {
         $this->available = $available;
     }
 
+    /**
+     *
+     * @return integer
+     */
 
+    public function getId()
+    {
+        return $this->id;
+    }
 }

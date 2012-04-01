@@ -28,5 +28,13 @@ class ProductSize {
         $this->name = $name;
     }
 
+    /**
+     *
+     * @return integer
+     */
 
+    public function getId()
+    {
+        return $this->id;
+    }
 }

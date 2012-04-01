@@ -27,5 +27,16 @@ class ProductColor {
     public function setName($name) {
         $this->name = $name;
     }
+    
+    /**
+     *
+     * @return integer
+     */
 
+    public function getId()
+    {
+        return $this->id;
+    }
 }
+
+
