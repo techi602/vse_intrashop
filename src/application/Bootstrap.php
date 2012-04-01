@@ -39,7 +39,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     
 
     }
-    /*
+    
     protected function _initDoctrine()
     {
         require 'Doctrine/ORM/Tools/Setup.php';
@@ -47,17 +47,11 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         // Setup Autoloader (1)
         \Doctrine\ORM\Tools\Setup::registerAutoloadPEAR();
         
-        $classLoader = new \Doctrine\Common\ClassLoader('entities', __DIR__);
+        $classLoader = new \Doctrine\Common\ClassLoader('Entities', __DIR__);
         $classLoader->register();
-        $classLoader = new \Doctrine\Common\ClassLoader('proxies', __DIR__);
+        $classLoader = new \Doctrine\Common\ClassLoader('Proxies', __DIR__);
         $classLoader->register();
-        
-        set_include_path(implode(PATH_SEPARATOR, array(
-                realpath(APPLICATION_PATH . '/entitites'),
-                get_include_path(),
-        )));
-        
-        
+
         // configuration (2)
         $config = new \Doctrine\ORM\Configuration();
         
@@ -68,7 +62,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $config->setAutoGenerateProxyClasses((APPLICATION_ENV == "development"));
         
         // Driver (4)
-        $driverImpl = $config->newDefaultAnnotationDriver(array(__DIR__."/entities"));
+        $driverImpl = $config->newDefaultAnnotationDriver('models');
         $config->setMetadataDriverImpl($driverImpl);
         
         $cache = new \Doctrine\Common\Cache\ArrayCache();
@@ -84,8 +78,10 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
                 'host' => 'localhost');
         
         $em = \Doctrine\ORM\EntityManager::create($connectionOptions, $config);
+        
+        Zend_Registry::set('EntityManager', $em);
     }
-    */
+    
     
     /*
     public function _initAutoloader()
