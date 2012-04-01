@@ -33,11 +33,11 @@ class Order
     protected $employee;
     
     /**
-     * @ManyToOne(targetEntity="Product")
-     * @JoinColumn(name="product_id", referencedColumnName="id",nullable=false)
-     * @var Product
+     * @ManyToOne(targetEntity="ProductVariant")
+     * @JoinColumn(name="variant_id", referencedColumnName="id",nullable=false)
+     * @var ProductVariant
      */
-    protected $product;
+    protected $productVariant;
     
     /**
      * @ManyToOne(targetEntity="OrderStatus")
@@ -46,5 +46,47 @@ class Order
      */
     
     protected $status;
+ 
     
+    public function getInserted() {
+        return $this->inserted;
+    }
+
+    public function setInserted($inserted) {
+        $this->inserted = $inserted;
+    }
+
+    public function getCredits() {
+        return $this->credits;
+    }
+
+    public function setCredits($credits) {
+        $this->credits = $credits;
+    }
+
+    public function getEmployee() {
+        return $this->employee;
+    }
+
+    public function setEmployee($employee) {
+        $this->employee = $employee;
+    }
+    
+    public function getProductVariant() {
+        return $this->productVariant;
+    }
+
+    public function setProductVariant($productVariant) {
+        $this->productVariant = $productVariant;
+    }
+    
+    public function getStatus() {
+        return $this->status;
+    }
+
+    public function setStatus($status) {
+        $this->status = $status;
+    }
+
+
 }

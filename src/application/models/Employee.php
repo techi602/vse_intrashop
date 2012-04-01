@@ -24,6 +24,14 @@ class Employee
     protected $name;
     
     /**
+     *
+     * @var string
+     * @Column(type="string")
+     */
+    
+    protected $email;
+    
+    /**
      * @var DateTime
      * @Column(type="date",name="employed_since")
      */
@@ -82,6 +90,22 @@ class Employee
     public function setOrders($orders) {
         $this->orders = $orders;
     }
+    public function getSuperiorEmployee() {
+        return $this->superiorEmployee;
+    }
+
+    public function setSuperiorEmployee($superiorEmployee) {
+        $this->superiorEmployee = $superiorEmployee;
+    }
+
+    public function getEmail() {
+        return $this->email;
+    }
+
+    public function setEmail($email) {
+        $this->email = $email;
+    }
+
 
 
 }

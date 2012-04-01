@@ -34,4 +34,30 @@ class ProductAvailability {
     
     protected $available;
 
+    
+    public function getName() {
+        return $this->name;
+    }
+
+    public function setName($name) {
+        $this->name = $name;
+    }
+
+    public function getDays() {
+        return $this->days;
+    }
+
+    public function setDays($days) {
+        $this->days = $days;
+    }
+
+    public function getAvailable() {
+        return $this->available;
+    }
+
+    public function setAvailable($available) {
+        $this->available = $available;
+    }
+
+
 }

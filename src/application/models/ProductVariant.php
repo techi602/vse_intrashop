@@ -58,4 +58,55 @@ class ProductVariant {
      */
     
     protected $quantity;
+    
+    
+    public function getName() {
+        return $this->name;
+    }
+
+    public function setName($name) {
+        $this->name = $name;
+    }
+
+    public function getColor() {
+        return $this->color;
+    }
+
+    public function setColor($color) {
+        $this->color = $color;
+    }
+
+    public function getSize() {
+        return $this->size;
+    }
+
+    public function setSize($size) {
+        $this->size = $size;
+    }
+
+    public function getProduct() {
+        return $this->product;
+    }
+
+    public function setProduct($product) {
+        $this->product = $product;
+    }
+
+    public function getAvailability() {
+        return $this->availability;
+    }
+
+    public function setAvailability($availability) {
+        $this->availability = $availability;
+    }
+
+    public function getQuantity() {
+        return $this->quantity;
+    }
+
+    public function setQuantity($quantity) {
+        $this->quantity = $quantity;
+    }
+
+
 }

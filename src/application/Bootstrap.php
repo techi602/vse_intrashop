@@ -78,6 +78,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
                 'host' => 'localhost');
         
         $em = \Doctrine\ORM\EntityManager::create($connectionOptions, $config);
+        $em->getEventManager()->addEventSubscriber(new \Doctrine\DBAL\Event\Listeners\MysqlSessionInit('utf8', 'utf8_unicode_ci')); 
         
         Zend_Registry::set('EntityManager', $em);
     }
