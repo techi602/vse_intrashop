@@ -23,6 +23,21 @@ class Employee
      */ 
     protected $name;
     
+
+    /**
+     * @var string
+     * @Column(type="string")
+     */ 
+
+    protected $username;
+    
+    /**
+     * @Column(type="boolean")
+     * @var boolean
+     */
+    
+    protected $employed;
+    
     /**
      *
      * @var string
@@ -105,7 +120,21 @@ class Employee
     public function setEmail($email) {
         $this->email = $email;
     }
+    public function getUsername() {
+        return $this->username;
+    }
 
+    public function setUsername($username) {
+        $this->username = $username;
+    }
+
+    public function getEmployed() {
+        return $this->employed;
+    }
+
+    public function setEmployed($employed) {
+        $this->employed = $employed;
+    }
 
     /**
      *

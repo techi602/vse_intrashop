@@ -15,7 +15,7 @@ defined('APPLICATION_ENV')
     || define('APPLICATION_ENV', (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'production'));
 */
 
- $classLoader = new \Doctrine\Common\ClassLoader('models', APPLICATION_PATH);
+ $classLoader = new \Doctrine\Common\ClassLoader('Entities', APPLICATION_PATH);
  $classLoader->register();
  $classLoader = new \Doctrine\Common\ClassLoader('Proxies', APPLICATION_PATH);
  $classLoader->register();
@@ -30,7 +30,7 @@ defined('APPLICATION_ENV')
  $config->setAutoGenerateProxyClasses((APPLICATION_ENV == "development"));
 
 // Driver (4)
- $driverImpl = $config->newDefaultAnnotationDriver(array(APPLICATION_PATH."/models"));
+ $driverImpl = $config->newDefaultAnnotationDriver(array(APPLICATION_PATH."/entities"));
  $config->setMetadataDriverImpl($driverImpl);
 
 // Caching Configuration (5)

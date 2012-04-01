@@ -34,7 +34,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     
     protected function _initPlugins()
     {
-        //$front = Zend_Controller_Front::getInstance();
+        $front = Zend_Controller_Front::getInstance();
+        //$front->registerPlugin(new Controller_Plugin_Auth());
         //$front->registerPlugin(new Zend_Controller_Plugin_ErrorHandler());
     
 
@@ -62,7 +63,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $config->setAutoGenerateProxyClasses((APPLICATION_ENV == "development"));
         
         // Driver (4)
-        $driverImpl = $config->newDefaultAnnotationDriver('models');
+        $driverImpl = $config->newDefaultAnnotationDriver('entities');
         $config->setMetadataDriverImpl($driverImpl);
         
         $cache = new \Doctrine\Common\Cache\ArrayCache();

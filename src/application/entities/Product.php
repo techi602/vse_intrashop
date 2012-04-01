@@ -37,6 +37,13 @@ class Product {
      * @var float
      */
     protected $price;
+    
+    /**
+     * @Column(type="boolean")
+     * @var boolean
+     */
+    
+    protected $visible;
 
     /**
      * @Column(type="float")
@@ -110,6 +117,15 @@ class Product {
         $this->credits = $credits;
     }
     
+    public function getVisible() {
+        return $this->visible;
+    }
+
+    public function setVisible($visible) {
+        $this->visible = $visible;
+    }
+
+        
     /**
      *
      * @return integer

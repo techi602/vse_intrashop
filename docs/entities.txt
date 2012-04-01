@@ -1,0 +1,23 @@
+Persistence objektů je postavena na ORM knihovně Doctrine 2.2.1
+
+Pro aktualizaci entit je potřeba spustit doctrine z příkazové řádky
+
+Doctrine je třeba instalovat přes PEAR
+
+pear install pear.doctrine-project.org/DoctrineORM-2.2.1
+
+doctrine hledá v aktuálním adresáři soubor cli-config.php (Tzn. konfigurační soubor z frameworku Symfony)
+Tento konfigurační soubor obsahuje inicializaci doctrine (připojení k databázi a nastavení cest k entitám)
+
+Kontrola konfigurace:
+
+doctrine orm:info
+
+Vygenerování schématu
+
+doctrine orm:schema-tool:create --dump-sql
+
+Smazání a vygenerování databáze
+
+doctrine orm:schema-tool:drop --force
+doctrine orm:schema-tool:create

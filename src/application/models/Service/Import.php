@@ -101,6 +101,7 @@ class Service_Import
         $product->setCredits(200);
         $product->setPrice(200);
         $product->setCategories(array($cat3));
+        $product->setVisible(true);
         $em->persist($product);
         
         $variant = new ProductVariant();
@@ -117,6 +118,8 @@ class Service_Import
         $employee->setEmail("jan.novak@localhost");
         $employee->setEmployedSince(new DateTime("2000-03-01"));
         $employee->setBalance(5000);
+        $employee->setUsername('jan.novak');
+        $employee->setEmployed(true);
         $em->persist($employee);
         
         

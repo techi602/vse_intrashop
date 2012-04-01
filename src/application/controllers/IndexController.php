@@ -14,7 +14,7 @@ class IndexController extends Zend_Controller_Action
     {
         $em = Zend_Registry::get('EntityManager');
         
-        $query = $em->createQuery("SELECT p FROM Product p");
+        $query = $em->createQuery("SELECT p FROM Product p WHERE p.visible = true");
         
         $products = $query->getResult();
         
