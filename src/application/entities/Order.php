@@ -25,6 +25,20 @@ class Order
     protected $credits;
     
     /**
+     * @Column(type="integer")
+     * @var type 
+     */
+    
+    protected $amount;
+    
+    /**
+     * @Column(type="string",nullable=true)
+     * @var string
+     */
+    
+    protected $note;
+    
+    /**
      * @ManyToOne(targetEntity="Employee", inversedBy="Order")
      * @JoinColumn(name="employee_id", referencedColumnName="id",nullable=false)
      * @var Employee
@@ -87,8 +101,23 @@ class Order
     public function setStatus($status) {
         $this->status = $status;
     }
+    public function getAmount() {
+        return $this->amount;
+    }
 
-    /**
+    public function setAmount($amount) {
+        $this->amount = $amount;
+    }
+
+    public function getNote() {
+        return $this->note;
+    }
+
+    public function setNote($note) {
+        $this->note = $note;
+    }
+
+        /**
      *
      * @return integer
      */

@@ -137,6 +137,8 @@ class Service_Import
         $order->setProductVariant($variant);
         $order->setCredits($variant->getProduct()->getCredits());
         $order->setStatus($status1);
+        $order->setAmount(1);
+        $order->setNote("testovací objednávka");
         $em->persist($order);
 
         
