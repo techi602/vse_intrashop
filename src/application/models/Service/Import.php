@@ -102,6 +102,7 @@ class Service_Import
         $product->setPrice(200);
         $product->setCategories(array($cat3));
         $product->setVisible(true);
+        $product->setCode("AB01");
         $em->persist($product);
         
         $variant = new ProductVariant();

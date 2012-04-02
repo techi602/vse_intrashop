@@ -32,6 +32,13 @@ class Product {
      */
     protected $picture;
 
+        /**
+     * @Column(type="string",unique=true)
+     * @var string
+     */
+    protected $code;
+
+    
     /**
      * @Column(type="float")
      * @var float
@@ -124,8 +131,15 @@ class Product {
     public function setVisible($visible) {
         $this->visible = $visible;
     }
+    public function getCode() {
+        return $this->code;
+    }
 
-        
+    public function setCode($code) {
+        $this->code = $code;
+    }
+
+            
     /**
      *
      * @return integer
