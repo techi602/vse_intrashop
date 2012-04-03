@@ -116,7 +116,11 @@ class ProductVariant {
     }
 
     public function getPicture() {
-        return $this->picture;
+        if (is_null($this->picture)) {
+            return $this->getProduct()->getPicture();
+        } else {
+            return $this->picture;
+        }
     }
 
     public function setPicture($picture) {

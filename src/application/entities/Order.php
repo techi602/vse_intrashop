@@ -13,7 +13,9 @@ class Order
     protected $id;
     
     /**
-     * @Column(type="date")
+     * Datum vytvoření objednávky
+     * 
+     * @Column(type="datetime")
      * @var DateTime
      */
     protected $inserted;

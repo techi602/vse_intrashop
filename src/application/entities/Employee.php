@@ -5,7 +5,7 @@
  * @Table(name="users")
  * @InheritanceType("SINGLE_TABLE")
  * @DiscriminatorColumn(name="discr", type="string")
- * @DiscriminatorMap({"superior_employee" = "SuperiorEmployee", "employee" = "Employee"})
+ * @DiscriminatorMap({"superior_employee" = "SuperiorEmployee", "employee" = "Employee", "financial_director" = "FinancialDirector"})
  */
 class Employee
 {
@@ -59,7 +59,7 @@ class Employee
     protected $employedSince;
     
     /**
-     * Počet kreditů na účtě
+     * Počet bodů na účtě
      * 
      * @Column(type="integer")
      * @var integer
@@ -95,16 +95,18 @@ class Employee
      */
     protected $roles;
 
-    public function __construct() {
-        $this->roles = new \Doctrine\Common\Collections\ArrayCollection();
-    }
     
     /**
-     * OneToMany(targetEntity="Order", mappedBy="order")
+     * @OneToMany(targetEntity="Order", mappedBy="order")
+     * @var array
      **/
     
-    //private $orders;
+    protected $orders;
     
+    public function __construct() {
+        $this->roles = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->orders = new \Doctrine\Common\Collections\ArrayCollection();
+    }
     
     public function getName() {
         return $this->name;

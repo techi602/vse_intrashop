@@ -6,8 +6,6 @@ class ImportController extends Zend_Controller_Action
     public function init()
     {
         
-        
-        /* Initialize action controller here */
     }
 
     public function indexAction()
@@ -15,12 +13,7 @@ class ImportController extends Zend_Controller_Action
         $import = new Service_Import();
         $import->import();
         
-        echo "OK";
-        
-        exit;
+        $this->getResponse()->setBody("Import Complete")->sendResponse();
     }
-
-    
-
 }
 

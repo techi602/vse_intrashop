@@ -42,7 +42,7 @@ class Bootstrap_Form extends Zend_Form
             array('Description', array('placement' => 'append', 'tag' => 'div', 'class' => 'help-block', 'escape' => false)),
             array('Errors', array('tag' => 'span', 'class' => 'help-block')),
             array(array('controls' => 'htmlTag'), array('tag' => 'div', 'class' => 'controls')),
-            array('Label', $labelOptions),
+            array('Label', @$labelOptions),
             array(new Bootstrap_Form_Decorator_ControlGroup()),
         );
         $this->multiDecoratorsRadio = array(
@@ -100,7 +100,7 @@ class Bootstrap_Form extends Zend_Form
         foreach ($this->getElements() as $el) {
             if(in_array($el->getName(),$this->getCustomDecorators()) ){
                 continue;
-            }
+            } 
             //echo '|'.$el->getName().' is '.$el->helper;
             switch ($el->helper) {
                 case 'formSubmit':

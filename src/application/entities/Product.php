@@ -32,7 +32,9 @@ class Product {
      */
     protected $picture;
 
-        /**
+    /**
+     * Jednoznačná identifikace produktu
+     * 
      * @Column(type="string",unique=true)
      * @var string
      */
@@ -46,6 +48,8 @@ class Product {
     protected $price;
     
     /**
+     * Zobrazit pro nákup
+     * 
      * @Column(type="boolean")
      * @var boolean
      */

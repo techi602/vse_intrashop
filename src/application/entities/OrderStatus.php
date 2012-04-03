@@ -6,6 +6,10 @@
  */
 class OrderStatus {
     
+    const STATUS_NEW = 'New';
+    const STATUS_STORNO = 'Storno';
+    const STATUS_CONFIRMED = 'Confirmed';
+    
     /**
      * @Id
      * @GeneratedValue
