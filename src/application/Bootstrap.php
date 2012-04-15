@@ -1,5 +1,6 @@
 <?php
 
+
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
     protected function _initAutoload()
@@ -40,6 +41,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     
 
     }
+
     
     protected function _initDoctrine()
     {
@@ -70,6 +72,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         
         $config->setMetadataCacheImpl($cache);
         $config->setQueryCacheImpl($cache);
+        $config->setSQLLogger(new DoctrineSqlLogger());
         
         $connectionOptions = array(
                 'driver' => 'pdo_mysql',

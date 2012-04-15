@@ -112,6 +112,14 @@ class Service_Import
         $variant->setQuantity(3);
         $variant->setAvailability($availStock);
         $em->persist($variant);
+        
+        $variant = new ProductVariant();
+        $variant->setName("Modrý deštník");
+        $variant->setProduct($product);
+        $variant->setColor($colorBlue);
+        $variant->setQuantity(4);
+        $variant->setAvailability($availStock);
+        $em->persist($variant);
                 
 
         $employee = new Employee();

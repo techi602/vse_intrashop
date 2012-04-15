@@ -21,7 +21,7 @@ class Product {
     protected $name;
 
     /**
-     * @Column(type="string",nullable=true)
+     * @Column(type="text",nullable=true)
      * @var string
      */
     protected $description;
@@ -33,7 +33,7 @@ class Product {
     protected $picture;
 
     /**
-     * Jednoznačná identifikace produktu
+     * JednoznaÄŤnĂˇ identifikace produktu
      * 
      * @Column(type="string",unique=true)
      * @var string
@@ -48,7 +48,7 @@ class Product {
     protected $price;
     
     /**
-     * Zobrazit pro nákup
+     * Zobrazit pro nĂˇkup
      * 
      * @Column(type="boolean")
      * @var boolean
@@ -61,6 +61,13 @@ class Product {
      * @var float
      */
     protected $credits;
+    
+    /**
+     * @OneToMany(targetEntity="ProductVariant", mappedBy="product")
+     * @var array
+     */
+    
+    protected $variants;
 
     /**
      * @var array
@@ -74,6 +81,7 @@ class Product {
 
     public function __construct() {
         $this->categories = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->variants = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     public function getCategories() {
@@ -141,6 +149,11 @@ class Product {
 
     public function setCode($code) {
         $this->code = $code;
+    }
+    
+    public function getVariants()
+    {
+        return $this->variants;
     }
 
             

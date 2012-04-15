@@ -1,0 +1,17 @@
+<h2>
+            <?php echo $this->escape($this->product->getCode()) ?>     
+            <?php echo $this->escape($this->product->getName()) ?>            
+            </h2>
+            
+            <p>
+            <?php echo nl2br($this->escape($this->product->getDescription())) ?>
+                </p>
+            
+            <img src="<?php echo $this->product->getPicture() ?>" width="200" alt="" />
+            
+            
+            <h3>Varianty</h3>
+            <?php foreach ($this->product->getVariants() as $variant): ?>
+            
+            
+            <?php endforeach; ?>

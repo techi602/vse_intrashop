@@ -44,12 +44,13 @@ class ProductVariant {
     protected $size;
     
     /**
-     * @ManyToOne(targetEntity="Product")
+     * @ManyToOne(targetEntity="Product",inversedBy="variants")
      * @JoinColumn(name="product_id",referencedColumnName="id",nullable=false)
      * @var Product
      */
     
     protected $product;
+    
 
     /**
      * @ManyToOne(targetEntity="ProductAvailability")

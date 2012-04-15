@@ -139,4 +139,10 @@ class Bootstrap_Form extends Zend_Form
     {
         return $this->_customDecorators;
     }
+    
+    public function render(Zend_View_Interface $view = null)
+    {
+        $this->loadDefaultDecorators();
+        return parent::render($view);
+    }
 }
