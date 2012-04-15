@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="Shopio" description="Build script" default="ci">
+    <target name="ci" depends="prepare, phplint, phpcs, phpcpd, phploc, pdepend, phpmd, phpcb"/>
+    
+    <!-- Definice adresářů, níže na ně budu jen odkazovat -->
+    <fileset id="application" dir="${project.basedir}/application">
+        <include name="**/*.php"/>
+    </fileset>
+    <fileset id="templates" dir="${project.basedir}/application">
+        <include name="**/*.phtml"/>
+    </fileset>
+    
+    <target name="cleanbuild" description="Vyčistění workspace">
+        <delete dir="${project.basedir}/build"/>
+    </target>
+    
+    <target name="prepare" depends="cleanbuild" description="Příprava workspace">
+        <mkdir dir="${project.basedir}/build"/>
+    </target>
+    
+    <target name="phplint" depends="prepare">
+        <phplint haltonfailure="true" level="info">
+            <fileset refid="application"/>
+            <fileset refid="templates"/>
+        </phplint>
+    </target>
+    
+    <target name="phpcs" depends="prepare" description="Kontrola Coding standards">
+        <mkdir dir="${project.basedir}/build/checkstyle-phpcs"/>
+        <phpcodesniffer standard="${project.basedir}/phpcs.xml" tabWidth="4">
+            <fileset refid="application"/>
+            <formatter type="default" usefile="false"/>
+            <formatter type="checkstyle" outfile="${project.basedir}/build/checkstyle-phpcs/checkstyle-phpcs.xml"/>
+        </phpcodesniffer>
+    </target>
+    
+    <target name="phpcpd" depends="prepare" description="Kontrola CPD">
+        <mkdir dir="${project.basedir}/build/pmd-cpd"/>
+        <phpcpd>
+            <fileset refid="application"/>
+            <fileset refid="templates"/>
+            <formatter type="pmd" outfile="${project.basedir}/build/pmd-cpd/pmd-cpd.xml"/>
+        </phpcpd>
+    </target>
+    
+    <target name="phploc" depends="prepare" description="Analýza PHPLOC">
+         <exec command="phploc --log-csv ${project.basedir}/build/phploc.csv ${project.basedir}/data/www" logoutput="true" />
+    </target>
+    
+    <target name="pdepend" depends="prepare" description="Analýza nástrojem PDepend">
+        <phpdepend>
+            <fileset refid="application"/>
+            <logger type="jdepend-xml" outfile="${project.basedir}/build/jdepend.xml"/>
+            <logger type="jdepend-chart" outfile="${project.basedir}/build/dependencies.svg"/>
+            <logger type="overview-pyramid" outfile="${project.basedir}/build/overview-pyramid.svg"/>
+        </phpdepend>
+    </target>
+    
+    <target name="phpmd" depends="prepare" description="PMD analýza">
+        <mkdir dir="${project.basedir}/build/pmd/"/>
+        <phpmd rulesets="${project.basedir}/phpmd.xml">
+            <fileset refid="application"/>
+            <formatter type="xml" outfile="${project.basedir}/build/pmd/pmd.xml"/>
+        </phpmd>
+    </target>
+    
+    <target name="phpcb" depends="phpcpd, phpmd, phpcs" description="Vygeneruje souhrnný výstup chyb v kódu pomocí PHP_CodeBrowser">
+        <exec command="phpcb --log ${project.basedir}/build/pmd --source ${project.basedir}/application --output ${project.basedir}/build/code-browser-pmd" logoutput="true" checkreturn="true" />
+        <exec command="phpcb --log ${project.basedir}/build/pmd-cpd --source ${project.basedir}/application --output ${project.basedir}/build/code-browser-cpd" logoutput="true" checkreturn="true" />
+        <exec command="phpcb --log ${project.basedir}/build/checkstyle-phpcs --source ${project.basedir}/application --output ${project.basedir}/build/code-browser-cs" logoutput="true" checkreturn="true" />
+    </target>
+</project>
