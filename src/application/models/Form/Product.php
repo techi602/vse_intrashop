@@ -10,17 +10,17 @@ class Form_Product extends Bootstrap_Form
         $this->setMethod(self::METHOD_POST);
         
         $this->addElement(new Zend_Form_Element_Text('name', array(
-            'label' => 'NĂˇzev produktu',
+            'label' => 'NÄ‚Ë‡zev produktu',
             'required' => true
         )));
         
         $this->addElement($this->createElement('text', 'code', array(
-            'label' => 'KĂłd produktu',
+            'label' => 'KÄ‚Ĺ‚d produktu',
             'required' => true
         )));
         
         $this->addElement($this->createElement('checkbox', 'visible', array(
-            'label' => 'AktivnĂ­',
+            'label' => 'AktivnÄ‚Â­',
             'required' => true
         )));
         
@@ -30,8 +30,14 @@ class Form_Product extends Bootstrap_Form
             'rows' => 3
         )));
         
-        $this->addElement($this->createElement('submit', 'button', array(
-            'label' => 'Odeslat'
+        $this->addElement($this->createElement('submit', 'button-catalog', array(
+            'label' => 'Uložit a přejít na výpis produktů',
+            'class' => 'btn'
+        )));
+        
+        $this->addElement($this->createElement('submit', 'button-detail', array(
+            'label' => 'Uložit a přejít na detail',
+            'class' => 'btn'
         )));
     }
 }

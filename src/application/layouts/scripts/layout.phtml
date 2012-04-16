@@ -43,11 +43,13 @@
           <a class="brand" href="#">Intrashop</a>
           <div class="nav-collapse">
             <ul class="nav">
-              <li class="active"><a href="#">Home</a></li>
-              <li><a href="#about">About</a></li>
-              <li><a href="#contact">Contact</a></li>
+              <li class="active"><a href="<?php echo $this->url(array('action' => 'index', 'controller' => 'index')) ?>">Obchod</a></li>
+              <li><a href="<?php echo $this->url(array('action' => 'index', 'controller' => 'catalog')) ?>">Katalog zboží</a></li>
+              <li><a href="<?php echo $this->url(array('action' => 'index', 'controller' => 'orders')) ?>">Objednávky</a></li>
             </ul>
-            <p class="navbar-text pull-right">Logged in as <a href="#">username</a></p>
+            <p class="navbar-text pull-right">Přihlášen jako <a href="#"><?php echo $this->username ?></a>
+                | <span class="credits"><?php echo $this->balance ?> bodů</span>            
+            </p>
           </div><!--/.nav-collapse -->
         </div>
       </div>
@@ -78,6 +80,22 @@
           </div><!--/.well -->
         </div><!--/span-->
         <div class="span9">
+            <?php if ($this->layout()->info): ?>
+            <ul class="unstyled"  style="border: 1px solid; border-color: lightblue">
+            <?php foreach ($this->layout()->info as $info): ?>
+            
+            <li>
+            <i class="icon-info-sign"></i>
+            
+            <?php echo $this->escape($info) ?>
+            
+            </li>
+
+            <?php endforeach ?>
+                </ul>
+            <?php endif ?>
+            
+            
         <?php echo $this->layout()->content ?>
           
       </div><!--/row-->

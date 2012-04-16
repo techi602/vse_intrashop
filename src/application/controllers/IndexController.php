@@ -1,13 +1,13 @@
 <?php
 
-class IndexController extends Zend_Controller_Action
+class IndexController extends Controller_Default
 {
 
     public function init()
     {
+        parent::init();
         
         
-        /* Initialize action controller here */
     }
 
     public function indexAction()
@@ -29,17 +29,17 @@ class IndexController extends Zend_Controller_Action
         $form->setLegend('Produkt');
         
         $form->addElement($form->createElement('text', 'name', array(
-            'label' => 'NĂˇzev produktu',
+            'label' => 'NÄ‚Ë‡zev produktu',
             'required' => true
         )));
         
         $form->addElement($form->createElement('text', 'code', array(
-            'label' => 'KĂłd produktu',
+            'label' => 'KÄ‚Ĺ‚d produktu',
             'required' => true
         )));
         
         $form->addElement($form->createElement('checkbox', 'visible', array(
-            'label' => 'AktivnĂ­',
+            'label' => 'AktivnÄ‚Â­',
             'required' => true
         )));
         
