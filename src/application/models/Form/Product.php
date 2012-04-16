@@ -20,14 +20,25 @@ class Form_Product extends Bootstrap_Form
         
         $this->addElement($this->createElement('checkbox', 'visible', array(
             'label' => 'Aktivní',
-            'description' => 'Povolen k nákupu',
-            'required' => true
+            'description' => 'Povolen k nákupu'
         )));
         
         $this->addElement($this->createElement('textarea', 'description', array(
             'label' => 'Popis',
             'cols' => 50,
             'rows' => 3
+        )));
+        
+        $this->addElement($this->createElement('text', 'price', array(
+            'label' => 'Cena',
+            'required' => true,
+            'validators' => array(new Zend_Validate_Int(), new Zend_Validate_GreaterThan(0))
+        )));
+        
+        $this->addElement($this->createElement('text', 'credits', array(
+            'label' => 'Body',
+            'required' => true,
+            'validators' => array(new Zend_Validate_Int(), new Zend_Validate_GreaterThan(0))
         )));
         
         $this->addElement($this->createElement('submit', 'button-catalog', array(

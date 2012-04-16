@@ -51,6 +51,9 @@ class CatalogController extends Controller_Default
 
                 $product->setName($form->getValue('name'));
                 $product->setDescription($form->getValue('description'));
+                $product->setVisible($form->getValue('visible'));
+                $product->setPrice($form->getValue('price'));
+                $product->setCredits($form->getValue('credits'));
                 $this->em->persist($product);
                 $this->em->flush();
                 
