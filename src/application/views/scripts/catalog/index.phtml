@@ -15,7 +15,7 @@
             <td><?php echo $product['name'] ?></td>
             <td><?php echo $product['price'] ?></td>
             
-            <td><a href="<?php echo $this->url(array('action' => 'edit', 'id' => $product['id'])) ?>"><i class="icon-edit"></i>
+            <td><a class="btn" href="<?php echo $this->url(array('action' => 'edit', 'id' => $product['id'])) ?>"><i class="icon-edit"></i>
 Upravit</a></td>
         </tr>
         <?php endforeach ?>

@@ -2,11 +2,6 @@
 
 class Form_Product extends Bootstrap_Form
 {
-    public function prepare2()
-    {
-        $this->init();  
-    }
-    
     public function prepare()
     {
         $this->addDecorator(new Zend_Form_Decorator_Fieldset());
