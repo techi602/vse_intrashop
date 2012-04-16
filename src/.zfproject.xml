@@ -18,9 +18,6 @@
         <controllerFile controllerName="ProductUpdate">
           <actionMethod actionName="index"/>
         </controllerFile>
-        <controllerFile controllerName="ProductUpdate&#xA8;">
-          <actionMethod actionName="index"/>
-        </controllerFile>
       </controllersDirectory>
       <formsDirectory enabled="false"/>
       <layoutsDirectory enabled="false"/>
@@ -52,9 +49,6 @@
             <viewScriptFile forActionName="index"/>
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="ProductUpdate">
-            <viewScriptFile forActionName="index"/>
-          </viewControllerScriptsDirectory>
-          <viewControllerScriptsDirectory forControllerName="ProductUpdate¨">
             <viewScriptFile forActionName="index"/>
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>

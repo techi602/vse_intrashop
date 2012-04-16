@@ -1,0 +1,11 @@
+.required {
+    font-weight: bold;
+}
+
+label:after {
+    content: ':'
+}
+
+.required:after {
+    content: ': *'; 
+}

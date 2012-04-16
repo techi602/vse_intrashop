@@ -2,6 +2,10 @@
 
 class Form_Product extends Bootstrap_Form
 {
+    public function prepare2()
+    {
+        $this->init();  
+    }
     
     public function prepare()
     {
@@ -10,17 +14,18 @@ class Form_Product extends Bootstrap_Form
         $this->setMethod(self::METHOD_POST);
         
         $this->addElement(new Zend_Form_Element_Text('name', array(
-            'label' => 'NÄ‚Ë‡zev produktu',
+            'label' => 'Název produktu',
             'required' => true
         )));
         
         $this->addElement($this->createElement('text', 'code', array(
-            'label' => 'KÄ‚Ĺ‚d produktu',
+            'label' => 'Kód produktu',
             'required' => true
         )));
         
         $this->addElement($this->createElement('checkbox', 'visible', array(
-            'label' => 'AktivnÄ‚Â­',
+            'label' => 'Aktivní',
+            'description' => 'Povolen k nákupu',
             'required' => true
         )));
         
@@ -32,11 +37,23 @@ class Form_Product extends Bootstrap_Form
         
         $this->addElement($this->createElement('submit', 'button-catalog', array(
             'label' => 'Uložit a přejít na výpis produktů',
-            'class' => 'btn'
+            'class' => 'btn btn-primary'
         )));
+        
         
         $this->addElement($this->createElement('submit', 'button-detail', array(
             'label' => 'Uložit a přejít na detail',
+            'class' => 'btn btn-primary'
+        )));
+
+        $this->addElement($this->createElement('submit', 'button-delete', array(
+            'label' => 'Smazat',
+            'class' => 'btn btn-danger',
+            'onclick' => "return confirm('Opravdu smazat?');"
+        )));
+        
+        $this->addElement($this->createElement('submit', 'button-cancel', array(
+            'label' => 'Zrušit',
             'class' => 'btn'
         )));
     }
