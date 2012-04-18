@@ -65,8 +65,8 @@
     </target>
     
     <target name="phpcb" depends="phpcpd, phpmd, phpcs" description="Vygeneruje souhrnný výstup chyb v kódu pomocí PHP_CodeBrowser">
-        <exec command="phpcb --log ${project.basedir}/build/pmd --source ${project.basedir}/application --output ${project.basedir}/build/code-browser-pmd" logoutput="true" checkreturn="true" />
-        <exec command="phpcb --log ${project.basedir}/build/pmd-cpd --source ${project.basedir}/application --output ${project.basedir}/build/code-browser-cpd" logoutput="true" checkreturn="true" />
-        <exec command="phpcb --log ${project.basedir}/build/checkstyle-phpcs --source ${project.basedir}/application --output ${project.basedir}/build/code-browser-cs" logoutput="true" checkreturn="true" />
+        <exec command="phpcb --log ${project.basedir}/build/pmd --source ${project.basedir}/application --output ${project.basedir}/build/code-browser-pmd --excludeOK" logoutput="true" checkreturn="true" />
+        <exec command="phpcb --log ${project.basedir}/build/pmd-cpd --source ${project.basedir}/application --output ${project.basedir}/build/code-browser-cpd --excludeOK" logoutput="true" checkreturn="true" />
+        <exec command="phpcb --log ${project.basedir}/build/checkstyle-phpcs --source ${project.basedir}/application --output ${project.basedir}/build/code-browser-cs --excludeOK" logoutput="true" checkreturn="true" />
     </target>
 </project>
