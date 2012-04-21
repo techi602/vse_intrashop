@@ -1,0 +1,37 @@
+<?
+    $orderList = $this->userOrderList ?: $this->warehouseKeeperOrderList;
+?>
+
+<h1>Objednávky</h1>
+
+<table class="table table-bordered" style="margin-top:20px">
+<tr>
+    <th>Zboží</th>
+    <? if ($this->warehouseKeeperOrderList) { ?>
+    <th>Zaměstnanec</th>
+    <? } ?>
+    <th>Datum objednání</th>
+    <th>Cena v bodech</th>
+    <th>Stav objednávky</th>
+    <th></th>
+</tr>
+
+<? if ($orderList) { ?>
+<? foreach($orderList as $order) { ?>
+<tr>
+    <td><?=$this->escape($order['productName']);?></td>
+    <? if ($this->warehouseKeeperOrderList) { ?>
+    <td><?//TODO;?></td>
+    <? } ?>
+    <td><?=($order['orderInserted']->format('m. d. Y '));?></td>
+    <td><?=$this->escape($order['orderCredits']);?></td>
+    <td><?=$this->escape($order['orderStatusName']);?></td>
+    <td></td>
+</tr>
+<? } ?>
+<? } else { ?>
+<tr>
+    <td style="font-style:italic" colspan="<?=$this->userOrderList? 6 : 5 ?>">Žádné objednávky.</td>
+</tr>
+<? } ?>
+</table>
