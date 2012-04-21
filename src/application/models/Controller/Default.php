@@ -11,6 +11,8 @@ class Controller_Default extends Zend_Controller_Action {
     public function init() {
         parent::init();
 
+        $this->view->strictVars(true);
+
         $this->em = EntityManager::getInstance();
         $this->view->username = User::getLoggedUser()->getUsername();
         $this->view->balance = User::getLoggedUser()->getBalance();
