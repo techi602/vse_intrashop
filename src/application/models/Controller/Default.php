@@ -8,14 +8,18 @@ class Controller_Default extends Zend_Controller_Action {
      */
     protected $em;
 
+    /** @var Employee */
+    protected $loggedUser;
+
     public function init() {
         parent::init();
 
         $this->view->strictVars(true);
 
         $this->em = EntityManager::getInstance();
-        $this->view->username = User::getLoggedUser()->getUsername();
-        $this->view->balance = User::getLoggedUser()->getBalance();
+        $this->loggedUser = User::getLoggedUser();
+        $this->view->username = $this->loggedUser->getUsername();
+        $this->view->balance = $this->loggedUser->getBalance();
     }
 
     /**
