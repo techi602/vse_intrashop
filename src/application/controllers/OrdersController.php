@@ -12,7 +12,7 @@ class OrdersController extends Controller_Default
 
     public function indexAction()
     {
-        $orderList = $this->ordersService->getUserOrderList($this->loggedUser->getId());
+        $orderList = $this->ordersService->getUserOrderList($this->loggedEmployee->getId());
         $this->view->userOrderList = $orderList;
         $this->view->warehouseKeeperOrderList = null;
     }

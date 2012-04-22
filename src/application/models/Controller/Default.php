@@ -8,18 +8,26 @@ class Controller_Default extends Zend_Controller_Action {
      */
     protected $em;
 
+    /** @var string*/
+    protected $loggedUserRole;
+
     /** @var Employee */
-    protected $loggedUser;
+    protected $loggedEmployee;
+
+    /** @var PersonnelOfficer */
+    protected $loggedPersonnelOfficer;
+
+    /** @var WarehouseKeeper */
+    protected $loggedWarehouseKeeper;
 
     public function init() {
         parent::init();
 
         $this->view->strictVars(true);
-
         $this->em = EntityManager::getInstance();
-        $this->loggedUser = User::getLoggedUser();
-        $this->view->username = $this->loggedUser->getUsername();
-        $this->view->balance = $this->loggedUser->getBalance();
+
+        $this->initRoles();
+        $this->initViewVariables();
     }
 
     /**
@@ -40,4 +48,24 @@ class Controller_Default extends Zend_Controller_Action {
         Controller_Plugin_MessageHandler::addErrorMessage($message);
     }
 
+    private function initRoles() {
+        $loggedUser = User::getLoggedUser();
+
+        if ($loggedUser instanceof Employee) {
+            $this->loggedEmployee = $loggedUser;
+        }
+
+        if ($loggedUser instanceof PersonnelOfficer) {
+            $this->loggedPersonnelOfficer = $loggedUser;
+        }
+
+        if ($loggedUser instanceof WarehouseKeeper) {
+            $this->loggedWarehouseKeeper = $loggedUser;
+        }
+    }
+
+    private function initViewVariables() {
+        $this->view->username = $this->loggedEmployee->getUsername();
+        $this->view->balance = $this->loggedEmployee->getBalance();
+    }
 }

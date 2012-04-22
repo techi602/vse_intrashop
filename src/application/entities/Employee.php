@@ -5,7 +5,7 @@
  * @Table(name="users")
  * @InheritanceType("SINGLE_TABLE")
  * @DiscriminatorColumn(name="discr", type="string")
- * @DiscriminatorMap({"superior_employee" = "SuperiorEmployee", "employee" = "Employee", "financial_director" = "FinancialDirector"})
+ * @DiscriminatorMap({"superior_employee" = "SuperiorEmployee", "employee" = "Employee", "warehouse_keeper" = "WarehouseKeeper", "personnel_officer" = "PersonnelOfficer"})
  */
 class Employee
 {
@@ -86,17 +86,6 @@ class Employee
     protected $superiorEmployee;
     
     /**
-     * @var array
-     * @ManyToMany(targetEntity="UserRole")
-     * @JoinTable(name="employees_roles",
-     *      joinColumns={@JoinColumn(name="employee_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@JoinColumn(name="role_id", referencedColumnName="id")}
-     *      )
-     */
-    protected $roles;
-
-    
-    /**
      * @OneToMany(targetEntity="Order", mappedBy="order")
      * @var array
      **/
@@ -104,7 +93,6 @@ class Employee
     protected $orders;
     
     public function __construct() {
-        $this->roles = new \Doctrine\Common\Collections\ArrayCollection();
         $this->orders = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
@@ -177,15 +165,7 @@ class Employee
         $this->dismissal = $dismissal;
     }
 
-    public function getRoles() {
-        return $this->roles;
-    }
-
-    public function setRoles($roles) {
-        $this->roles = $roles;
-    }
-
-        /**
+    /**
      *
      * @return integer
      */
