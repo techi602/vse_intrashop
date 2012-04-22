@@ -2,7 +2,7 @@
 
 class Service_Orders
 {
-    /** @var  */
+    /** @var Doctrine\ORM\EntityManager */
     private $em;
 
     public function __construct(\Doctrine\ORM\EntityManager $em)

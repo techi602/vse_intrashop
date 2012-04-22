@@ -7,7 +7,7 @@ class OrdersController extends Controller_Default
 
     public function init() {
         parent::init();
-        $this->ordersService = new Service_Orders(Zend_Registry::get('EntityManager'));
+        $this->ordersService = new Service_Orders($this->em);
     }
 
     public function indexAction()
