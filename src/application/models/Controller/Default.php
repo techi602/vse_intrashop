@@ -50,6 +50,7 @@ class Controller_Default extends Zend_Controller_Action {
 
     private function initRoles() {
         $loggedUser = User::getLoggedUser();
+        $this->loggedUserRole = get_class($loggedUser);
 
         if ($loggedUser instanceof Employee) {
             $this->loggedEmployee = $loggedUser;
@@ -67,5 +68,6 @@ class Controller_Default extends Zend_Controller_Action {
     private function initViewVariables() {
         $this->view->username = $this->loggedEmployee->getUsername();
         $this->view->balance = $this->loggedEmployee->getBalance();
+        $this->view->role = $this->loggedUserRole;
     }
 }

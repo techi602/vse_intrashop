@@ -53,8 +53,25 @@
               <li><a href="<?php echo $this->url(array('action' => 'index', 'controller' => 'catalog')) ?>">Katalog zboží</a></li>
               <li><a href="<?php echo $this->url(array('action' => 'index', 'controller' => 'orders')) ?>">Objednávky</a></li>
             </ul>
-            <p class="navbar-text pull-right">Přihlášen jako <a href="#"><?php echo $this->username ?></a>
-                | <span class="credits"><?php echo $this->balance ?> bodů</span>            
+            <?
+                switch ($this->role) {
+                    case 'Employee':
+                        $role = 'zaměstnanec';
+                        break;
+
+                    case 'PersonnelOfficer':
+                        $role = 'personalista';
+                        break;
+
+                    case 'WarehouseKeeper':
+                        $role = 'správce skladu';
+                        break;
+                }
+            ?>
+            <p class="navbar-text pull-right">
+                Přihlášen jako <?=$role;?> <a href="#"><?php echo $this->username ?>
+           </a>
+                | <span class="credits"><?php echo $this->balance ?> bodů</span>
             </p>
           </div><!--/.nav-collapse -->
         </div>
