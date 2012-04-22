@@ -72,6 +72,9 @@
                 Přihlášen jako <?=$role;?> <a href="#"><?php echo $this->username ?>
            </a>
                 | <span class="credits"><?php echo $this->balance ?> bodů</span>
+                <? if (isset($this->personnelOfficerBalance)) { ?>
+                | <span class="credits"><?=$this->personnelOfficerBalance;?> mimořádných bodů</span>
+                <? } ?>
             </p>
           </div><!--/.nav-collapse -->
         </div>

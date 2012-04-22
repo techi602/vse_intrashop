@@ -69,5 +69,9 @@ class Controller_Default extends Zend_Controller_Action {
         $this->view->username = $this->loggedEmployee->getUsername();
         $this->view->balance = $this->loggedEmployee->getBalance();
         $this->view->role = $this->loggedUserRole;
+
+        if ($this->loggedPersonnelOfficer) {
+            $this->view->personnelOfficerBalance = $this->loggedPersonnelOfficer->getPersonnelOfficerBalance();
+        }
     }
 }
