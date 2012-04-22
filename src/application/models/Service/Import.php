@@ -121,13 +121,14 @@ class Service_Import
         $variant->setAvailability($availStock);
         $em->persist($variant);
 
-        $janNovakEmployee = new Employee();
+        $janNovakEmployee = new PersonnelOfficer();
         $janNovakEmployee->setName('Jan Novák');
         $janNovakEmployee->setEmail("jan.novak@localhost");
         $janNovakEmployee->setEmployedSince(new DateTime("2000-03-01"));
         $janNovakEmployee->setBalance(5000);
         $janNovakEmployee->setUsername('jan.novak');
         $janNovakEmployee->setEmployed(true);
+        $janNovakEmployee->setPersonnelOfficerBalance(70000);
         $em->persist($janNovakEmployee);
 
         $status1 = new OrderStatus();
