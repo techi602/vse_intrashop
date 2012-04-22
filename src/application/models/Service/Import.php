@@ -120,18 +120,16 @@ class Service_Import
         $variant->setQuantity(4);
         $variant->setAvailability($availStock);
         $em->persist($variant);
-                
 
-        $employee = new Employee();
-        $employee->setName('Jan Novák');
-        $employee->setEmail("jan.novak@localhost");
-        $employee->setEmployedSince(new DateTime("2000-03-01"));
-        $employee->setBalance(5000);
-        $employee->setUsername('jan.novak');
-        $employee->setEmployed(true);
-        $em->persist($employee);
-        
-        
+        $janNovakEmployee = new Employee();
+        $janNovakEmployee->setName('Jan Novák');
+        $janNovakEmployee->setEmail("jan.novak@localhost");
+        $janNovakEmployee->setEmployedSince(new DateTime("2000-03-01"));
+        $janNovakEmployee->setBalance(5000);
+        $janNovakEmployee->setUsername('jan.novak');
+        $janNovakEmployee->setEmployed(true);
+        $em->persist($janNovakEmployee);
+
         $status1 = new OrderStatus();
         $status1->setName("Nová");
         $em->persist($status1);
@@ -141,7 +139,7 @@ class Service_Import
         $em->persist($status2);
         
         $order = new Order();
-        $order->setEmployee($employee);
+        $order->setEmployee($janNovakEmployee);
         $order->setInserted(new DateTime());
         $order->setProductVariant($variant);
         $order->setCredits($variant->getProduct()->getCredits());
