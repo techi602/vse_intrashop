@@ -92,8 +92,20 @@ class Employee
     
     protected $orders;
     
+    
+    /**
+     * @var array
+     * @ManyToMany(targetEntity="UserRole")
+     * @JoinTable(name="employee_roles",
+     *      joinColumns={@JoinColumn(name="employee_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@JoinColumn(name="role_id", referencedColumnName="id")}
+     *      )
+     * */
+    protected $roles;
+    
     public function __construct() {
         $this->orders = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->roles = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     public function getName() {
@@ -164,7 +176,32 @@ class Employee
     public function setDismissal($dismissal) {
         $this->dismissal = $dismissal;
     }
+    
+    public function getRoles() {
+        return $this->roles;
+    }
 
+    public function setRoles($roles) {
+        $this->roles = $roles;
+    }
+    
+    /**
+     *
+     * @param string $role
+     * @return boolean 
+     */
+    
+    public function hasRole($role)
+    {
+        foreach ($this->roles as $role) {
+            if ($role->getRole() == $role) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
     /**
      *
      * @return integer

@@ -6,6 +6,14 @@
  */
 class UserRole {
     
+    const ROLE_WAREHOUSEKEEPER = 'warehouse_keeper';
+    
+    const ROLE_FINANCIALDIRECTOR = 'financial_director';
+    
+    const ROLE_SUPERIOR = 'superior';
+    
+    const ROLE_PERSONALOFFICER = 'personal_officer';
+    
     /**
      * @Id
      * @GeneratedValue

@@ -146,6 +146,11 @@ class Service_Import
         $variant->setQuantity(4);
         $variant->setAvailability($availStock);
         $em->persist($variant);
+        
+        $role1 = new UserRole();
+        $role1->setName("PersonalOfficer");
+        $role1->setRole(UserRole::ROLE_PERSONALOFFICER);
+        $em->persist($role1);
 
         $janNovakEmployee = new PersonnelOfficer();
         $janNovakEmployee->setName('Jan Novák');
@@ -155,6 +160,7 @@ class Service_Import
         $janNovakEmployee->setUsername('jan.novak');
         $janNovakEmployee->setEmployed(true);
         $janNovakEmployee->setPersonnelOfficerBalance(70000);
+        $janNovakEmployee->setRoles(array($role1));
         $em->persist($janNovakEmployee);
 
         $status1 = new OrderStatus();
