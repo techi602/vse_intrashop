@@ -121,7 +121,7 @@ class Service_Import
         
         $product = new Product();
         $product->setName("Deštník");
-        $product->setDescription("Deštník do deště");
+        $product->setDescription("Deštník proti dešti");
         $product->setPicture(base64_encode(file_get_contents("http://4.bp.blogspot.com/-V2eN7qTt9wE/TvOTH5zxhyI/AAAAAAAABlE/poiQTfz-5PA/s1600/destnik_cerveny.jpg")));
         $product->setCredits(200);
         $product->setPrice(200);
