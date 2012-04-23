@@ -1,0 +1,6 @@
+<h1>Vaše objednávka nemohla být přijata</h1>
+
+<p><?php echo @$this->reason ?></p>
+
+<p></p>
+<a href="<?php echo $this->url(array('controller' => 'index'), null, true) ?>">Pokračovat</a>
