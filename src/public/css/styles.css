@@ -9,3 +9,8 @@ label:after {
 .required:after {
     content: ': *'; 
 }
+
+.product {
+    float: left;
+    margin: 20px;
+}

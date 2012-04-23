@@ -74,6 +74,10 @@ class Service_Import
         $cat3 = new Category();
         $cat3->setName("Outdoor");
         $em->persist($cat3);
+        
+        $cat4 = new Category();
+        $cat4->setName("Poukázky");
+        $em->persist($cat4);
     
         $colorWhite = new ProductColor();
         $colorWhite->setName('Bílá');
@@ -93,6 +97,27 @@ class Service_Import
         $availStock->setAvailable(true);
         $availStock->setDays(0);
         $em->persist($availStock);
+        
+        
+            
+        $p1 = new Product();
+        $p1->setName("Dárková poukázka");
+        $p1->setDescription("Poukázka na nákup zboží");
+        $p1->setPrice(5000);
+        $p1->setCredits(5000);
+        $p1->setCategories(array($cat4));
+        $p1->setVisible(true);
+        $p1->setMultipleVariants(false);
+        $p1->setPicture(base64_encode(file_get_contents("http://www.poukazky.cz/_dataPublic/shopItems/1bbba875360982c4c668693ca68826c0/Firotour5000.JPG")));
+        $p1->setCode("DP5000");
+        $em->persist($p1);
+        
+        $v1 = new ProductVariant();
+        $v1->setName("Dárková poukázka");
+        $v1->setProduct($p1);
+        $v1->setQuantity(10);
+        $v1->setAvailability($availStock);
+        $em->persist($v1);
         
         $product = new Product();
         $product->setName("Deštník");
