@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @Entity 
+ * @Entity(repositoryClass="Repository_Category")
  * @Table(name="categories")
  */
 

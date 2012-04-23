@@ -35,6 +35,11 @@ class Form_Product extends Bootstrap_Form
             'label' => 'Obrázek',
         )));
         
+        $this->addElement($this->createElement('MultiCheckbox', 'categories', array(
+            'label' => 'Kategorie',
+            'multiOptions' => $this->getCategoriesCodebook()
+        )));
+        
         
         $this->addElement($this->createElement('text', 'price', array(
             'label' => 'Cena',
@@ -56,6 +61,12 @@ class Form_Product extends Bootstrap_Form
             
             //$this->addSubForm($subform, 'variant' . $variantId);
         }
+        
+        
+        $this->addElement($this->createElement('checkbox', 'has_multiple_variants', array(
+            'label' => 'Více variant',
+            'description' => 'Produkt má více variant'
+        )));
         
         $this->addElement($this->createElement('submit', 'button-submit', array(
             'label' => 'Uložit',
@@ -82,6 +93,11 @@ class Form_Product extends Bootstrap_Form
             'label' => 'Zrušit',
             'class' => 'btn'
         )));
+    }
+    
+    private function getCategoriesCodebook()
+    {
+          return EntityManager::getInstance()->getRepository('Category')->fetchToCodebook();
     }
 }
         
