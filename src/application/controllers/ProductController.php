@@ -7,7 +7,7 @@
  *
  */
 
-class ProductController extends Zend_Controller_Action
+class ProductController extends Controller_Default
 {
     public function indexAction()
     {

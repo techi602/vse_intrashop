@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @Entity
+ * @Entity(repositoryClass="Repository_Product")
  * @Table(name="products")
  */
 class Product {
@@ -100,7 +100,8 @@ class Product {
         $this->name = $name;
     }
 
-    public function getDescription() {
+    public function getDescription()
+    {
         return $this->description;
     }
 

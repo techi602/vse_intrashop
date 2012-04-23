@@ -29,7 +29,7 @@ class CatalogController extends Controller_Default
         }
         
         $form = new Form_Product();
-        $form->prepare();
+        $form->prepare($product);
         
         if ($this->_request->isPost()) {
             
@@ -63,9 +63,11 @@ class CatalogController extends Controller_Default
                     $this->_helper->redirector->goto('index', 'product', null, array('id' => $this->_getParam('id')));
                 }
 
-//                if ($this->_getParam('buttoncatalog')) {
+                if ($this->_getParam('buttoncatalog')) {
                     $this->_helper->redirector->goto('index');
-//                }
+                }
+                
+                $this->_helper->redirector->goto('edit', null, null, array('id' => $this->_getParam('id')));
                 
             }
         } else {

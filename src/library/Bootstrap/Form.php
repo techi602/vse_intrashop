@@ -100,7 +100,7 @@ class Bootstrap_Form extends Zend_Form
         foreach ($this->getElements() as $el) {
             if(in_array($el->getName(),$this->getCustomDecorators()) ){
                 continue;
-            } 
+            }
             //echo '|'.$el->getName().' is '.$el->helper;
             switch ($el->helper) {
                 case 'formSubmit':
@@ -140,9 +140,10 @@ class Bootstrap_Form extends Zend_Form
         return $this->_customDecorators;
     }
     
-    public function render(Zend_View_Interface $view = null)
-    {
+    public function render(Zend_View_Interface $view = null) {
+        
         $this->loadDefaultDecorators();
+        
         return parent::render($view);
     }
 }
