@@ -27,7 +27,7 @@ class Product {
     protected $description;
 
     /**
-     * @Column(type="string",nullable=true)
+     * @Column(type="text",nullable=true)
      * @var string
      */
     protected $picture;

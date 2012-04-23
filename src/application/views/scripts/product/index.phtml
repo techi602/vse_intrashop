@@ -22,7 +22,7 @@
             <?php echo nl2br($this->escape($this->product->getDescription())) ?>
                 </p>
             
-            <img src="<?php echo $this->product->getPicture() ?>" width="200" alt="" />
+            <img src="<?php echo $this->pictureUri($this->product->getPicture()) ?>" width="200" alt="" />
             
             <?php if ($this->product->getMultipleVariants()): ?>
             <h3>Varianty</h3>

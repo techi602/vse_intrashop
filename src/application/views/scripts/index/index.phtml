@@ -19,7 +19,7 @@
             <?php echo nl2br($this->escape($product->getDescription())) ?>
                 </p>
             
-            <img src="<?php echo $product->getPicture() ?>" width="200" alt="" />
+            <img src="<?php echo $this->pictureUri($product->getPicture()) ?>" width="200" alt="" />
             <p><a class="btn" href="<?php echo $this->url(array('action' => 'index', 'controller' => 'product', 'id' => $product->getId())) ?>">View details &raquo;</a></p>
         </div>
         

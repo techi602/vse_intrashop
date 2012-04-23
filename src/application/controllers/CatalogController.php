@@ -54,6 +54,11 @@ class CatalogController extends Controller_Default
                 $product->setVisible($form->getValue('visible'));
                 $product->setPrice($form->getValue('price'));
                 $product->setCredits($form->getValue('credits'));
+
+                if (isset($_FILES['picture'])) {
+                    $product->setPicture(base64_encode(file_get_contents($_FILES['picture']['tmp_name'])));
+                }
+                
                 $this->em->persist($product);
                 $this->em->flush();
                 

@@ -28,6 +28,7 @@ class Controller_Default extends Zend_Controller_Action {
 
         $this->initRoles();
         $this->initViewVariables();
+        $this->view->addHelperPath(APPLICATION_PATH . '/views/helpers/', 'Default_Helper');
     }
 
     /**
