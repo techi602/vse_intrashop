@@ -69,7 +69,7 @@ class Service_Order
         $employee->setBalance($balance);
         
         $this->em->persist($employee);
-        
+        $this->em->flush();
         $this->em->commit();
     }
     
@@ -92,7 +92,7 @@ class Service_Order
         $employee->setBalance($balance);
         
         $this->em->persist($employee);
-        
+        $this->em->flush();
         $this->em->commit();
     }
     
@@ -116,7 +116,7 @@ class Service_Order
         $variant->setQuantity($qty);
         
         $this->em->persist($variant);
-        
+        $this->em->flush();
         $this->em->commit();
     }
 }
