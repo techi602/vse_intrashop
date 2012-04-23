@@ -22,6 +22,13 @@ class OrderStatus {
      * @Column(type="string")
      * @var string
      */
+    
+    protected $code;
+    
+    /**
+     * @Column(type="string")
+     * @var string
+     */
     protected $name;
     
     
@@ -33,7 +40,15 @@ class OrderStatus {
         $this->name = $name;
     }
 
+    public function getCode() {
+        return $this->code;
+    }
 
+    public function setCode($code) {
+        $this->code = $code;
+    }
+
+        
     /**
      *
      * @return integer

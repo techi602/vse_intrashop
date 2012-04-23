@@ -46,7 +46,7 @@
                 </p>
                 <?php endif ?>
                 
-            <form method="post" onsubmit="return confirm('Opravdu objednat?');">
+            <form method="post" onsubmit="return confirm('Opravdu objednat?');" action="<?php echo $this->url(array('controller' => 'order'), null, true) ?>">
                 
                 
                 Ks: <?php echo $this->formSelect('quantity', null, array('style' => "width: 50px"), Util::generateRange($variant->getQuantity())) ?>

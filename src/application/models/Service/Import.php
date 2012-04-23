@@ -159,11 +159,18 @@ class Service_Import
 
         $status1 = new OrderStatus();
         $status1->setName("Nová");
+        $status1->setCode(OrderStatus::STATUS_NEW);
         $em->persist($status1);
         
         $status2 = new OrderStatus();
         $status2->setName("Vyřízená");
+        $status2->setCode(OrderStatus::STATUS_CONFIRMED);
         $em->persist($status2);
+        
+        $status3 = new OrderStatus();
+        $status3->setName("Stornovaná");
+        $status3->setCode(OrderStatus::STATUS_STORNO);
+        $em->persist($status3);
         
         $order = new Order();
         $order->setEmployee($janNovakEmployee);
