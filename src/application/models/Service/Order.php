@@ -10,6 +10,16 @@ class Service_Order
         $this->em = $em;
     }
     
+    /**
+     * Kontroluje, zda-li ma zamestnanec dostatecny pocet bodu
+     * 
+     * @param Employee $employee
+     * @param Product $product
+     * @param integer $quantity
+     * @return boolean
+     * @throws InvalidArgumentException 
+     */
+    
     public function hasEnoughCredits(Employee $employee, Product $product, $quantity)
     {
         if (!is_numeric($quantity) || $quantity < 1) {
@@ -22,6 +32,16 @@ class Service_Order
         
         return $balance >= $totalCredits;
     }
+    
+    /**
+     * Vytvori obednavku
+     * 
+     * @param Employee $employee
+     * @param ProductVariant $variant
+     * @param integer $quantity
+     * @param string $note
+     * @throws InvalidArgumentException 
+     */
     
     public function createOrder(Employee $employee, ProductVariant $variant, $quantity, $note = '')
     {
@@ -40,7 +60,7 @@ class Service_Order
         $order->setProductVariant($variant);
         $order->setStatus($this->em->getRepository('OrderStatus')->findOneBy(array('code' => OrderStatus::STATUS_NEW)));
         $order->setCredits($credits);
-        $order->setAmount($variant->getProduct()->getPrice() * $quantity);
+        $order->setAmount($quantity);
         
         $this->em->persist($order);
         
@@ -49,6 +69,53 @@ class Service_Order
         $employee->setBalance($balance);
         
         $this->em->persist($employee);
+        
+        $this->em->commit();
+    }
+    
+    /**
+     * Stornuje obednavku a pricte body zpet na ucet zamestnance
+     * 
+     * @param Order $order 
+     */
+    
+    public function stornoOrder(Order $order)
+    {
+        $this->em->beginTransaction();
+        
+        $order->setStatus($this->em->getRepository('OrderStatus')->findOneBy(array('code' => OrderStatus::STATUS_STORNO)));
+        $this->em->persist($order);
+        
+        $employee = $order->getEmployee();
+        $balance = $employee->getBalance();
+        $balance += $order->getCredits();
+        $employee->setBalance($balance);
+        
+        $this->em->persist($employee);
+        
+        $this->em->commit();
+    }
+    
+    /**
+     * Potvrdi obednavku a provede vyskladneni produktu na skladu
+     * 
+     * @param Order $order 
+     */
+    
+    public function confirmOrder(Order $order)
+    {
+        $this->em->beginTransaction();
+        
+        $order->setStatus($this->em->getRepository('OrderStatus')->findOneBy(array('code' => OrderStatus::STATUS_CONFIRMED)));
+        
+        $this->em->persist($order);
+        
+        $variant = $order->getProductVariant();
+        $qty = $variant->getQuantity();
+        $qty -= $order->getAmount();
+        $variant->setQuantity($qty);
+        
+        $this->em->persist($variant);
         
         $this->em->commit();
     }
