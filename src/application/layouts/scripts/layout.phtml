@@ -46,14 +46,14 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="#">Intrashop</a>
+          <a class="brand" href="<?php echo $this->url(array('action' => 'index', 'controller' => 'index'), null, true) ?>">Intrashop</a>
           <div class="nav-collapse">
             <ul class="nav">
-              <li class="active"><a href="<?php echo $this->url(array('action' => 'index', 'controller' => 'index')) ?>">Obchod</a></li>
-              <li><a href="<?php echo $this->url(array('action' => 'index', 'controller' => 'catalog')) ?>">Katalog zboží</a></li>
-              <li><a href="<?php echo $this->url(array('action' => 'index', 'controller' => 'orders')) ?>">Objednávky</a></li>
+              <li class="active"><a href="<?php echo $this->url(array('action' => 'index', 'controller' => 'index'), null, true) ?>">Obchod</a></li>
+              <li><a href="<?php echo $this->url(array('action' => 'index', 'controller' => 'catalog'), null, true) ?>">Katalog zboží</a></li>
+              <li><a href="<?php echo $this->url(array('action' => 'index', 'controller' => 'orders'), null, true) ?>">Objednávky</a></li>
               <? if (@$this->role === 'PersonnelOfficer') { ?>
-              <li><a href="<?php echo $this->url(array('action' => 'index', 'controller' => 'extra-credits-admin')) ?>">Přidělit mimořádné body</a></li>
+              <li><a href="<?php echo $this->url(array('action' => 'index', 'controller' => 'extra-credits-admin'), null, true) ?>">Přidělit mimořádné body</a></li>
               <? } ?>
             </ul>
             <?
