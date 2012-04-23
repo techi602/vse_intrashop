@@ -5,7 +5,6 @@ class CatalogController extends Controller_Default
     public function init()
     {
         parent::init();
-        
     }
     
     public function indexAction()
@@ -17,7 +16,6 @@ class CatalogController extends Controller_Default
     
     public function editAction()
     {
-        
         if (!$this->_hasParam('id')) {
             throw new InvalidArgumentException('Missing Product ID');
         }
@@ -32,13 +30,11 @@ class CatalogController extends Controller_Default
         $form->prepare($product);
         
         if ($this->_request->isPost()) {
-            
             if ($this->_getParam('buttoncancel')) {
                 $this->_helper->redirector->goto('index');
             }
             
             if ($this->_getParam('buttondelete')) {
-                
                 $this->addInfoMessage('Produkt ' . $product->getCode() . ' byl smazán');
                 
                 $this->em->remove($product);
@@ -54,6 +50,12 @@ class CatalogController extends Controller_Default
                 $product->setVisible($form->getValue('visible'));
                 $product->setPrice($form->getValue('price'));
                 $product->setCredits($form->getValue('credits'));
+                
+                $categories = array();
+                foreach ($form->getValue('categories') as $categoryId) {
+                    $categories[] = $this->em->find('Category', $categoryId);
+                }
+                $product->setCategories($categories);
 
                 if (isset($_FILES['picture'])) {
                     $product->setPicture(base64_encode(file_get_contents($_FILES['picture']['tmp_name'])));
@@ -73,7 +75,6 @@ class CatalogController extends Controller_Default
                 }
                 
                 $this->_helper->redirector->goto('edit', null, null, array('id' => $this->_getParam('id')));
-                
             }
         } else {
 
