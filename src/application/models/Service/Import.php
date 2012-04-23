@@ -149,7 +149,7 @@ class Service_Import
         
         $role1 = new UserRole();
         $role1->setName("PersonalOfficer");
-        $role1->setRole(UserRole::ROLE_PERSONALOFFICER);
+        $role1->setRole(UserRole::ROLE_PERSONNELOFFICER);
         $em->persist($role1);
 
         $janNovakEmployee = new PersonnelOfficer();

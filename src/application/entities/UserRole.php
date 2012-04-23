@@ -12,7 +12,7 @@ class UserRole {
     
     const ROLE_SUPERIOR = 'superior';
     
-    const ROLE_PERSONALOFFICER = 'personal_officer';
+    const ROLE_PERSONNELOFFICER = 'personal_officer';
     
     /**
      * @Id
