@@ -2,8 +2,22 @@
 
 class Form_Product extends Bootstrap_Form
 {
-    public function prepare(Product $product)
+    /**
+     *
+     * @var Product
+     */
+    
+    private $product;
+    
+    public function setProduct(Product $product)
     {
+        $this->product = $product;
+    }
+    
+    public function prepare()
+    {
+        $product = $this->product;
+        
         $this->addDecorator(new Zend_Form_Decorator_Fieldset());
         $this->setLegend('Produkt');
         $this->setMethod(self::METHOD_POST);
