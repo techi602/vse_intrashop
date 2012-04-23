@@ -18,6 +18,7 @@ class Form_ExtraCreditsAdmin extends Bootstrap_Form
         $this->addDecorator(new Zend_Form_Decorator_Fieldset());
         $this->setLegend($this->userName);
         $this->setMethod(self::METHOD_POST);
+        $this->setAttrib('onsubmit', "return confirm('Opravdu přidělit ' + parseInt($('#creditsAmount').val()) + ' bodů');");
 
         $creditsAmountLessThanValidate = new Zend_Validate_LessThan(null);
 
