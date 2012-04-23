@@ -50,6 +50,7 @@
                 
                 
                 Ks: <?php echo $this->formSelect('quantity', null, array('style' => "width: 50px"), Util::generateRange($variant->getQuantity())) ?>
+                <?php echo $this->formHidden('variant', $variant->getId()) ?>
                 <input type="submit" value="Objednat" class="btn btn-primary" />
             </form>
             </p>
