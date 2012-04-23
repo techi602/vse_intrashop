@@ -2,6 +2,11 @@
 
 class Util
 {
+    private function __construct()
+    {
+        
+    }
+    
     public static function generateRange($max, $min = 1)
     {
         $a = array();
