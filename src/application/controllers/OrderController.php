@@ -29,5 +29,36 @@ class OrderController extends Controller_Default
         
         $this->view->enoughCredits = $this->orderService->hasEnoughCredits(User::getLoggedUser(), $product, $quantity);
     }
+    
+    public function confirmAction()
+    {
+        $quantity = $this->_getParam('quantity');
+        
+        $variant = $this->em->find('ProductVariant', $this->_getParam('variant'));
+        
+        $note = $this->_getParam('note', '');
+        
+        $product = $variant->getProduct();
+        
+        
+        if (!$this->orderService->hasEnoughCredits(User::getLoggedUser(), $product, $quantity)) {
+            $this->addErrorMessage('Nedostatek bodů k nákupu');
+            $this->_helper->redirector->gotoAction('failed');
+        }
+        
+        $this->orderService->createOrder(User::getLoggedUser(), $variant, $quantity, $note);
+
+        $this->_helper->redirector->gotoAction('success');
+    }
+    
+    public function successAction()
+    {
+        
+    }
+    
+    public function failedAction()
+    {
+        
+    }
 }
 
