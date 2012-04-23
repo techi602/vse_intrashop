@@ -21,34 +21,32 @@ class OrderController extends Controller_Default
         $quantity = $this->_getParam('quantity');
         
         $variant = $this->em->find('ProductVariant', $this->_getParam('variant'));
-        
         $product = $variant->getProduct();
+        
+        if ($this->_getParam('back') || $this->_getParam('cancel')) {
+            $this->_helper->redirector->goto('index', 'product', null, array('id' => $variant->getProduct()->getId()));
+            return;
+        }
+        
+        if ($this->_getParam('confirm')) {
+            $note = $this->_getParam('note', '');
+            
+            if (!$this->orderService->hasEnoughCredits(User::getLoggedUser(), $product, $quantity)) {
+                $this->addErrorMessage('Nedostatek bodů k nákupu');
+                $this->_helper->redirector->goto('failed');
+                return;
+            }
+            
+            $this->orderService->createOrder(User::getLoggedUser(), $variant, $quantity, $note);
+            $this->_helper->redirector->goto('success');
+            return;
+        }
 
         $this->view->variant = $variant;
         $this->view->product = $product;
-        
+        $this->view->totalCredits = $product->getCredits() * $quantity;
+        $this->view->quantity = $quantity;
         $this->view->enoughCredits = $this->orderService->hasEnoughCredits(User::getLoggedUser(), $product, $quantity);
-    }
-    
-    public function confirmAction()
-    {
-        $quantity = $this->_getParam('quantity');
-        
-        $variant = $this->em->find('ProductVariant', $this->_getParam('variant'));
-        
-        $note = $this->_getParam('note', '');
-        
-        $product = $variant->getProduct();
-        
-        
-        if (!$this->orderService->hasEnoughCredits(User::getLoggedUser(), $product, $quantity)) {
-            $this->addErrorMessage('Nedostatek bodů k nákupu');
-            $this->_helper->redirector->gotoAction('failed');
-        }
-        
-        $this->orderService->createOrder(User::getLoggedUser(), $variant, $quantity, $note);
-
-        $this->_helper->redirector->gotoAction('success');
     }
     
     public function successAction()

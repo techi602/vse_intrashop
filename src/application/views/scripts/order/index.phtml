@@ -4,3 +4,26 @@
             <?php echo $this->escape($this->product->getCode()) ?>     
             <?php echo $this->escape($this->product->getName()) ?>            
             </h2>
+
+
+<p>
+    Počet ks: <?php echo $this->quantity ?><br />
+    Celkový počet bodů: <?php echo $this->totalCredits ?><br />
+</p>
+
+<form method="post" action="<?php echo $this->url() ?>">
+    <?php if ($this->enoughCredits): ?>
+    <?php echo $this->formSubmit('confirm', 'Závazně objednat', array('class' => 'btn btn-success')) ?>
+    <?php else: ?>
+    <p class="warning">
+        <i class="icon-warning-sign"></i>
+        Nemáte dostatečný počet kreditů pro objednávku</p>
+    <?php endif ?>
+    <?php echo $this->formSubmit('back', 'Zpět', array('class' => 'btn btn-inverse')) ?>
+    <?php echo $this->formSubmit('cancel', 'Zrušit', array('class' => 'btn btn-danger')) ?>
+    
+    
+    <?php echo $this->formHidden('variant', $this->variant->getId()) ?>
+    <?php echo $this->formHidden('quantity', $this->quantity) ?>
+</form>
+    
