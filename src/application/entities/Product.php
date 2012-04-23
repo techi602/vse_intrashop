@@ -70,6 +70,15 @@ class Product {
     protected $variants;
 
     /**
+     * Vice variant produktu
+     * 
+     * @Column(type="boolean",name="has_multiple_variants")
+     * @var boolean
+     */
+
+    protected $hasMultipleVariants;
+    
+    /**
      * @var array
      * @ManyToMany(targetEntity="Category")
      * @JoinTable(name="products_categories",
@@ -157,7 +166,15 @@ class Product {
         return $this->variants;
     }
 
-            
+    public function getMultipleVariants() {
+        return $this->hasMultipleVariants;
+    }
+
+    public function setMultipleVariants($hasMultipleVariants) {
+        $this->hasMultipleVariants = $hasMultipleVariants;
+    }
+
+    
     /**
      *
      * @return integer

@@ -103,6 +103,7 @@ class Service_Import
         $product->setCategories(array($cat3));
         $product->setVisible(true);
         $product->setCode("AB01");
+        $product->setMultipleVariants(true);
         $em->persist($product);
         
         $variant = new ProductVariant();
@@ -148,7 +149,6 @@ class Service_Import
         $order->setAmount(1);
         $order->setNote("testovací objednávka");
         $em->persist($order);
-
         
         $em->flush();
     }

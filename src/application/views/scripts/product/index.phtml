@@ -3,15 +3,55 @@
             <?php echo $this->escape($this->product->getName()) ?>            
             </h2>
             
-            <p>
+<p class="categories">
+    Kategorie: 
+    <?php foreach ($this->product->getCategories() as $category): ?>
+    
+    <?= $this->escape($category) ?>
+    
+    <?php endforeach ?>
+    
+</p>
+
+<strong>
+    Počet bodů: <?php echo $this->product->getCredits() ?><br />
+    Cena: <?php echo $this->product->getPrice() ?><br />
+</strong>
+
+            <p class="description">
             <?php echo nl2br($this->escape($this->product->getDescription())) ?>
                 </p>
             
             <img src="<?php echo $this->product->getPicture() ?>" width="200" alt="" />
             
-            
+            <?php if ($this->product->getMultipleVariants()): ?>
             <h3>Varianty</h3>
+            <?php endif ?>
             <?php foreach ($this->product->getVariants() as $variant): ?>
-            
+            <p>
+                <strong>
+                    <?php echo $variant->getName() ?>
+                </strong>
+                
+                
+                <?php if ($variant->getColor()): ?>
+                <p>
+                Barva: <?= $this->escape($variant->getColor()) ?>
+                </p>
+                <?php endif ?>
+                
+                <?php if ($variant->getSize()): ?>
+                <p>
+                Velikost: <?= $this->escape($variant->getSize()) ?>
+                </p>
+                <?php endif ?>
+                
+            <form method="post" onsubmit="return confirm('Opravdu objednat?');">
+                
+                
+                Ks: <?php echo $this->formSelect('quantity', null, array('style' => "width: 50px"), Util::generateRange($variant->getQuantity())) ?>
+                <input type="submit" value="Objednat" class="btn btn-primary" />
+            </form>
+            </p>
             
             <?php endforeach; ?>

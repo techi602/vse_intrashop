@@ -2,11 +2,12 @@
 
 class Form_Product extends Bootstrap_Form
 {
-    public function prepare()
+    public function prepare(Product $product)
     {
         $this->addDecorator(new Zend_Form_Decorator_Fieldset());
         $this->setLegend('Produkt');
         $this->setMethod(self::METHOD_POST);
+        $this->setEnctype(self::ENCTYPE_MULTIPART);
         
         $this->addElement(new Zend_Form_Element_Text('name', array(
             'label' => 'Název produktu',
@@ -29,6 +30,12 @@ class Form_Product extends Bootstrap_Form
             'rows' => 3
         )));
         
+        
+        $this->addElement($this->createElement('file', 'picture', array(
+            'label' => 'Obrázek',
+        )));
+        
+        
         $this->addElement($this->createElement('text', 'price', array(
             'label' => 'Cena',
             'required' => true,
@@ -41,11 +48,24 @@ class Form_Product extends Bootstrap_Form
             'validators' => array(new Zend_Validate_Int(), new Zend_Validate_GreaterThan(0))
         )));
         
+        foreach ($product->getVariants() as $variantId => $variant) {
+            $subform = new Zend_Form_SubForm();
+            
+            $subform->setLegend('Varianta');
+            $subform->createElement('text', 'name');
+            
+            //$this->addSubForm($subform, 'variant' . $variantId);
+        }
+        
+        $this->addElement($this->createElement('submit', 'button-submit', array(
+            'label' => 'Uložit',
+            'class' => 'btn btn-primary'
+        )));
+        
         $this->addElement($this->createElement('submit', 'button-catalog', array(
             'label' => 'Uložit a přejít na výpis produktů',
             'class' => 'btn btn-primary'
         )));
-        
         
         $this->addElement($this->createElement('submit', 'button-detail', array(
             'label' => 'Uložit a přejít na detail',

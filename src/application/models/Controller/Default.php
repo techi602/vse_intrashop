@@ -66,6 +66,7 @@ class Controller_Default extends Zend_Controller_Action {
     }
 
     private function initViewVariables() {
+        
         $this->view->username = $this->loggedEmployee->getUsername();
         $this->view->balance = $this->loggedEmployee->getBalance();
         $this->view->role = $this->loggedUserRole;
