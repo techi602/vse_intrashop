@@ -52,5 +52,7 @@ class Form_ExtraCreditsAdmin extends Bootstrap_Form
             'label' => 'Zrušit',
             'class' => 'btn'
         )));
+
+		$this->addElement($this->createElement('hidden', 'hidden-confirm', array()));
     }
 }

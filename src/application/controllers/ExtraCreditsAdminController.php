@@ -31,21 +31,29 @@ class ExtraCreditsAdminController extends Controller_Default
         );
         $adminForm->prepare();
 
+		$showConfirmDialog = false;
         if ($this->_request->isPost()) {
             if ($this->_getParam('buttoncancel')) {
                 $this->_helper->redirector->goto('index');
             }
             if ($adminForm->isValid($this->_request->getPost())) {
-                $this->creditsAdminService->giveExtraCredits(
-                    $this->loggedPersonnelOfficer->getId(),
-                    $employeeId,
-                    $adminForm->getValue('creditsAmount'),
-                    $adminForm->getValue('note')
-                );
-                $this->_helper->redirector->goto('index');
+				$confirmed = ($this->getRequest()->getPost('hiddenconfirm') == 'true');
+				if ($confirmed) {
+					$this->creditsAdminService->giveExtraCredits(
+						$this->loggedPersonnelOfficer->getId(),
+						$employeeId,
+						$adminForm->getValue('creditsAmount'),
+						$adminForm->getValue('note')
+					);
+					$this->_helper->redirector->goto('index');
+				}
+				else {
+					$showConfirmDialog = true;
+				}
             }
         }
 
+		$this->view->showConfirmDialog = $showConfirmDialog;
         $this->view->adminForm = $adminForm;
         $this->view->employeeInfo = $employeeInfo;
     }

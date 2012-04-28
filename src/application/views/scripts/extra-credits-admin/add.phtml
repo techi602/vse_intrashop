@@ -13,3 +13,14 @@
 </table>
 
 <?=$this->adminForm;?>
+
+<? if($this->showConfirmDialog) { ?>
+<script type="text/javascript">
+$(function() {
+	if(confirm('Skutečně přidělit?')) {
+		$('#hiddenconfirm').val('true');
+		$('#buttondetail').click();
+	}
+})
+</script>
+<? } ?>
