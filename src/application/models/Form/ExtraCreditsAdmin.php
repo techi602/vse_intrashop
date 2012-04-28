@@ -4,19 +4,17 @@ class Form_ExtraCreditsAdmin extends Bootstrap_Form
 {
     const MAX_CREDIT_AMOUNT_GIVEN = 50000;
 
-    private $userName;
     private $personnelOfficerBalance;
 
-    public function __construct($userName, $personnelOfficerBalance) {
+    public function __construct($personnelOfficerBalance) {
         parent::__construct();
-        $this->userName = $userName;
         $this->personnelOfficerBalance = $personnelOfficerBalance;
     }
 
     public function prepare()
     {
         $this->addDecorator(new Zend_Form_Decorator_Fieldset());
-        $this->setLegend($this->userName);
+        $this->setLegend('Přidělit body');
         $this->setMethod(self::METHOD_POST);
 
         $creditsAmountLessThanValidate = new Zend_Validate_LessThan(null);

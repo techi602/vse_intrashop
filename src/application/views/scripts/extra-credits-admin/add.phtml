@@ -1,2 +1,15 @@
 <h1>Přidělit mimořádné body</h1>
+
+<h2 style=" margin-top: 20px;"><?=$this->escape($this->employeeInfo['employeeName']);?></h2>
+<table class="table table-bordered" style="width: 200px;">
+<tr>
+	<th>Funkce</th>
+	<td><?=$this->escape($this->employeeInfo['functionName']);?></td>
+</tr>
+<tr>
+	<th>Oddělení</th>
+	<td><?=$this->escape($this->employeeInfo['departmentName']);?></td>
+</tr>
+</table>
+
 <?=$this->adminForm;?>

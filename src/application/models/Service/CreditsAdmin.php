@@ -41,7 +41,9 @@ class Service_CreditsAdmin
         $employee = $query->getSingleResult();
 
         $employeeInfo = array(
-            'employeeName' => $employee->getName()
+            'employeeName' => $employee->getName(),
+			'functionName' => 'TODO',
+			'departmentName' => 'TODO'
         );
 
         return $employeeInfo;

@@ -27,7 +27,6 @@ class ExtraCreditsAdminController extends Controller_Default
         $employeeInfo = $this->creditsAdminService->getEmployeeInfo($employeeId);
 
         $adminForm = new Form_ExtraCreditsAdmin(
-            $employeeInfo['employeeName'],
             $this->loggedPersonnelOfficer->getPersonnelOfficerBalance()
         );
         $adminForm->prepare();
