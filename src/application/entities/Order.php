@@ -128,4 +128,8 @@ class Order
     {
         return $this->id;
     }
+
+	public function isCancellable() {
+		return $this->getStatus()->getCode() === OrderStatus::STATUS_NEW;
+	}
 }

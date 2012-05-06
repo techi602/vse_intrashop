@@ -1,0 +1,55 @@
+<h1>Detail objednávky</h1>
+
+<h2><?=$this->escape($this->order['productName']);?></h2>
+
+<table class="table table-bordered" style="width: 250px">
+<tr>
+	<td colspan="2"><?=$this->escape($this->order['productDescription']);?></td>
+</tr>
+<tr>
+	<th>Bodová hodnota</th>
+	<td><?=$this->escape($this->order['orderCredits']);?></td>
+</tr>
+<tr>
+	<th>Počet kusů</th>
+	<td><?=$this->escape($this->order['orderAmount']);?></td>
+</tr>
+<tr>
+	<th>Cena v bodech</th>
+	<td>TODO</td>
+</tr>
+<? if ($this->warehouseKeeperView) { ?>
+<tr>
+	<th>Zaměstnanec</th>
+	<td><?=$this->escape($this->order['employeeName']);?></td>
+</tr>
+<? } ?>
+<tr>
+	<th>Datum objednání</th>
+	<td><?=($this->order['orderInserted']->format('m. d. Y '));?></td>
+</tr>
+<tr>
+	<th>Stav objednávky</th>
+	<td><?=$this->escape($this->order['orderStatusName']);?></td>
+</tr>
+</table>
+<a class="btn" href="../orders" id="bacbktn">Zpět</a> <?//TODO: ten href natvrdo tady?>
+
+<? if ($this->order['orderCancellable']) { ?>
+<a class="btn btn-danger" id="cancelbtn" href="./cancel?id=<?=$this->order['orderId'];?>">Storno</a>
+<? } ?>
+
+<script>
+$(function() {
+	$('#cancelbtn').bind('click', function() {
+		if(confirm('Opravdu stornovat?')) {
+			return true;
+		}
+		else {
+			document.location = $('#bacbktn').attr('href');
+			return false;
+		}
+
+	});
+});
+</script>

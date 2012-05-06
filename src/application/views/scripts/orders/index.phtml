@@ -19,14 +19,22 @@
 <? if ($orderList) { ?>
 <? foreach($orderList as $order) { ?>
 <tr>
-    <td><?=$this->escape($order['productName']);?></td>
+    <td>
+        <a href="./orders/detail?id=<?=$order['orderId'];?>"> <?//TODO: ta adresa ne tak natvrdo tady?>
+            <?=$this->escape($order['productName']);?>
+        </a>
+    </td>
     <? if ($this->warehouseKeeperOrderList) { ?>
-    <td><?//TODO;?></td>
+    <td><?=$this->escape($order['orderEmployeeName']);?></td>
     <? } ?>
     <td><?=($order['orderInserted']->format('m. d. Y '));?></td>
     <td><?=$this->escape($order['orderCredits']);?></td>
     <td><?=$this->escape($order['orderStatusName']);?></td>
-    <td></td>
+    <td>
+		<? if ($order['orderCancellable']) { ?>
+        <a href="./orders/detail?id=<?=$order['orderId'];?>" class="btn btn-danger">Storno</a> <?//TODO: ta adresa ne tak natvrdo tady?>
+		<? } ?>
+    </td>
 </tr>
 <? } ?>
 <? } else { ?>
