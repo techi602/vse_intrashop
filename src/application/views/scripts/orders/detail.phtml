@@ -8,7 +8,7 @@
 </tr>
 <tr>
 	<th>Bodová hodnota</th>
-	<td><?=$this->escape($this->order['orderCredits']);?></td>
+	<td><?=round($this->order['orderCredits']/$this->order['orderAmount']);?></td>
 </tr>
 <tr>
 	<th>Počet kusů</th>
@@ -16,7 +16,7 @@
 </tr>
 <tr>
 	<th>Cena v bodech</th>
-	<td>TODO</td>
+	<td><?=$this->escape($this->order['orderCredits']);?></td>
 </tr>
 <? if ($this->warehouseKeeperView) { ?>
 <tr>
