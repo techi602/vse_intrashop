@@ -5,7 +5,7 @@ class IndexController extends Controller_Default
 
     public function indexAction()
     {
-        
+        $user = User::getLoggedUser();
     }
     
     public function catalogAction()
@@ -16,6 +16,7 @@ class IndexController extends Controller_Default
     public function logoutAction()
     {
         Zend_Auth::getInstance()->clearIdentity();
+
         $this->_redirect('/');
     }
 }

@@ -182,6 +182,11 @@ class Service_Import
         $role1->setName("PersonalOfficer");
         $role1->setRole(UserRole::ROLE_PERSONNELOFFICER);
         $em->persist($role1);
+        
+        $role2 = new UserRole();
+        $role2->setName("Správce skladu");
+        $role2->setRole(UserRole::ROLE_WAREHOUSEKEEPER);
+        $em->persist($role2);
 
         $janNovakEmployee = new PersonnelOfficer();
         $janNovakEmployee->setName('Jan Novák');
@@ -191,7 +196,7 @@ class Service_Import
         $janNovakEmployee->setUsername('jan.novak');
         $janNovakEmployee->setEmployed(true);
         $janNovakEmployee->setPersonnelOfficerBalance(70000);
-        $janNovakEmployee->setRoles(array($role1));
+        $janNovakEmployee->setRoles(array($role1, $role2));
         $em->persist($janNovakEmployee);
 
         $status1 = new OrderStatus();

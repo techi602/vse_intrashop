@@ -13,7 +13,13 @@ class IntrashopAuthResolver implements Zend_Auth_Adapter_Http_Resolver_Interface
     
     public function resolve($username, $realm) {
         
-        return 'intrashop';
+        $user = EntityManager::getInstance()->getRepository('Employee')->findOneBy(array('email' => $username));
+        
+        if (is_null($user)) {
+            return null;
+        }
+
+        return $user->getEmail();
     }
 }
 
@@ -21,8 +27,10 @@ class Controller_Plugin_Auth extends Zend_Controller_Plugin_Abstract
 {
     public function preDispatch(Zend_Controller_Request_Abstract $request)
     {
-        $auth = Zend_Auth::getInstance();
-
+        if ($request->getControllerName() == 'import') {
+            return;
+        }
+        
         $adapter = new Zend_Auth_Adapter_Http(array(
                     'accept_schemes' => 'basic',
                     'realm' => 'intrashop',

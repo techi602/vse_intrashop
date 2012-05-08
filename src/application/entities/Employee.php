@@ -193,8 +193,8 @@ class Employee
     
     public function hasRole($role)
     {
-        foreach ($this->roles as $role) {
-            if ($role->getRole() == $role) {
+        foreach ($this->roles as $xrole) {
+            if ($xrole->getRole() == $role) {
                 return true;
             }
         }
