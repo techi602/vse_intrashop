@@ -85,7 +85,7 @@ class Controller_Default extends Zend_Controller_Action {
         $nav = array();
         
         $user = User::getLoggedUser();
-        $user->getRoles();
+        
         
         // zamestnanec
         $nav = array_merge($nav, array(
@@ -106,29 +106,25 @@ class Controller_Default extends Zend_Controller_Action {
             ),
         )));
         
-        
+        if ($user->hasRole(UserRole::ROLE_WAREHOUSEKEEPER)) {
         $nav = array_merge($nav, array(
-    array(
-        'controller' => 'catalog',
-        'label' => 'Katalog',
-        'pages' => array(
-            array(
-                'controller' => 'tools',
-                'action' => 'free',
-                'label' => 'Free Tools',
+        array(
+            'controller' => 'warehouse',
+            'label' => 'Sklad',
+            'pages' => array(
+                array(
+                    'controller' => 'warehouse',
+                    'action' => 'index',
+                    'label' => 'Katalog',
+                    ),
+                array(
+                    'controller' => 'warehouse',
+                    'action' => 'edit',
+                    'label' => 'Nový produkt',
+                    ),
                 ),
-            array(
-                'controller' => 'tools',
-                'action' => 'licenses',
-                'label' => 'New Licenses',
-                ),
-            array(
-                'controller' => 'tools',
-                'action' => 'products',
-                'label' => 'Products',
-                ),
-            ),
-        )));
+            )));
+        }
            
                 /*
     array(

@@ -16,6 +16,15 @@ class OrdersController extends Controller_Default
         $this->view->userOrderList = $orderList;
         $this->view->warehouseKeeperOrderList = null;
     }
+    
+    public function employeeAction()
+    {
+        $orderList = $this->ordersService->getUserOrderList($this->loggedEmployee->getId());
+        $this->view->userOrderList = $orderList;
+        $this->view->warehouseKeeperOrderList = null;
+        
+        $this->_helper->ViewRenderer->render('index');
+    }
 
     public function editAction()
     {

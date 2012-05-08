@@ -43,7 +43,36 @@ class Service_Import
          * 
          */
         
+        $tool = new \Doctrine\ORM\Tools\SchemaTool($em);
+
+        $entities = array(
+            'ProductColor',
+            'ProductSize',
+            'ProductAvailability',
+            'ProductVariant',
+            'Product',
+            'Category',
+            'OrderStatus',
+            'Employee',
+            'Order',
+            'UserRole',
+            'ProductAvailability',
+            'Department',
+            'SuperiorEmployee',
+            'WarehouseKeeper',
+            'PersonnelOfficer');
         
+        $classes = array();
+        foreach ($entities as $entity) {
+            $classes[] = $em->getClassMetadata($entity);
+        }
+        
+        $tool->dropSchema($classes);
+        $tool->createSchema($classes);
+            
+            
+        
+        /*
         $this->truncateTable($em, 'ProductColor');
         $this->truncateTable($em, 'ProductSize');
         $this->truncateTable($em, 'ProductAvailability');
@@ -53,12 +82,14 @@ class Service_Import
         $this->truncateTable($em, 'OrderStatus');
         $this->truncateTable($em, 'Employee');
         $this->truncateTable($em, 'Order');
+         */
         
     }
     
     public function import()
     {
-        $this->truncate($this->em);
+        $this->truncate($this->em);        
+        
         
         $em = $this->em;
         
