@@ -55,6 +55,9 @@
               <? if ($this->role === 'PersonnelOfficer') { ?>
               <li><a href="<?php echo $this->url(array('action' => 'index', 'controller' => 'extra-credits-admin'), null, true) ?>">Přidělit mimořádné body</a></li>
               <? } ?>
+              <? if ($this->role === 'SuperiorEmployee') { ?>
+              <li><a href="<?php echo $this->url(array('action' => 'index', 'controller' => 'performance-credits-admin'), null, true) ?>">Přidělit výkonové body</a></li>
+              <? } ?>
             </ul>
             <?
                 switch ($this->role) {

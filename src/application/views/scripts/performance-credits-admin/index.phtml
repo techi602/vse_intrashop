@@ -1,0 +1,12 @@
+<h1>Přidělit výkonové body</h1>
+
+<table class="table table-bordered" style="margin-top:20px">
+<tr>
+    <th>Jméno zaměstnance</th>
+</tr>
+<? foreach ($this->employeeList as $employee) { ?>
+<tr>
+    <td><a href="performance-credits-admin/add?userId=<?=$employee['employeeId'];?>"><?=$this->escape($employee['employeeName']);?></a></th>
+</tr>
+<? } ?>
+</table>
