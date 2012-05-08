@@ -20,6 +20,9 @@ class Controller_Default extends Zend_Controller_Action {
     /** @var WarehouseKeeper */
     protected $loggedWarehouseKeeper;
 
+    /** @var SuperiorEmployee */
+    protected $loggedSuperiorEmployee;
+
     public function init() {
         parent::init();
 
@@ -64,6 +67,10 @@ class Controller_Default extends Zend_Controller_Action {
         if ($loggedUser instanceof WarehouseKeeper) {
             $this->loggedWarehouseKeeper = $loggedUser;
         }
+
+        if ($loggedUser instanceof SuperiorEmployee) {
+            $this->loggedSuperiorEmployee = $loggedUser;
+        }
     }
 
     private function initViewVariables() {
@@ -74,6 +81,16 @@ class Controller_Default extends Zend_Controller_Action {
 
         if ($this->loggedPersonnelOfficer) {
             $this->view->personnelOfficerBalance = $this->loggedPersonnelOfficer->getPersonnelOfficerBalance();
+        }
+        else {
+            $this->view->personnelOfficerBalance = null;
+        }
+
+        if ($this->loggedSuperiorEmployee) {
+            $this->view->superiorEmployeeBalance = $this->loggedSuperiorEmployee->getSuperiorBalance();
+        }
+        else {
+            $this->view->superiorEmployeeBalance = null;
         }
     }
 }
