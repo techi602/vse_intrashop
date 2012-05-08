@@ -1,14 +1,14 @@
 <?php
 
-class Form_ExtraCreditsAdmin extends Bootstrap_Form
+class Form_CreditsAdmin extends Bootstrap_Form
 {
     const MAX_CREDIT_AMOUNT_GIVEN = 50000;
 
-    private $personnelOfficerBalance;
+    private $accountBalance;
 
-    public function __construct($personnelOfficerBalance) {
+    public function __construct($accountBalance) {
         parent::__construct();
-        $this->personnelOfficerBalance = $personnelOfficerBalance;
+        $this->accountBalance = $accountBalance;
     }
 
     public function prepare()
@@ -19,9 +19,9 @@ class Form_ExtraCreditsAdmin extends Bootstrap_Form
 
         $creditsAmountLessThanValidate = new Zend_Validate_LessThan(null);
 
-        if ($this->personnelOfficerBalance <= self::MAX_CREDIT_AMOUNT_GIVEN) {
-            $creditsAmountLessThanValidate->setMax($this->personnelOfficerBalance + 1);
-            $creditsAmountLessThanValidate->setMessage("Překročena výše konta mimořádných bodů");
+        if ($this->accountBalance <= self::MAX_CREDIT_AMOUNT_GIVEN) {
+            $creditsAmountLessThanValidate->setMax($this->accountBalance + 1);
+            $creditsAmountLessThanValidate->setMessage("Překročena výše konta");
         }
         else {
             $creditsAmountLessThanValidate->setMax(self::MAX_CREDIT_AMOUNT_GIVEN + 1);

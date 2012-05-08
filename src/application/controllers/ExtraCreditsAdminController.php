@@ -2,8 +2,11 @@
 
 class ExtraCreditsAdminController extends Controller_Default
 {
-    /** @var Service_CreditsAdmin */
-    private $creditsAdminService;
+    /** @var Service_ExtraCreditsAdmin */
+    private $extraCreditsAdminService;
+
+    /** @var Service_Employee */
+    private $employeeService;
 
     public function init() {
         parent::init();
@@ -12,21 +15,22 @@ class ExtraCreditsAdminController extends Controller_Default
             throw new Exception("Unauthorized");
         }
 
-        $this->creditsAdminService = new Service_CreditsAdmin($this->em);
+        $this->extraCreditsAdminService = new Service_ExtraCreditsAdmin($this->em);
+        $this->employeeService = new Service_Employee($this->em);
     }
 
     public function indexAction()
     {
-        $this->view->employeeList = $this->creditsAdminService->getEmployeeList();
+        $this->view->employeeList = $this->extraCreditsAdminService->getEmployeeList();
     }
 
     public function addAction()
     {
         $request = $this->getRequest();
         $employeeId = $request->getParam('userId');
-        $employeeInfo = $this->creditsAdminService->getEmployeeInfo($employeeId);
+        $employeeInfo = $this->employeeService->getEmployeeInfo($employeeId);
 
-        $adminForm = new Form_ExtraCreditsAdmin(
+        $adminForm = new Form_CreditsAdmin(
             $this->loggedPersonnelOfficer->getPersonnelOfficerBalance()
         );
         $adminForm->prepare();
@@ -39,7 +43,7 @@ class ExtraCreditsAdminController extends Controller_Default
             if ($adminForm->isValid($this->_request->getPost())) {
 				$confirmed = ($this->getRequest()->getPost('hiddenconfirm') == 'true');
 				if ($confirmed) {
-					$this->creditsAdminService->giveExtraCredits(
+					$this->extraCreditsAdminService->giveExtraCredits(
 						$this->loggedPersonnelOfficer->getId(),
 						$employeeId,
 						$adminForm->getValue('creditsAmount'),

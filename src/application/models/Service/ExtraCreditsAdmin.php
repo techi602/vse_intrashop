@@ -1,6 +1,6 @@
 <?php
 
-class Service_CreditsAdmin
+class Service_ExtraCreditsAdmin
 {
     /** @var Doctrine\ORM\EntityManager */
     private $em;
@@ -29,26 +29,6 @@ class Service_CreditsAdmin
         return $employees;
     }
 
-    public function getEmployeeInfo($employeeUserId)
-    {
-        $query = $this->em->createQuery("
-            SELECT e
-            FROM Employee e
-            WHERE e.id = ?1
-        ");
-        $query->setParameter(1, $employeeUserId);
-
-        $employee = $query->getSingleResult();
-
-        $employeeInfo = array(
-            'employeeName' => $employee->getName(),
-			'functionName' => 'TODO',
-			'departmentName' => 'TODO'
-        );
-
-        return $employeeInfo;
-    }
-
     public function getFinantialBalance() {
 
     }
@@ -58,6 +38,7 @@ class Service_CreditsAdmin
      */
     public function giveExtraCredits($personnelOfficerUserId, $employeeUserId, $creditsAmount, $note)
     {
+        $this->em->beginTransaction();
         $employee = $this->em->find('Employee', $employeeUserId);
         $employee->setBalance($employee->getBalance() + $creditsAmount);
         $this->em->persist($employee);
@@ -66,6 +47,7 @@ class Service_CreditsAdmin
         $personnelOfficer->setPersonnelOfficerBalance($personnelOfficer->getPersonnelOfficerBalance() - $creditsAmount);
         $this->em->persist($personnelOfficer);
 
+        $this->em->commit();
         $this->em->flush();
     }
 }
