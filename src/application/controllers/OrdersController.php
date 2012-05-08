@@ -17,4 +17,8 @@ class OrdersController extends Controller_Default
         $this->view->warehouseKeeperOrderList = null;
     }
 
+    public function editAction()
+    {
+        $id = $this->_getParam('id');
+    }
 }

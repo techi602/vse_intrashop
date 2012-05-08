@@ -9,15 +9,8 @@
     <link href="<?php echo $this->baseUrl() ?>/css/bootstrap.css" rel="stylesheet">
     <link href="<?php echo $this->baseUrl() ?>/css/styles.css" rel="stylesheet">
     <style type="text/css">
-      body {
-        padding-top: 60px;
-        padding-bottom: 40px;
-      }
-      .sidebar-nav {
-        padding: 9px 0;
-      }
     </style>
-    <link href="http://tablesorter.com/themes/blue/style.css" rel="stylesheet">
+    <!--link href="http://tablesorter.com/themes/blue/style.css" rel="stylesheet"-->
     <link href="<?php echo $this->baseUrl() ?>/css/bootstrap-responsive.css" rel="stylesheet">
     <link href="<?php echo $this->baseUrl() ?>/css/tablesort.css" rel="stylesheet">
 
@@ -46,38 +39,24 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="<?php echo $this->url(array('action' => 'index', 'controller' => 'index'), null, true) ?>">Intrashop</a>
+          <a class="brand" href="<?php echo $this->url(array('action' => 'index', 'controller' => 'index'), null, true) ?>">
+              <img src="http://images2.wikia.nocookie.net/__cb20080519060532/egamia/images/thumb/d/d9/Umbrella_Corporation_logo.gif/50px-Umbrella_Corporation_logo.gif" alt="" width="20" />
+              Intrashop</a>
           <div class="nav-collapse">
-            <ul class="nav">
-              <li class="active"><a href="<?php echo $this->url(array('action' => 'index', 'controller' => 'index'), null, true) ?>">Obchod</a></li>
-              <li><a href="<?php echo $this->url(array('action' => 'index', 'controller' => 'catalog'), null, true) ?>">Katalog zboží</a></li>
-              <li><a href="<?php echo $this->url(array('action' => 'index', 'controller' => 'orders'), null, true) ?>">Objednávky</a></li>
-              <? if (@$this->role === 'PersonnelOfficer') { ?>
-              <li><a href="<?php echo $this->url(array('action' => 'index', 'controller' => 'extra-credits-admin'), null, true) ?>">Přidělit mimořádné body</a></li>
-              <? } ?>
-            </ul>
-            <?
-                switch (@$this->role) {
-                    case 'Employee':
-                        $role = 'zaměstnanec';
-                        break;
-
-                    case 'PersonnelOfficer':
-                        $role = 'personalista';
-                        break;
-
-                    case 'WarehouseKeeper':
-                        $role = 'správce skladu';
-                        break;
-                }
-            ?>
-            <p class="navbar-text pull-right">
-                Přihlášen jako <?=@$role;?> <a href="#"><?php echo @$this->username ?>
-           </a>
+              
+              <?php echo $this->navigation()->menu()->setMaxDepth(0)->setUlClass('nav') ?>
+          
+              <p class="navbar-text pull-right">
+                <?php echo @$this->username ?>
+           
                 | <span class="credits"><?php echo @$this->balance ?> bodů</span>
                 <? if (isset($this->personnelOfficerBalance)) { ?>
                 | <span class="credits"><?=$this->personnelOfficerBalance;?> mimořádných bodů</span>
                 <? } ?>
+                
+                |
+                <a href="<?php echo $this->url(array('action' => 'logout', 'controller' => 'index')) ?>">Odhlásit</a>
+                
             </p>
           </div><!--/.nav-collapse -->
         </div>
@@ -88,56 +67,27 @@
       <div class="row-fluid">
         <div class="span3">
           <div class="well sidebar-nav">
-            <ul class="nav nav-list">
-              <li class="nav-header">Sidebar</li>
-              <li class="active"><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li class="nav-header">Sidebar</li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li class="nav-header">Sidebar</li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-            </ul>
+              
+              <?php echo $this->navigation()->menu()->renderSubMenu(null, 'nav nav-list') ?>
           </div><!--/.well -->
         </div><!--/span-->
         <div class="span9">
-            <?php if ($this->layout()->info): ?>
-            <ul class="unstyled"  style="border: 1px solid; border-color: lightblue">
-            <?php foreach ($this->layout()->info as $info): ?>
-            
-            <li>
-            <i class="icon-info-sign"></i>
-            
-            <?php echo $this->escape($info) ?>
-            
-            </li>
-
-            <?php endforeach ?>
-                </ul>
-            <?php endif ?>
-            
+            <?= $this->partial('messages.phtml', $this) ?>
             
         <?php echo $this->layout()->content ?>
+            
+            
           
       </div><!--/row-->
 
-      <hr>
-
+      <br style="clear: both;">
+      
       <footer>
+          <hr>
         <p>&copy; 4IT442 2012</p>
       </footer>
 
     </div><!--/.fluid-container-->
-
-
   </body>
 </html>
 

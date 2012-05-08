@@ -28,6 +28,7 @@ class Controller_Default extends Zend_Controller_Action {
 
         $this->initRoles();
         $this->initViewVariables();
+        $this->initNavigation();
         $this->view->addHelperPath(APPLICATION_PATH . '/views/helpers/', 'Default_Helper');
     }
 
@@ -75,5 +76,91 @@ class Controller_Default extends Zend_Controller_Action {
         if ($this->loggedPersonnelOfficer) {
             $this->view->personnelOfficerBalance = $this->loggedPersonnelOfficer->getPersonnelOfficerBalance();
         }
+        
+        
+    }
+    
+    private function initNavigation()
+    {
+        $nav = array();
+        
+        $user = User::getLoggedUser();
+        $user->getRoles();
+        
+        // zamestnanec
+        $nav = array_merge($nav, array(
+    array(
+        'controller' => 'index',
+        'label' => 'Home',
+        'pages' => array(
+                array(
+                'controller' => 'orders',
+                'action' => 'employee',
+                'label' => 'Moje objednávky',
+                ),
+                array(
+                'controller' => 'index',
+                'action' => 'catalog',
+                'label' => 'Seznam zboží',
+                ),
+            ),
+        )));
+        
+        
+        $nav = array_merge($nav, array(
+    array(
+        'controller' => 'catalog',
+        'label' => 'Katalog',
+        'pages' => array(
+            array(
+                'controller' => 'tools',
+                'action' => 'free',
+                'label' => 'Free Tools',
+                ),
+            array(
+                'controller' => 'tools',
+                'action' => 'licenses',
+                'label' => 'New Licenses',
+                ),
+            array(
+                'controller' => 'tools',
+                'action' => 'products',
+                'label' => 'Products',
+                ),
+            ),
+        )));
+           
+                /*
+    array(
+        'module' => 'admin',
+        'label' => 'Administration',
+        'resource' => 'admin',
+        'privilege' => 'index',
+        'pages' => array(
+            array(
+                'module' => 'admin',
+                'controller' => 'adduser',
+                'label' => 'Add User',
+                'resource' => 'admin',
+                'privilege' => 'adduser',
+                ),
+            array(
+                'module' => 'admin',
+                'controller' => 'addpage',
+                'label' => 'Add Page',
+                'resource' => 'admin',
+                'privilege' => 'addpage',
+                ),
+            ),
+        )
+    );
+        */
+        $navigation = new Zend_Navigation();
+        $navigation->setPages($nav);
+        
+        $this->view->navigation($navigation);
+        
+        $activeNav = $this->view->navigation()->findByController($this->getRequest()->getControllerName());
+		@$activeNav->active = true;
     }
 }

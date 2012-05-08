@@ -4,7 +4,7 @@
 
 <h1>Objednávky</h1>
 
-<table class="table table-bordered" style="margin-top:20px">
+<table class="table">
 <tr>
     <th>Zboží</th>
     <? if ($this->warehouseKeeperOrderList) { ?>
@@ -13,7 +13,7 @@
     <th>Datum objednání</th>
     <th>Cena v bodech</th>
     <th>Stav objednávky</th>
-    <th></th>
+    <th>Akce</th>
 </tr>
 
 <? if ($orderList) { ?>
@@ -26,7 +26,7 @@
     <td><?=($order['orderInserted']->format('m. d. Y '));?></td>
     <td><?=$this->escape($order['orderCredits']);?></td>
     <td><?=$this->escape($order['orderStatusName']);?></td>
-    <td></td>
+    <td><a class="btn" href="<?php echo $this->url(array('action' => 'edit', 'id' => @$order['id'])) ?>"><i class="icon-edit"></i> Detail</a></td>
 </tr>
 <? } ?>
 <? } else { ?>

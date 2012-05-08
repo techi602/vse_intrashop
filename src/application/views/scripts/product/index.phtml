@@ -33,6 +33,10 @@
                     <?php echo $variant->getName() ?>
                 </strong>
                 
+            <p>
+                Počet ks na skladě: <?= $variant->getQuantity() ?>
+            </p>
+                
                 
                 <?php if ($variant->getColor()): ?>
                 <p>
@@ -51,7 +55,7 @@
                 
                 Ks: <?php echo $this->formSelect('quantity', null, array('style' => "width: 50px"), Util::generateRange($variant->getQuantity())) ?>
                 <?php echo $this->formHidden('variant', $variant->getId()) ?>
-                <input type="submit" value="Objednat" class="btn btn-primary" />
+                <input type="submit" value="Objednat zboží" class="btn btn-primary" />
             </form>
             </p>
             

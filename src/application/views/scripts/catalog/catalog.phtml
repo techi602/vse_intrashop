@@ -1,0 +1,25 @@
+<table class="table" id="catalog">
+    <thead>
+        <tr>
+            <th>Kód</th>
+            <th>Název</th>
+            <th>Cena</th>
+            <th>Akce</th>
+        </tr>
+    </thead>
+    
+    <tbody>
+        <?php foreach ($this->products as $product): ?>
+        <tr>
+            <td><?php echo $product['code'] ?></td>
+            <td><?php echo $product['name'] ?></td>
+            <td><?php echo $product['price'] ?></td>
+            
+            <td><a class="btn" href="<?php echo $this->url(array('action' => 'edit', 'id' => $product['id'])) ?>"><i class="icon-edit"></i>
+Upravit</a></td>
+        </tr>
+        <?php endforeach ?>
+        
+    </tbody>
+    
+</table>

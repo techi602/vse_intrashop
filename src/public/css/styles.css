@@ -19,3 +19,20 @@ label:after {
     font-weight: bold;
     color: red;
 }
+
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+      .sidebar-nav {
+        padding: 9px 0;
+      }
+
+      footer {
+		min-height: 900;
+		bottom:0;
+		width:90%;
+                margin: auto 0 auto 0;
+                text-align: center;
+
+	}
