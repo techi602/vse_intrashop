@@ -29,5 +29,15 @@ class OrdersController extends Controller_Default
     public function editAction()
     {
         $id = $this->_getParam('id');
+        
+        if (empty($id)) {
+            throw new InvalidArgumentException("Order ID is missing");
+        }
+        
+        $order = $this->em->find('Order', $id);
+        
+        $this->view->headTitle('Objedánávka ' . $order->getOrderId());
+        
+        $this->view->order = $order;
     }
 }

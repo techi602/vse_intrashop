@@ -27,6 +27,7 @@ class Service_Orders
 
         foreach ($query->getArrayResult() as $order) {
             $orders[] = array(
+                'id' => $order['id'],
                 'productName' => $order['productVariant']['product']['name'],
                 'orderInserted' => $order['inserted'],
                 'orderCredits' => $order['credits'],

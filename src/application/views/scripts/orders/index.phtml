@@ -23,10 +23,10 @@
     <? if ($this->warehouseKeeperOrderList) { ?>
     <td><?//TODO;?></td>
     <? } ?>
-    <td><?=($order['orderInserted']->format('m. d. Y '));?></td>
+    <td><?=($order['orderInserted']->format('d.m.y'));?></td>
     <td><?=$this->escape($order['orderCredits']);?></td>
     <td><?=$this->escape($order['orderStatusName']);?></td>
-    <td><a class="btn" href="<?php echo $this->url(array('action' => 'edit', 'id' => @$order['id'])) ?>"><i class="icon-edit"></i> Detail</a></td>
+    <td><a class="btn" href="<?php echo $this->url(array('action' => 'edit', 'id' => $order['id'])) ?>"><i class="icon-edit"></i> Detail</a></td>
 </tr>
 <? } ?>
 <? } else { ?>
