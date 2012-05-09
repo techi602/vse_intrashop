@@ -1,16 +1,12 @@
 <?php
 
-class ProductUpdateController extends Zend_Controller_Action
+class WarehouseController extends Controller_Default
 {
-
-    public function init()
-    {
-        /* Initialize action controller here */
-    }
-
     public function indexAction()
     {
-        // action body
+        $query = $this->em->createQuery("SELECT p FROM Product p");
+        $products = $query->getArrayResult();
+        $this->view->products = $products;
     }
     
     public function editAction()

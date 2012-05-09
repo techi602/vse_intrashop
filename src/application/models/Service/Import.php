@@ -43,7 +43,36 @@ class Service_Import
          * 
          */
         
+        $tool = new \Doctrine\ORM\Tools\SchemaTool($em);
+
+        $entities = array(
+            'ProductColor',
+            'ProductSize',
+            'ProductAvailability',
+            'ProductVariant',
+            'Product',
+            'Category',
+            'OrderStatus',
+            'Employee',
+            'Order',
+            'UserRole',
+            'ProductAvailability',
+            'Department',
+            'SuperiorEmployee',
+            'WarehouseKeeper',
+            'PersonnelOfficer');
         
+        $classes = array();
+        foreach ($entities as $entity) {
+            $classes[] = $em->getClassMetadata($entity);
+        }
+        
+        $tool->dropSchema($classes);
+        $tool->createSchema($classes);
+            
+            
+        
+        /*
         $this->truncateTable($em, 'ProductColor');
         $this->truncateTable($em, 'ProductSize');
         $this->truncateTable($em, 'ProductAvailability');
@@ -53,12 +82,14 @@ class Service_Import
         $this->truncateTable($em, 'OrderStatus');
         $this->truncateTable($em, 'Employee');
         $this->truncateTable($em, 'Order');
+         */
         
     }
     
     public function import()
     {
-        $this->truncate($this->em);
+        $this->truncate($this->em);        
+        
         
         $em = $this->em;
         
@@ -121,7 +152,7 @@ class Service_Import
         
         $product = new Product();
         $product->setName("Deštník");
-        $product->setDescription("Deštník do deště");
+        $product->setDescription("Deštník proti dešti");
         $product->setPicture(base64_encode(file_get_contents("http://4.bp.blogspot.com/-V2eN7qTt9wE/TvOTH5zxhyI/AAAAAAAABlE/poiQTfz-5PA/s1600/destnik_cerveny.jpg")));
         $product->setCredits(200);
         $product->setPrice(200);
@@ -151,6 +182,11 @@ class Service_Import
         $role1->setName("PersonalOfficer");
         $role1->setRole(UserRole::ROLE_PERSONNELOFFICER);
         $em->persist($role1);
+        
+        $role2 = new UserRole();
+        $role2->setName("Správce skladu");
+        $role2->setRole(UserRole::ROLE_WAREHOUSEKEEPER);
+        $em->persist($role2);
 
         $janNovakEmployee = new PersonnelOfficer();
         $janNovakEmployee->setName('Jan Novák');
@@ -160,7 +196,7 @@ class Service_Import
         $janNovakEmployee->setUsername('jan.novak');
         $janNovakEmployee->setEmployed(true);
         $janNovakEmployee->setPersonnelOfficerBalance(70000);
-        $janNovakEmployee->setRoles(array($role1));
+        $janNovakEmployee->setRoles(array($role1, $role2));
         $em->persist($janNovakEmployee);
 
         $status1 = new OrderStatus();

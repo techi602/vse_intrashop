@@ -61,13 +61,13 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $config = new \Doctrine\ORM\Configuration();
         
         // Proxies (3)
-        $config->setProxyDir(__DIR__ . '/Proxies');
+        $config->setProxyDir(__DIR__ . '/proxies');
         $config->setProxyNamespace('Proxies');
         
         $config->setAutoGenerateProxyClasses((APPLICATION_ENV == "development"));
         
         // Driver (4)
-        $driverImpl = $config->newDefaultAnnotationDriver('entities');
+        $driverImpl = $config->newDefaultAnnotationDriver(APPLICATION_PATH . '/entities');
         $config->setMetadataDriverImpl($driverImpl);
         
         $cache = new \Doctrine\Common\Cache\ArrayCache();
@@ -76,14 +76,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $config->setQueryCacheImpl($cache);
         $config->setSQLLogger(new DoctrineSqlLogger());
         
-        $connectionOptions = array(
-                'driver' => 'pdo_mysql',
-                'dbname' => 'test',
-                'user' => '',
-                'password' => '',
-                'host' => 'localhost');
-        
-        $em = \Doctrine\ORM\EntityManager::create($connectionOptions, $config);
+        $options = $this->getOption('doctrine');
+        $em = \Doctrine\ORM\EntityManager::create($options['db'], $config);
         $em->getEventManager()->addEventSubscriber(new \Doctrine\DBAL\Event\Listeners\MysqlSessionInit('utf8', 'utf8_unicode_ci')); 
         
         Zend_Registry::set('EntityManager', $em);

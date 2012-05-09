@@ -31,6 +31,7 @@ class Controller_Default extends Zend_Controller_Action {
 
         $this->initRoles();
         $this->initViewVariables();
+        $this->initNavigation();
         $this->view->addHelperPath(APPLICATION_PATH . '/views/helpers/', 'Default_Helper');
     }
 
@@ -74,7 +75,7 @@ class Controller_Default extends Zend_Controller_Action {
     }
 
     private function initViewVariables() {
-        
+
         $this->view->username = $this->loggedEmployee->getUsername();
         $this->view->balance = $this->loggedEmployee->getBalance();
         $this->view->role = $this->loggedUserRole;
@@ -92,5 +93,102 @@ class Controller_Default extends Zend_Controller_Action {
         else {
             $this->view->superiorEmployeeBalance = null;
         }
+    }
+
+    private function initNavigation()
+    {
+        $nav = array();
+
+        $user = User::getLoggedUser();
+
+
+        // zamestnanec
+        $nav = array_merge($nav, array(
+    array(
+        'controller' => 'index',
+        'label' => 'Home',
+        'pages' => array(
+                array(
+                'controller' => 'orders',
+                'action' => 'employee',
+                'label' => 'Moje objednávky',
+                ),
+                array(
+                'controller' => 'index',
+                'action' => 'catalog',
+                'label' => 'Seznam zboží',
+                ),
+            ),
+        )));
+
+        if ($user->hasRole(UserRole::ROLE_WAREHOUSEKEEPER)) {
+        $nav = array_merge($nav, array(
+        array(
+            'controller' => 'warehouse',
+            'label' => 'Sklad',
+            'pages' => array(
+                array(
+                    'controller' => 'warehouse',
+                    'action' => 'index',
+                    'label' => 'Katalog',
+                    ),
+                array(
+                    'controller' => 'warehouse',
+                    'action' => 'edit',
+                    'label' => 'Nový produkt',
+                    ),
+                ),
+            )));
+        }
+
+        if ($this->loggedSuperiorEmployee) {
+            $nav = array_merge($nav, array(array(
+                'controller' => 'performance-credits-admin',
+                'label' => 'Přidělit výkonové body'
+                )
+            ));
+        }
+
+        if ($this->loggedPersonnelOfficer) {
+            $nav = array_merge($nav, array(array(
+                'controller' => 'extra-credits-admin',
+                'label' => 'Přidělit mimořádné body'
+                )
+            ));
+        }
+        
+
+                /*
+    array(
+        'module' => 'admin',
+        'label' => 'Administration',
+        'resource' => 'admin',
+        'privilege' => 'index',
+        'pages' => array(
+            array(
+                'module' => 'admin',
+                'controller' => 'adduser',
+                'label' => 'Add User',
+                'resource' => 'admin',
+                'privilege' => 'adduser',
+                ),
+            array(
+                'module' => 'admin',
+                'controller' => 'addpage',
+                'label' => 'Add Page',
+                'resource' => 'admin',
+                'privilege' => 'addpage',
+                ),
+            ),
+        )
+    );
+        */
+        $navigation = new Zend_Navigation();
+        $navigation->setPages($nav);
+
+        $this->view->navigation($navigation);
+
+        $activeNav = $this->view->navigation()->findByController($this->getRequest()->getControllerName());
+		@$activeNav->active = true;
     }
 }

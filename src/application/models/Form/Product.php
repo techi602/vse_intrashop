@@ -2,8 +2,22 @@
 
 class Form_Product extends Bootstrap_Form
 {
-    public function prepare(Product $product)
+    /**
+     *
+     * @var Product
+     */
+    
+    private $product;
+    
+    public function setProduct(Product $product)
     {
+        $this->product = $product;
+    }
+    
+    public function prepare()
+    {
+        $product = $this->product;
+        
         $this->addDecorator(new Zend_Form_Decorator_Fieldset());
         $this->setLegend('Produkt');
         $this->setMethod(self::METHOD_POST);
@@ -35,6 +49,20 @@ class Form_Product extends Bootstrap_Form
             'label' => 'Obrázek',
         )));
         
+        $checkedCategories = array();
+        
+        if ($product) {
+            foreach ($product->getCategories() as $category) {
+                $checkedCategories[] = $category->getId();
+            }
+        }
+        
+        $this->addElement($this->createElement('MultiCheckbox', 'categories', array(
+            'label' => 'Kategorie',
+            'multiOptions' => $this->getCategoriesCodebook(),
+            'value' => $checkedCategories
+        )));
+        
         
         $this->addElement($this->createElement('text', 'price', array(
             'label' => 'Cena',
@@ -48,14 +76,23 @@ class Form_Product extends Bootstrap_Form
             'validators' => array(new Zend_Validate_Int(), new Zend_Validate_GreaterThan(0))
         )));
         
-        foreach ($product->getVariants() as $variantId => $variant) {
-            $subform = new Zend_Form_SubForm();
-            
-            $subform->setLegend('Varianta');
-            $subform->createElement('text', 'name');
-            
-            //$this->addSubForm($subform, 'variant' . $variantId);
+        if ($product) {
+
+            foreach ($product->getVariants() as $variantId => $variant) {
+                $subform = new Zend_Form_SubForm();
+
+                $subform->setLegend('Varianta');
+                $subform->createElement('text', 'name');
+
+                //$this->addSubForm($subform, 'variant' . $variantId);
+            }
+
         }
+        
+        $this->addElement($this->createElement('checkbox', 'has_multiple_variants', array(
+            'label' => 'Více variant',
+            'description' => 'Produkt má více variant'
+        )));
         
         $this->addElement($this->createElement('submit', 'button-submit', array(
             'label' => 'Uložit',
@@ -82,6 +119,11 @@ class Form_Product extends Bootstrap_Form
             'label' => 'Zrušit',
             'class' => 'btn'
         )));
+    }
+    
+    private function getCategoriesCodebook()
+    {
+          return EntityManager::getInstance()->getRepository('Category')->fetchToCodebook();
     }
 }
         

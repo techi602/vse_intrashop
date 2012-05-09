@@ -24,6 +24,15 @@ class OrdersController extends Controller_Default
         }
     }
 
+    public function employeeAction()
+    {
+        $orderList = $this->ordersService->getUserOrderList($this->loggedEmployee->getId());
+        $this->view->userOrderList = $orderList;
+        $this->view->warehouseKeeperOrderList = null;
+
+        $this->_helper->ViewRenderer->render('index');
+    }
+
 	public function detailAction() {
 		//TODO: řešit jestli to je jeho nebo ne (tzn. bud je warehouse keeper, nebo je ta objednávka jeho)
 		$orderId = $this->getRequest()->getParam('id');
@@ -41,5 +50,20 @@ class OrdersController extends Controller_Default
 
     public function addCancelNote() {
         //TODO
+    }
+
+    public function editAction()
+    {
+        $id = $this->_getParam('id');
+
+        if (empty($id)) {
+            throw new InvalidArgumentException("Order ID is missing");
+        }
+
+        $order = $this->em->find('Order', $id);
+
+        $this->view->headTitle('Objedánávka ' . $order->getOrderId());
+
+        $this->view->order = $order;
     }
 }

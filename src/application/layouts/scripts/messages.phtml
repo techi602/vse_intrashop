@@ -1,0 +1,14 @@
+  <?php if ($this->layout()->info): ?>
+            <ul class="unstyled"  style="border: 1px solid; border-color: lightblue">
+            <?php foreach ($this->layout()->info as $info): ?>
+            
+            <li>
+            <i class="icon-info-sign"></i>
+            
+            <?php echo $this->escape($info) ?>
+            
+            </li>
+
+            <?php endforeach ?>
+                </ul>
+            <?php endif ?>

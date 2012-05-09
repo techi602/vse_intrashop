@@ -10,7 +10,7 @@ class Service_User
         $this->em = $em;
     }
  
-    public function getEmployee($id, $desiredRole = null)
+    public function getUser($id, $desiredRole = null)
     {
         if (is_null($desiredRole)) {
             $entity = 'Employee';

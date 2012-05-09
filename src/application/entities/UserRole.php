@@ -14,6 +14,7 @@ class UserRole {
     
     const ROLE_PERSONNELOFFICER = 'personal_officer';
     
+    const ROLE_SALESMAN = 'salesman';
     /**
      * @Id
      * @GeneratedValue

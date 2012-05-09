@@ -21,6 +21,14 @@ class Order
     protected $inserted;
     
     /**
+     * Datum změny stavu
+     * 
+     * @Column(type="datetime",nullable=true)
+     * @var DateTime
+     */
+    protected $statusChanged;
+    
+    /**
      * @Column(type="integer")
      * @var integer
      */
@@ -118,7 +126,20 @@ class Order
     public function setNote($note) {
         $this->note = $note;
     }
+    
+    public function getStatusChanged() {
+        return $this->statusChanged;
+    }
 
+    public function setStatusChanged($statusChanged) {
+        $this->statusChanged = $statusChanged;
+    }
+
+    public function getOrderId()
+    {
+        return str_pad($this->id, 5, '0', STR_PAD_LEFT) . '/' . $this->inserted->format('Y');
+    }
+    
         /**
      *
      * @return integer
