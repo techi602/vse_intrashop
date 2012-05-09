@@ -1,8 +1,8 @@
-<table class="table" id="catalog">
+<table class="tablesorter table" id="catalog">
     <thead>
         <tr>
-            <th>Kód</th>
-            <th>Název</th>
+            <th>Kod</th>
+            <th>Nazev</th>
             <th>Cena</th>
             <th>Akce</th>
         </tr>
@@ -23,3 +23,13 @@ Upravit</a></td>
     </tbody>
     
 </table>
+
+<script type="text/javascript">
+    
+    $(document).ready(function() { 
+    $("table").tablesorter({ 
+        sortList: [[0,0]] 
+    }); 
+}); 
+    
+    </script>
