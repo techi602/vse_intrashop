@@ -187,16 +187,33 @@ class Service_Import
         $role2->setName("Správce skladu");
         $role2->setRole(UserRole::ROLE_WAREHOUSEKEEPER);
         $em->persist($role2);
+        
+        $boss = new SuperiorEmployee();
+        $boss->setName("Johan Opršálek");
+        $boss->setEmail("johan@intrashop");
+        $boss->setUsername("johan");
+        $boss->setEmployedSince(new DateTime("1990-05-06"));
+        $boss->setBalance(65655);
+        $boss->setEmployed(true);
+        $boss->setRoles(array($role1, $role2));
+        $em->persist($boss);
+        
+        $dpt1 = new Department();
+        $dpt1->setName("Nákup");
+        $dpt1->setBoss($boss);
+        $em->persist($dpt1);
 
         $janNovakEmployee = new PersonnelOfficer();
         $janNovakEmployee->setName('Jan Novák');
-        $janNovakEmployee->setEmail("jan.novak@localhost");
+        $janNovakEmployee->setEmail("jan.novak@intrashop");
         $janNovakEmployee->setEmployedSince(new DateTime("2000-03-01"));
         $janNovakEmployee->setBalance(5000);
         $janNovakEmployee->setUsername('jan.novak');
         $janNovakEmployee->setEmployed(true);
         $janNovakEmployee->setPersonnelOfficerBalance(70000);
         $janNovakEmployee->setRoles(array($role1, $role2));
+        $janNovakEmployee->setDepartment($dpt1);
+        
         $em->persist($janNovakEmployee);
 
         $status1 = new OrderStatus();

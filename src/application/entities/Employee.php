@@ -94,6 +94,15 @@ class Employee
     
     
     /**
+     * @ManyToOne(targetEntity="Department")
+     * @JoinColumn(name="department_id", referencedColumnName="id",nullable=true)
+     * @var Department
+     */
+    
+    protected $department;
+    
+    
+    /**
      * @var array
      * @ManyToMany(targetEntity="UserRole")
      * @JoinTable(name="employee_roles",
@@ -115,8 +124,15 @@ class Employee
     public function setName($name) {
         $this->name = $name;
     }
+    public function getDepartment() {
+        return $this->department;
+    }
 
-    public function getEmployedSince() {
+    public function setDepartment($department) {
+        $this->department = $department;
+    }
+
+        public function getEmployedSince() {
         return $this->employedSince;
     }
 
