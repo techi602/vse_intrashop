@@ -31,20 +31,33 @@ class Controller_Plugin_Auth extends Zend_Controller_Plugin_Abstract
             return;
         }
         
+        $realm = 'intrashop';
+        
+       if ($request->getParam('logoff')) {
+            if (Zend_Auth::getInstance()->hasIdentity()) {
+                Zend_Auth::getInstance()->clearIdentity();
+                header("HTTP/1.0 401 Authorization Required");
+                header('WWW-Authenticate: Basic realm="' . $realm . '"');
+                exit;
+            } else {
+                header("Location:http://" . $_SERVER['HTTP_HOST'] . dirname($_SERVER['SCRIPT_NAME']));
+                exit;
+            }
+        }
+        
         $adapter = new Zend_Auth_Adapter_Http(array(
                     'accept_schemes' => 'basic',
-                    'realm' => 'intrashop',
+                    'realm' => $realm,
                     'nonce_timeout' => 3600,
                 ));
         $adapter->setBasicResolver(new IntraShopAuthResolver());
         $adapter->setRequest($this->getRequest());
         $adapter->setResponse($this->getResponse());
-
+        
         $result = Zend_Auth::getInstance()->authenticate($adapter);
         
         if (!$result->isValid()) {
             $this->getResponse()->setBody("401 Unauthorized")->sendResponse();
-            //Zend_Controller_Front::getInstance();
         }
     }
 }
