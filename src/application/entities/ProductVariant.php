@@ -15,7 +15,7 @@ class ProductVariant {
     protected $id;
     
     /**
-     * @Column(type="string")
+     * @Column(type="string",nullable=true)
      * @var string
      */
     protected $name;
@@ -54,7 +54,7 @@ class ProductVariant {
 
     /**
      * @ManyToOne(targetEntity="ProductAvailability")
-     * @JoinColumn(name="availability_id",referencedColumnName="id",nullable=false)
+     * @JoinColumn(name="availability_id",referencedColumnName="id",nullable=true)
      * @var ProductAvailability
      */
    

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @Entity
+ * @Entity(repositoryClass="Repository_ProductColor")
  * @Table(name="product_colors")
  */
 class ProductColor {

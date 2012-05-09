@@ -19,7 +19,7 @@ class Form_Product extends Bootstrap_Form
         $product = $this->product;
         
         $this->addDecorator(new Zend_Form_Decorator_Fieldset());
-        $this->setLegend('Produkt');
+        $this->setLegend('Produkt ' . $product->getName());
         $this->setMethod(self::METHOD_POST);
         $this->setEnctype(self::ENCTYPE_MULTIPART);
         
@@ -76,23 +76,56 @@ class Form_Product extends Bootstrap_Form
             'validators' => array(new Zend_Validate_Int(), new Zend_Validate_GreaterThan(0))
         )));
         
-        if ($product) {
-
-            foreach ($product->getVariants() as $variantId => $variant) {
-                $subform = new Zend_Form_SubForm();
-
-                $subform->setLegend('Varianta');
-                $subform->createElement('text', 'name');
-
-                //$this->addSubForm($subform, 'variant' . $variantId);
-            }
-
-        }
-        
-        $this->addElement($this->createElement('checkbox', 'has_multiple_variants', array(
+        $this->addElement($this->createElement('checkbox', 'hasMultipleVariants', array(
             'label' => 'Více variant',
             'description' => 'Produkt má více variant'
         )));
+        
+        if ($product) {
+
+            foreach ($product->getVariants() as $variant) {
+                
+                $variantId = $variant->getId();
+                $group = array();
+
+                $name = "variant{$variantId}_name";
+                $this->addElement(new Zend_Form_Element_Text($name, array(
+                            'label' => 'Název varianty',
+                            'value' => $variant->getName(),
+                            'required' => true
+                        )));
+                $group[] = $name;
+
+                $name = "variant{$variantId}_quantity";
+                $this->addElement(new Zend_Form_Element_Text($name, array(
+                            'label' => 'Skladem',
+                            'value' => $variant->getQuantity(),
+                            'required' => true,
+                            'validators' => array('Int')
+                        )));
+                $group[] = $name;
+
+                $name = "variant{$variantId}_color";
+                $this->addElement(new Zend_Form_Element_Select($name, array(
+                            'label' => 'Barva',
+                            'value' => $variant->getColor() ? $variant->getColor()->getId() : null,
+                            'multiOptions' => array(' -- nevybráno -- ') + $this->getColorsCodebook(),
+                        )));
+                $group[] = $name;
+
+                $name = "variant{$variantId}_size";
+                $this->addElement(new Zend_Form_Element_Select($name, array(
+                            'label' => 'Velikost',
+                            'value' => $variant->getSize() ? $variant->getSize()->getId() : null,
+                            'multiOptions' => array(' -- nevybráno -- ') + $this->getSizesCodebook(),
+                        )));
+                $group[] = $name;
+
+
+                $this->addDisplayGroup($group, "Varianta$variantId", array('legend' => $variant->getName()));
+            }
+
+        }
         
         $this->addElement($this->createElement('submit', 'button-submit', array(
             'label' => 'Uložit',
@@ -108,6 +141,11 @@ class Form_Product extends Bootstrap_Form
             'label' => 'Uložit a přejít na detail',
             'class' => 'btn btn-primary'
         )));
+        
+        $this->addElement($this->createElement('submit', 'button-variant', array(
+            'label' => 'Uložit a přidat variantu',
+            'class' => 'btn btn-primary'
+        )));
 
         $this->addElement($this->createElement('submit', 'button-delete', array(
             'label' => 'Smazat',
@@ -119,6 +157,16 @@ class Form_Product extends Bootstrap_Form
             'label' => 'Zrušit',
             'class' => 'btn'
         )));
+    }
+    
+    private function getColorsCodebook()
+    {
+        return EntityManager::getInstance()->getRepository('ProductColor')->fetchToCodebook();
+    }
+    
+    private function getSizesCodebook()
+    {
+        return EntityManager::getInstance()->getRepository('ProductSize')->fetchToCodebook();
     }
     
     private function getCategoriesCodebook()

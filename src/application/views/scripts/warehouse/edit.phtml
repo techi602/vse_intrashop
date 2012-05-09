@@ -1,0 +1,4 @@
+<?php if ($this->product->getPicture()): ?>
+<img src="<?php echo $this->pictureUri($this->product->getPicture()) ?>" width="200" alt="" align="right" />
+<?php endif ?>
+<?php echo $this->form ?>

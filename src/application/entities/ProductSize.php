@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @Entity
+ * @Entity(repositoryClass="Repository_ProductSize")
  * @Table(name="product_sizes")
  */
 class ProductSize {
