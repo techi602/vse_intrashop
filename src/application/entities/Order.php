@@ -71,12 +71,24 @@ class Order
     
     protected $status;
  
+    /**
+     * @Column(type="string",nullable=true)
+     * @var string
+     */
+    protected $stornoReason;
     
     public function getInserted() {
         return $this->inserted;
     }
+    public function getStornoReason() {
+        return $this->stornoReason;
+    }
 
-    public function setInserted($inserted) {
+    public function setStornoReason($stornoReason) {
+        $this->stornoReason = $stornoReason;
+    }
+
+        public function setInserted($inserted) {
         $this->inserted = $inserted;
     }
 

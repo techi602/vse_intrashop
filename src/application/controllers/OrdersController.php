@@ -34,23 +34,32 @@ class OrdersController extends Controller_Default
     }
 
 	public function detailAction() {
-		//TODO: řešit jestli to je jeho nebo ne (tzn. bud je warehouse keeper, nebo je ta objednávka jeho)
-		$orderId = $this->getRequest()->getParam('id');
-		$this->view->order = $this->ordersService->getOrderInfo($orderId);
+
+        $orderId = $this->getRequest()->getParam('id');
+
+        //TODO: řešit jestli to je jeho nebo ne (tzn. bud je warehouse keeper, nebo je ta objednávka jeho)
+
+        $this->view->order = $this->ordersService->getOrderInfo($orderId);
         $this->view->warehouseKeeperView = !!$this->loggedWarehouseKeeper;
-	}
-
-
-	public function cancelAction() {
-		//TODO: řešit jestli to je jeho nebo ne
-		$orderId = $this->getRequest()->getParam('id');
-		$this->ordersService->cancelOrder($orderId);
-		$this->_helper->redirector->goto('index');
-	}
-
-    public function addCancelNote() {
-        //TODO
     }
+
+    public function cancelAction() {
+        //TODO: řešit jestli to je jeho nebo ne
+        $orderId = $this->getRequest()->getParam('id');
+        $order = $this->ordersService->getOrderInfo($orderId);
+        
+        
+        if ($this->_getParam('cancel')) {
+            $this->ordersService->cancelOrder($orderId, $this->_getParam('reason'));
+            $this->addInfoMessage("Objednávka " . $order['customOrderId'] . ' byla stornována');
+            $this->_helper->redirector->goto('detail', null, null, array('id' => $orderId));
+        } if ($this->_getParam('back')) {
+            $this->_helper->redirector->goto('detail', null, null, array('id' => $orderId));
+        }
+        
+        $this->view->order = $order;
+    }
+
 
     public function editAction()
     {

@@ -1,0 +1,9 @@
+<h1>Storno objednávky <?php echo $this->order['customOrderId'] ?></h1>
+
+<form method="post">
+    <label>Důvod storna</label>
+    <textarea name="reason" cols="60" rows="3"></textarea>
+    <br style="clear: both">
+    <input type="submit" name="cancel" class="btn btn-danger" value="Stornovat" onclick="return confirm('Opravdu stornovat?')">
+    <input type="submit" name="back" class="btn btn-inverse" value="Zpět">
+</form>

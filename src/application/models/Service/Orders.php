@@ -61,7 +61,7 @@ class Service_Orders
                 'orderCredits' => $order->getCredits(),
                 'orderStatusName' => $order->getStatus()->getName(),
                 'orderId' => $order->getId(),
-				'orderCancellable' => $order->isCancellable(),
+                'orderCancellable' => $order->isCancellable(),
                 'orderEmployeeName' => $order->getEmployee()->getName()
             );
         }
@@ -73,26 +73,32 @@ class Service_Orders
 		$order = $this->em->find('Order', $orderId);
 
 		return array(
+                        'customOrderId' => $order->getOrderId(),
 			'productName' => $order->getProductVariant()->getProduct()->getName(),
 			'productDescription' => $order->getProductVariant()->getProduct()->getDescription(),
 			'orderInserted' => $order->getInserted(),
+                        'statusChanged' => $order->getStatusChanged(),
 			'orderCredits' => $order->getCredits(),
 			'orderStatusName' => $order->getStatus()->getName(),
 			'orderId' => $order->getId(),
 			'employeeName' => $order->getEmployee()->getName(),
 			'orderAmount' => $order->getAmount(),
-			'orderCancellable' => $order->isCancellable()
+			'orderCancellable' => $order->isCancellable(),
+                        'stornoReason' => $order->getStornoReason()
 		);
-		die();
 	}
 
-	public function cancelOrder($orderId) {
+	public function cancelOrder($orderId, $reason = null) {
 		$order = $this->em->find('Order', $orderId);
 
 		if ($order->getStatus()->getCode() !== OrderStatus::STATUS_NEW) {
-			throw new \Exception();
+			throw new \Exception("Objednavku nelze stornoat");
 		}
+                
+                $model = new Service_Order($this->em);
+                $model->stornoOrder($order, $reason);
 
+                /*
 		$employee = $order->getEmployee();
 		$canceledOrderStatus = $this->em->getRepository('OrderStatus')->findOneBy(array('code' => OrderStatus::STATUS_STORNO));
 
@@ -103,6 +109,8 @@ class Service_Orders
 		$employee->setBalance($employee->getBalance() + $orderCredits);
 		$productVariant->setQuantity($productVariant->getQuantity() + $productVariantOrderedAmount);
 		$order->setStatus($canceledOrderStatus);
+                $order->setStatusChanged(new DateTime());
+                $order->setStornoReason($reason);
 
 		$this->em->beginTransaction();
 		$this->em->persist($employee);
@@ -111,5 +119,7 @@ class Service_Orders
 		$this->em->commit();
 	
 		$this->em->flush();
+                 * 
+                 */
 	}
 }

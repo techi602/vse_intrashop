@@ -1,46 +1,57 @@
-<?
-    $orderList = $this->userOrderList ?: $this->warehouseKeeperOrderList;
-?>
+<?php $orderList = $this->userOrderList ?: $this->warehouseKeeperOrderList; ?>
 
 <h1>Objednávky</h1>
 
-<table class="table">
-<tr>
+<table class="tablesorter">
+<thead>
+    <tr>
     <th>Zboží</th>
-    <? if ($this->warehouseKeeperOrderList) { ?>
+    <?php if ($this->warehouseKeeperOrderList) { ?>
     <th>Zaměstnanec</th>
-    <? } ?>
+    <?php } ?>
     <th>Datum objednání</th>
     <th>Cena v bodech</th>
     <th>Stav objednávky</th>
     <th>Akce</th>
 </tr>
+</thead>
+<tbody>
 
-<? if ($orderList) { ?>
-<? foreach($orderList as $order) { ?>
+<?php if ($orderList) { ?>
+<?php foreach($orderList as $order) { ?>
 <tr>
     <td>
-        <a href="./orders/detail?id=<?=$order['orderId'];?>"> <?//TODO: ta adresa ne tak natvrdo tady?>
-            <?=$this->escape($order['productName']);?>
-        </a>
+         <?=$this->escape($order['productName']);?>
     </td>
-    <? if ($this->warehouseKeeperOrderList) { ?>
-    <td><?=$this->escape($order['orderEmployeeName']);?></td>
-    <? } ?>
-    <td><?=($order['orderInserted']->format('d.m.y'));?></td>
-    <td><?=$this->escape($order['orderCredits']);?></td>
-    <td><?=$this->escape($order['orderStatusName']);?></td>
+    <?php if ($this->warehouseKeeperOrderList): ?>
+    <td><?= $this->escape($order['orderEmployeeName']);?></td>
+    <?php endif ?>
+    <td><?= $order['orderInserted']->format('d.m.y H:i');?></td>
+    <td><?= $this->escape($order['orderCredits']);?></td>
+    <td><?= $this->escape($order['orderStatusName']);?></td>
     <td>
-		<? if ($order['orderCancellable']) { ?>
-        <a href="./orders/detail?id=<?=$order['orderId'];?>" class="btn btn-danger">Storno</a> <?//TODO: ta adresa ne tak natvrdo tady?>
-		<? } ?>
-        <a class="btn" href="<?php echo $this->url(array('action' => 'edit', 'id' => $order['orderId'])) ?>"><i class="icon-edit"></i> Detail</a>
+		<?php if ($order['orderCancellable']): ?>
+        <a href="<?php echo $this->url(array('action' => 'cancel', 'id' => $order['orderId'])) ?>" class="btn btn-danger">Storno</a>
+		<?php endif ?>
+        <a class="btn" href="<?php echo $this->url(array('action' => 'detail', 'id' => $order['orderId'])) ?>"><i class="icon-edit"></i> Detail</a>
     </td>
 </tr>
-<? } ?>
-<? } else { ?>
+<?php } ?>
+<?php } else { ?>
 <tr>
     <td style="font-style:italic" colspan="<?=$this->userOrderList? 6 : 5 ?>">Žádné objednávky.</td>
 </tr>
-<? } ?>
+<?php } ?>
+</tbody>
 </table>
+
+
+<script type="text/javascript">
+    
+    $(document).ready(function() { 
+    $("table").tablesorter({ 
+        sortList: [[0,0]] 
+    }); 
+}); 
+    
+    </script>

@@ -76,21 +76,24 @@ class Service_Order
     /**
      * Stornuje obednavku a pricte body zpet na ucet zamestnance
      * 
-     * @param Order $order 
+     * @param Order $order
+     * @param string $reason duvod zamitnuti
      */
     
-    public function stornoOrder(Order $order)
+    public function stornoOrder(Order $order, $reason = null)
     {
         $this->em->beginTransaction();
         
         $order->setStatus($this->em->getRepository('OrderStatus')->findOneBy(array('code' => OrderStatus::STATUS_STORNO)));
-        $this->em->persist($order);
+        $order->setStatusChanged(new DateTime());
+        $order->setStornoReason($reason);
         
         $employee = $order->getEmployee();
         $balance = $employee->getBalance();
         $balance += $order->getCredits();
         $employee->setBalance($balance);
         
+        $this->em->persist($order);
         $this->em->persist($employee);
         $this->em->flush();
         $this->em->commit();
