@@ -49,6 +49,11 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     {
         require 'Doctrine/ORM/Tools/Setup.php';
         
+        if (APPLICATION_ENV != "development") {
+            // hosting hack
+            error_reporting(E_ERROR | E_COMPILE_ERROR | E_CORE_ERROR | E_RECOVERABLE_ERROR);
+        }
+        
         // Setup Autoloader (1)
         \Doctrine\ORM\Tools\Setup::registerAutoloadPEAR();
         
@@ -64,7 +69,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $config->setProxyDir(__DIR__ . '/proxies');
         $config->setProxyNamespace('Proxies');
         
-        $config->setAutoGenerateProxyClasses((APPLICATION_ENV == "development"));
+        $config->setAutoGenerateProxyClasses(true);
         
         // Driver (4)
         $driverImpl = $config->newDefaultAnnotationDriver(APPLICATION_PATH . '/entities');
