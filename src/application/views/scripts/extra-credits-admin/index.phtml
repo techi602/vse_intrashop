@@ -8,7 +8,7 @@
 <? foreach ($this->employeeList as $employee) { ?>
 <tr>
     <td><a href="extra-credits-admin/add?userId=<?=$employee['employeeId'];?>"><?=$this->escape($employee['employeeName']);?></a></th>
-    <td>TODO</td>
+    <td><?=$employee['departmentName'];?></td>
 </tr>
 <? } ?>
 </table>

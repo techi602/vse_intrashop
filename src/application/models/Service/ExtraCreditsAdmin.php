@@ -14,8 +14,9 @@ class Service_ExtraCreditsAdmin
     public function getEmployeeList()
     {
         $query = $this->em->createQuery("
-            SELECT e
+            SELECT e, d
             FROM Employee e
+            JOIN e.department d
         ");
 
         $employees = array();
@@ -23,7 +24,8 @@ class Service_ExtraCreditsAdmin
         foreach ($query->getArrayResult() as $employee) {
             $employees[] = array(
                 'employeeName' => $employee['name'],
-                'employeeId' => $employee['id']
+                'employeeId' => $employee['id'],
+                'departmentName' => $employee['department']['name']
             );
         }
 
