@@ -9,6 +9,7 @@
  */
 class Employee
 {
+
     /**
      * @var integer
      * @Id
@@ -16,40 +17,36 @@ class Employee
      * @Column(type="integer")
      */
     protected $id;
-    
+
     /**
      * @var string
      * @Column(type="string")
-     */ 
+     */
     protected $name;
-    
 
     /**
      * Prihhlašovací uživatelské jméno
      * 
      * @var string
      * @Column(type="string")
-     */ 
-
+     */
     protected $username;
-    
+
     /**
      * Je zaměstnán = může objendávat
      * 
      * @Column(type="boolean")
      * @var boolean
      */
-    
     protected $employed;
-    
+
     /**
      *
      * @var string
      * @Column(type="string")
      */
-    
     protected $email;
-    
+
     /**
      * Datum nástupu
      * 
@@ -57,7 +54,7 @@ class Employee
      * @Column(type="date",name="employed_since")
      */
     protected $employedSince;
-    
+
     /**
      * Počet bodů na účtě
      * 
@@ -65,16 +62,15 @@ class Employee
      * @var integer
      */
     protected $balance;
-    
+
     /**
      * Datum propouštění
      * 
      * @Column(type="date",nullable=true)
      * @var DateTime 
      */
-    
     protected $dismissal;
-    
+
     /**
      * Nadřízený zaměstnanec
      * 
@@ -82,26 +78,21 @@ class Employee
      * @OneToOne(targetEntity="SuperiorEmployee")
      * @JoinToColumn(name="superior_id",referencedColumnName="id")
      */
-    
     protected $superiorEmployee;
-    
+
     /**
      * @OneToMany(targetEntity="Order", mappedBy="order")
      * @var array
-     **/
-    
+     * */
     protected $orders;
-    
-    
+
     /**
      * @ManyToOne(targetEntity="Department")
      * @JoinColumn(name="department_id", referencedColumnName="id",nullable=true)
      * @var Department
      */
-    
     protected $department;
-    
-    
+
     /**
      * @var array
      * @ManyToMany(targetEntity="UserRole")
@@ -111,102 +102,128 @@ class Employee
      *      )
      * */
     protected $roles;
-    
-    public function __construct() {
+
+    public function __construct()
+    {
         $this->orders = new \Doctrine\Common\Collections\ArrayCollection();
         $this->roles = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
-    public function getName() {
+
+    public function getName()
+    {
         return $this->name;
     }
 
-    public function setName($name) {
+    public function setName($name)
+    {
         $this->name = $name;
     }
-    public function getDepartment() {
+
+    public function getDepartment()
+    {
         return $this->department;
     }
 
-    public function setDepartment($department) {
+    public function setDepartment($department)
+    {
         $this->department = $department;
     }
 
-        public function getEmployedSince() {
+    public function getEmployedSince()
+    {
         return $this->employedSince;
     }
 
-    public function setEmployedSince($employedSince) {
+    public function setEmployedSince($employedSince)
+    {
         $this->employedSince = $employedSince;
     }
 
-    public function getBalance() {
+    public function getBalance()
+    {
         return $this->balance;
     }
 
-    public function setBalance($balance) {
+    public function setBalance($balance)
+    {
         $this->balance = $balance;
     }
 
-    public function getOrders() {
+    public function getOrders()
+    {
         return $this->orders;
     }
 
-    public function setOrders($orders) {
+    public function setOrders($orders)
+    {
         $this->orders = $orders;
     }
-    public function getSuperiorEmployee() {
+
+    public function getSuperiorEmployee()
+    {
         return $this->superiorEmployee;
     }
 
-    public function setSuperiorEmployee($superiorEmployee) {
+    public function setSuperiorEmployee($superiorEmployee)
+    {
         $this->superiorEmployee = $superiorEmployee;
     }
 
-    public function getEmail() {
+    public function getEmail()
+    {
         return $this->email;
     }
 
-    public function setEmail($email) {
+    public function setEmail($email)
+    {
         $this->email = $email;
     }
-    public function getUsername() {
+
+    public function getUsername()
+    {
         return $this->username;
     }
 
-    public function setUsername($username) {
+    public function setUsername($username)
+    {
         $this->username = $username;
     }
 
-    public function getEmployed() {
+    public function getEmployed()
+    {
         return $this->employed;
     }
 
-    public function setEmployed($employed) {
+    public function setEmployed($employed)
+    {
         $this->employed = $employed;
     }
-    public function getDismissal() {
+
+    public function getDismissal()
+    {
         return $this->dismissal;
     }
 
-    public function setDismissal($dismissal) {
+    public function setDismissal($dismissal)
+    {
         $this->dismissal = $dismissal;
     }
-    
-    public function getRoles() {
+
+    public function getRoles()
+    {
         return $this->roles;
     }
 
-    public function setRoles($roles) {
+    public function setRoles($roles)
+    {
         $this->roles = $roles;
     }
-    
+
     /**
      *
      * @param string $role
      * @return boolean 
      */
-    
     public function hasRole($role)
     {
         foreach ($this->roles as $xrole) {
@@ -214,17 +231,17 @@ class Employee
                 return true;
             }
         }
-        
+
         return false;
     }
-    
+
     /**
      *
      * @return integer
      */
-
     public function getId()
     {
         return $this->id;
     }
+
 }

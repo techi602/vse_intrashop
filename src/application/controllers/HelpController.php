@@ -12,5 +12,6 @@ class HelpController extends Zend_Controller_Action
     {
         
     }
+
 }
 

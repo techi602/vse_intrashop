@@ -2,6 +2,7 @@
 
 class Service_User
 {
+
     /** @var Doctrine\ORM\EntityManager */
     private $em;
 
@@ -9,7 +10,7 @@ class Service_User
     {
         $this->em = $em;
     }
- 
+
     public function getUser($id, $desiredRole = null)
     {
         if (is_null($desiredRole)) {
@@ -19,28 +20,29 @@ class Service_User
                 case UserRole::ROLE_SUPERIOR:
                     $entity = 'SuperiorEmployee';
                     break;
-                
+
                 case UserRole::ROLE_PERSONNELOFFICER:
                     $entity = 'PersonnelOfficer';
                     break;
-                
+
                 case UserRole::ROLE_WAREHOUSEKEEPER:
                     $entity = 'WarehouseKeeper';
                     break;
-                
+
                 default:
                     $entity = 'Employee';
             }
         }
-        
+
         $user = $this->em->find($entity, $identifier);
-        
+
         if (!is_null($user) && !is_null($desiredRole)) {
             if (!$user->hasRole($desiredRole)) {
                 throw new Exception("User {" . $user->getName() . "} has not assigned $desiredRole role");
             }
         }
-        
+
         return $user;
     }
+
 }

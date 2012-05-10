@@ -4,12 +4,13 @@
  * @Entity
  * @Table(name="order_statuses")
  */
-class OrderStatus {
-    
+class OrderStatus
+{
+
     const STATUS_NEW = 'New';
     const STATUS_STORNO = 'Storno';
     const STATUS_CONFIRMED = 'Confirmed';
-    
+
     /**
      * @Id
      * @GeneratedValue
@@ -17,45 +18,46 @@ class OrderStatus {
      * @var integer
      */
     protected $id;
-    
+
     /**
      * @Column(type="string")
      * @var string
      */
-    
     protected $code;
-    
+
     /**
      * @Column(type="string")
      * @var string
      */
     protected $name;
-    
-    
-    public function getName() {
+
+    public function getName()
+    {
         return $this->name;
     }
 
-    public function setName($name) {
+    public function setName($name)
+    {
         $this->name = $name;
     }
 
-    public function getCode() {
+    public function getCode()
+    {
         return $this->code;
     }
 
-    public function setCode($code) {
+    public function setCode($code)
+    {
         $this->code = $code;
     }
 
-        
     /**
      *
      * @return integer
      */
-
     public function getId()
     {
         return $this->id;
-    }    
+    }
+
 }

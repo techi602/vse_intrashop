@@ -2,129 +2,117 @@
 
 class Controller_Plugin_MessageHandler extends Zend_Controller_Plugin_Abstract
 {
-	private static $messages = array();
 
-	public function postDispatch(Zend_Controller_Request_Abstract $request)
-	{
-		$layout = Zend_Layout::getMvcInstance();
+    private static $messages = array();
 
-		$layout->info = self::getMessages('info');
-                
-		$layout->error = self::getMessages('error');
-		$layout->warning = self::getMessages('warning');
-	}
+    public function postDispatch(Zend_Controller_Request_Abstract $request)
+    {
+        $layout = Zend_Layout::getMvcInstance();
 
+        $layout->info = self::getMessages('info');
 
-	public function dispatchLoopShutdown()
-	{
-		$flash = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger');
+        $layout->error = self::getMessages('error');
+        $layout->warning = self::getMessages('warning');
+    }
 
-		//$mess = (array)@self::$messages[$namespace] + $flash->setNamespace($namespace)->getMessages();
+    public function dispatchLoopShutdown()
+    {
+        $flash = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger');
 
-		$flash->setNamespace('info')->clearMessages();
-		$flash->setNamespace('error')->clearMessages();
-		$flash->setNamespace('warning')->clearMessages();
-	}
+        //$mess = (array)@self::$messages[$namespace] + $flash->setNamespace($namespace)->getMessages();
 
-	public static function clearMessages($namespace)
-	{
-		$flash = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger');
+        $flash->setNamespace('info')->clearMessages();
+        $flash->setNamespace('error')->clearMessages();
+        $flash->setNamespace('warning')->clearMessages();
+    }
 
-		$flash->setNamespace($namespace)->clearMessages();
-	}
+    public static function clearMessages($namespace)
+    {
+        $flash = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger');
 
+        $flash->setNamespace($namespace)->clearMessages();
+    }
 
+    /**
+     * Enter description here...
+     *
+     * @param string $namespace
+     * @return array
+     */
+    public static function getMessages($namespace)
+    {
+        $flash = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger');
 
+        $mess = (array) @self::$messages[$namespace] + $flash->setNamespace($namespace)->getMessages();
 
-	/**
-	 * Enter description here...
-	 *
-	 * @param string $namespace
-	 * @return array
-	 */
+        $flash->setNamespace($namespace)->clearMessages();
 
-	public static function getMessages($namespace)
-	{
-		$flash = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger');
+        return $mess;
+    }
 
-		$mess = (array)@self::$messages[$namespace] + $flash->setNamespace($namespace)->getMessages();
+    /**
+     * Enter description here...
+     *
+     * @param string $message
+     * @param string $namespace
+     */
+    public static function addMessage($message, $namespace)
+    {
+        if (!empty($message)) {
+            $flash = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger');
 
-		$flash->setNamespace($namespace)->clearMessages();
+            $flash->setNamespace($namespace)->addMessage($message);
 
-		return $mess;
-	}
+            if (!array_key_exists($namespace, self::$messages)) {
+                self::$messages[$namespace] = array();
+            }
 
-	/**
-	 * Enter description here...
-	 *
-	 * @param string $message
-	 * @param string $namespace
-	 */
+            self::$messages[$namespace][] = $message;
 
-	public static function addMessage($message, $namespace)
-	{
-		if (! empty($message))
-		{
-			$flash = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger');
+            /*
+              $writer = new Zend_Log_Writer_Stream('./logs/messages.log');
 
-			$flash->setNamespace($namespace)->addMessage($message);
+              $priority = Zend_Log::INFO;
 
-			if (!array_key_exists($namespace, self::$messages))
-			{
-				self::$messages[$namespace] = array();
-			}
+              if ($namespace == "error")
+              {
+              $priority = Zend_Log::ERR;
+              }
 
-			self::$messages[$namespace][] = $message;
+              $log = new Zend_Log($writer);
+              $log->log($message, $priority);
+             */
+        }
+    }
 
-                        /*
-			$writer = new Zend_Log_Writer_Stream('./logs/messages.log');
+    /**
+     * Enter description here...
+     *
+     * @param string $message
+     */
+    public static function addInfoMessage($message)
+    {
+        self::addMessage($message, 'info');
+    }
 
-                        $priority = Zend_Log::INFO;
+    /**
+     * Enter description here...
+     *
+     * @param string $message
+     */
+    public static function addErrorMessage($message)
+    {
+        self::addMessage($message, 'error');
+    }
 
-                        if ($namespace == "error")
-                        {
-                            $priority = Zend_Log::ERR;
-                        }
-
-			$log = new Zend_Log($writer);
-			$log->log($message, $priority);
-*/
-
-
-		}
-	}
-
-	/**
-	 * Enter description here...
-	 *
-	 * @param string $message
-	 */
-
-	public static function addInfoMessage($message)
-	{
-		self::addMessage($message, 'info');
-	}
-
-	/**
-	 * Enter description here...
-	 *
-	 * @param string $message
-	 */
-
-	public static function addErrorMessage($message)
-	{
-		self::addMessage($message, 'error');
-	}
-
-	/**
-	 * Enter description here...
-	 *
-	 * @param string $message
-	 */
-
-	public static function addWarningMessage($message)
-	{
-		self::addMessage($message, 'warning');
-	}
+    /**
+     * Enter description here...
+     *
+     * @param string $message
+     */
+    public static function addWarningMessage($message)
+    {
+        self::addMessage($message, 'warning');
+    }
 
 }

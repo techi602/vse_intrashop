@@ -1,17 +1,19 @@
 <?php
+
 /**
  * @Entity
  * @Table(name="orders")
  */
 class Order
 {
+
     /**
      * @Id @GeneratedValue
      * @Column(type="integer")
      * @var integer
      */
     protected $id;
-    
+
     /**
      * Datum vytvoření objednávky
      * 
@@ -19,7 +21,7 @@ class Order
      * @var DateTime
      */
     protected $inserted;
-    
+
     /**
      * Datum změny stavu
      * 
@@ -27,123 +29,139 @@ class Order
      * @var DateTime
      */
     protected $statusChanged;
-    
+
     /**
      * @Column(type="integer")
      * @var integer
      */
     protected $credits;
-    
+
     /**
      * @Column(type="integer")
      * @var type 
      */
-    
     protected $amount;
-    
+
     /**
      * @Column(type="string",nullable=true)
      * @var string
      */
-    
     protected $note;
-    
+
     /**
      * @ManyToOne(targetEntity="Employee", inversedBy="Order")
      * @JoinColumn(name="employee_id", referencedColumnName="id",nullable=false)
      * @var Employee
      */
-    
     protected $employee;
-    
+
     /**
      * @ManyToOne(targetEntity="ProductVariant")
      * @JoinColumn(name="variant_id", referencedColumnName="id",nullable=false)
      * @var ProductVariant
      */
     protected $productVariant;
-    
+
     /**
      * @ManyToOne(targetEntity="OrderStatus")
      * @JoinColumn(name="status_id", referencedColumnName="id",nullable=false)
      * @var OrderStatus
      */
-    
     protected $status;
- 
+
     /**
      * @Column(type="string",nullable=true)
      * @var string
      */
     protected $stornoReason;
-    
-    public function getInserted() {
+
+    public function getInserted()
+    {
         return $this->inserted;
     }
-    public function getStornoReason() {
+
+    public function getStornoReason()
+    {
         return $this->stornoReason;
     }
 
-    public function setStornoReason($stornoReason) {
+    public function setStornoReason($stornoReason)
+    {
         $this->stornoReason = $stornoReason;
     }
 
-        public function setInserted($inserted) {
+    public function setInserted($inserted)
+    {
         $this->inserted = $inserted;
     }
 
-    public function getCredits() {
+    public function getCredits()
+    {
         return $this->credits;
     }
 
-    public function setCredits($credits) {
+    public function setCredits($credits)
+    {
         $this->credits = $credits;
     }
 
-    public function getEmployee() {
+    public function getEmployee()
+    {
         return $this->employee;
     }
 
-    public function setEmployee($employee) {
+    public function setEmployee($employee)
+    {
         $this->employee = $employee;
     }
-    
-    public function getProductVariant() {
+
+    public function getProductVariant()
+    {
         return $this->productVariant;
     }
 
-    public function setProductVariant($productVariant) {
+    public function setProductVariant($productVariant)
+    {
         $this->productVariant = $productVariant;
     }
-    
-    public function getStatus() {
+
+    public function getStatus()
+    {
         return $this->status;
     }
 
-    public function setStatus($status) {
+    public function setStatus($status)
+    {
         $this->status = $status;
     }
-    public function getAmount() {
+
+    public function getAmount()
+    {
         return $this->amount;
     }
 
-    public function setAmount($amount) {
+    public function setAmount($amount)
+    {
         $this->amount = $amount;
     }
 
-    public function getNote() {
+    public function getNote()
+    {
         return $this->note;
     }
 
-    public function setNote($note) {
+    public function setNote($note)
+    {
         $this->note = $note;
     }
-    
-    public function getStatusChanged() {
+
+    public function getStatusChanged()
+    {
         return $this->statusChanged;
     }
 
-    public function setStatusChanged($statusChanged) {
+    public function setStatusChanged($statusChanged)
+    {
         $this->statusChanged = $statusChanged;
     }
 
@@ -151,18 +169,19 @@ class Order
     {
         return str_pad($this->id, 5, '0', STR_PAD_LEFT) . '/' . $this->inserted->format('Y');
     }
-    
-        /**
+
+    /**
      *
      * @return integer
      */
-
     public function getId()
     {
         return $this->id;
     }
 
-	public function isCancellable() {
-		return $this->getStatus()->getCode() === OrderStatus::STATUS_NEW;
-	}
+    public function isCancellable()
+    {
+        return $this->getStatus()->getCode() === OrderStatus::STATUS_NEW;
+    }
+
 }

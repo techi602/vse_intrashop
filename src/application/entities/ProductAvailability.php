@@ -4,8 +4,9 @@
  * @Entity
  * @Table(name="product_availabilities")
  */
-class ProductAvailability {
-    
+class ProductAvailability
+{
+
     /**
      * @Id
      * @GeneratedValue
@@ -13,49 +14,52 @@ class ProductAvailability {
      * @var integer
      */
     protected $id;
-    
+
     /**
      * @Column(type="string")
      * @var string
      */
     protected $name;
-    
+
     /**
      * @Column(type="integer")
      * @var type 
      */
-    
     protected $days;
-    
+
     /**
      * @Column(type="boolean")
      * @var bool
      */
-    
     protected $available;
 
-    
-    public function getName() {
+    public function getName()
+    {
         return $this->name;
     }
 
-    public function setName($name) {
+    public function setName($name)
+    {
         $this->name = $name;
     }
 
-    public function getDays() {
+    public function getDays()
+    {
         return $this->days;
     }
 
-    public function setDays($days) {
+    public function setDays($days)
+    {
         $this->days = $days;
     }
 
-    public function getAvailable() {
+    public function getAvailable()
+    {
         return $this->available;
     }
 
-    public function setAvailable($available) {
+    public function setAvailable($available)
+    {
         $this->available = $available;
     }
 
@@ -63,9 +67,9 @@ class ProductAvailability {
      *
      * @return integer
      */
-
     public function getId()
     {
         return $this->id;
     }
+
 }

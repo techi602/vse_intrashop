@@ -2,25 +2,23 @@
 
 class OrdersController extends Controller_Default
 {
+
     /** @var Service_Orders */
     private $ordersService;
 
-    public function init() {
+    public function init()
+    {
         parent::init();
         $this->ordersService = new Service_Orders($this->em);
     }
 
     public function indexAction()
     {
-        if ($this->loggedWarehouseKeeper) {
+        if (User::getLoggedUser()->hasRole(UserRole::ROLE_WAREHOUSEKEEPER)) {
             $orderList = $this->ordersService->getWarehouseKeeperOrderList();
             $this->view->warehouseKeeperOrderList = $orderList;
-            $this->view->userOrderList = null;
-        }
-        else {
-            $orderList = $this->ordersService->getUserOrderList($this->loggedEmployee->getId());
-            $this->view->userOrderList = $orderList;
-            $this->view->warehouseKeeperOrderList = null;
+        } else {
+            throw new Zend_Acl_Exception("Accedd denied :)");
         }
     }
 
@@ -33,22 +31,23 @@ class OrdersController extends Controller_Default
         $this->_helper->ViewRenderer->render('index');
     }
 
-	public function detailAction() {
+    public function detailAction()
+    {
 
         $orderId = $this->getRequest()->getParam('id');
 
         //TODO: řešit jestli to je jeho nebo ne (tzn. bud je warehouse keeper, nebo je ta objednávka jeho)
 
         $this->view->order = $this->ordersService->getOrderInfo($orderId);
-        $this->view->warehouseKeeperView = !!$this->loggedWarehouseKeeper;
     }
 
-    public function cancelAction() {
+    public function cancelAction()
+    {
         //TODO: řešit jestli to je jeho nebo ne
         $orderId = $this->getRequest()->getParam('id');
         $order = $this->ordersService->getOrderInfo($orderId);
-        
-        
+
+
         if ($this->_getParam('cancel')) {
             $this->ordersService->cancelOrder($orderId, $this->_getParam('reason'));
             $this->addInfoMessage("Objednávka " . $order['customOrderId'] . ' byla stornována');
@@ -56,10 +55,9 @@ class OrdersController extends Controller_Default
         } if ($this->_getParam('back')) {
             $this->_helper->redirector->goto('detail', null, null, array('id' => $orderId));
         }
-        
+
         $this->view->order = $order;
     }
-
 
     public function editAction()
     {
@@ -75,4 +73,5 @@ class OrdersController extends Controller_Default
 
         $this->view->order = $order;
     }
+
 }

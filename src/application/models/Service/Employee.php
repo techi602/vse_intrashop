@@ -2,6 +2,7 @@
 
 class Service_Employee
 {
+
     /** @var Doctrine\ORM\EntityManager */
     private $em;
 
@@ -23,10 +24,11 @@ class Service_Employee
 
         $employeeInfo = array(
             'employeeName' => $employee->getName(),
-			'functionName' => 'TODO',
-			'departmentName' => 'TODO'
+            'functionName' => 'TODO',
+            'departmentName' => 'TODO'
         );
 
         return $employeeInfo;
     }
+
 }

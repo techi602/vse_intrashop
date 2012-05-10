@@ -2,6 +2,7 @@
 
 class Service_Order
 {
+
     /** @var Doctrine\ORM\EntityManager */
     private $em;
 
@@ -9,7 +10,7 @@ class Service_Order
     {
         $this->em = $em;
     }
-    
+
     /**
      * Kontroluje, zda-li ma zamestnanec dostatecny pocet bodu
      * 
@@ -19,20 +20,19 @@ class Service_Order
      * @return boolean
      * @throws InvalidArgumentException 
      */
-    
     public function hasEnoughCredits(Employee $employee, Product $product, $quantity)
     {
         if (!is_numeric($quantity) || $quantity < 1) {
             throw new InvalidArgumentException('Quantity must be > 0');
         }
-        
+
         $balance = $employee->getBalance();
-        
+
         $totalCredits = $product->getCredits() * $quantity;
-        
+
         return $balance >= $totalCredits;
     }
-    
+
     /**
      * Vytvori obednavku
      * 
@@ -42,17 +42,16 @@ class Service_Order
      * @param string $note
      * @throws InvalidArgumentException 
      */
-    
     public function createOrder(Employee $employee, ProductVariant $variant, $quantity, $note = '')
     {
         if (!is_numeric($quantity) || $quantity < 1) {
             throw new InvalidArgumentException('Quantity must be > 0');
         }
-        
+
         $this->em->beginTransaction();
-        
+
         $credits = $variant->getProduct()->getCredits() * $quantity;
-        
+
         $order = new Order();
         $order->setEmployee($employee);
         $order->setInserted(new DateTime());
@@ -61,65 +60,64 @@ class Service_Order
         $order->setStatus($this->em->getRepository('OrderStatus')->findOneBy(array('code' => OrderStatus::STATUS_NEW)));
         $order->setCredits($credits);
         $order->setAmount($quantity);
-        
+
         $this->em->persist($order);
-        
+
         $balance = $employee->getBalance();
         $balance -= $credits;
         $employee->setBalance($balance);
-        
+
         $this->em->persist($employee);
         $this->em->flush();
         $this->em->commit();
     }
-    
+
     /**
      * Stornuje obednavku a pricte body zpet na ucet zamestnance
      * 
      * @param Order $order
      * @param string $reason duvod zamitnuti
      */
-    
     public function stornoOrder(Order $order, $reason = null)
     {
         $this->em->beginTransaction();
-        
+
         $order->setStatus($this->em->getRepository('OrderStatus')->findOneBy(array('code' => OrderStatus::STATUS_STORNO)));
         $order->setStatusChanged(new DateTime());
         $order->setStornoReason($reason);
-        
+
         $employee = $order->getEmployee();
         $balance = $employee->getBalance();
         $balance += $order->getCredits();
         $employee->setBalance($balance);
-        
+
         $this->em->persist($order);
         $this->em->persist($employee);
         $this->em->flush();
         $this->em->commit();
     }
-    
+
     /**
      * Potvrdi obednavku a provede vyskladneni produktu na skladu
      * 
      * @param Order $order 
      */
-    
     public function confirmOrder(Order $order)
     {
         $this->em->beginTransaction();
-        
+
         $order->setStatus($this->em->getRepository('OrderStatus')->findOneBy(array('code' => OrderStatus::STATUS_CONFIRMED)));
-        
+
         $this->em->persist($order);
-        
+
         $variant = $order->getProductVariant();
         $qty = $variant->getQuantity();
         $qty -= $order->getAmount();
         $variant->setQuantity($qty);
-        
+
         $this->em->persist($variant);
         $this->em->flush();
         $this->em->commit();
     }
+
 }

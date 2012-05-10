@@ -4,8 +4,9 @@
  * @Entity(repositoryClass="Repository_Category")
  * @Table(name="categories")
  */
+class Category
+{
 
-class Category {
     /**
      * @Id
      * @GeneratedValue
@@ -13,7 +14,7 @@ class Category {
      * @var integer
      */
     protected $id;
-    
+
     /**
      * @Column(type="string")
      * @var string
@@ -26,27 +27,30 @@ class Category {
      * 
      * @var integer
      */
-    
     protected $parentCategory;
-    
-    
-    public function getName() {
+
+    public function getName()
+    {
         return $this->name;
     }
 
-    public function setName($name) {
+    public function setName($name)
+    {
         $this->name = $name;
     }
 
-    public function getParentCategory() {
+    public function getParentCategory()
+    {
         return $this->parentCategory;
     }
-    
-    public function hasParentCategory() {
+
+    public function hasParentCategory()
+    {
         return !is_null($this->parentCategory);
     }
 
-    public function setParentCategory($parentCategory) {
+    public function setParentCategory($parentCategory)
+    {
         $this->parentCategory = $parentCategory;
     }
 
@@ -54,13 +58,14 @@ class Category {
      *
      * @return integer
      */
-
     public function getId()
     {
         return $this->id;
     }
-    
-    public function __toString() {
+
+    public function __toString()
+    {
         return $this->getName();
     }
+
 }

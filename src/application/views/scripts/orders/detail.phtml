@@ -18,7 +18,7 @@
 	<th>Cena v bodech</th>
 	<td><?=$this->escape($this->order['orderCredits']);?></td>
 </tr>
-<? if ($this->warehouseKeeperView) { ?>
+<? if (isset($this->warehouseKeeperView)) { ?>
 <tr>
 	<th>Zaměstnanec</th>
 	<td><?=$this->escape($this->order['employeeName']);?></td>

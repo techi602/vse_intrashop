@@ -7,5 +7,5 @@ require_once 'Employee.php';
  */
 class WarehouseKeeper extends Employee
 {
-
+    
 }

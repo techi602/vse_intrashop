@@ -7,10 +7,11 @@ class IndexController extends Controller_Default
     {
         $user = User::getLoggedUser();
     }
-    
+
     public function catalogAction()
     {
         $this->view->products = $this->em->getRepository('Product')->fetchForHomepage();
     }
+
 }
 

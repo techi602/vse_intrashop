@@ -4,7 +4,8 @@
  * @Entity(repositoryClass="Repository_Product")
  * @Table(name="products")
  */
-class Product {
+class Product
+{
 
     /**
      * @Id
@@ -40,20 +41,18 @@ class Product {
      */
     protected $code;
 
-    
     /**
      * @Column(type="float")
      * @var float
      */
     protected $price;
-    
+
     /**
      * Zobrazit pro nĂˇkup
      * 
      * @Column(type="boolean")
      * @var boolean
      */
-    
     protected $visible;
 
     /**
@@ -61,12 +60,11 @@ class Product {
      * @var float
      */
     protected $credits;
-    
+
     /**
      * @OneToMany(targetEntity="ProductVariant", mappedBy="product")
      * @var array
      */
-    
     protected $variants;
 
     /**
@@ -75,9 +73,8 @@ class Product {
      * @Column(type="boolean",name="has_multiple_variants")
      * @var boolean
      */
-
     protected $hasMultipleVariants;
-    
+
     /**
      * @var array
      * @ManyToMany(targetEntity="Category")
@@ -88,24 +85,29 @@ class Product {
      * */
     protected $categories;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->categories = new \Doctrine\Common\Collections\ArrayCollection();
         $this->variants = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
-    public function getCategories() {
+
+    public function getCategories()
+    {
         return $this->categories;
     }
 
-    public function setCategories($categories) {
+    public function setCategories($categories)
+    {
         $this->categories = $categories;
     }
 
-    public function getName() {
+    public function getName()
+    {
         return $this->name;
     }
 
-    public function setName($name) {
+    public function setName($name)
+    {
         $this->name = $name;
     }
 
@@ -114,11 +116,13 @@ class Product {
         return $this->description;
     }
 
-    public function setDescription($description) {
+    public function setDescription($description)
+    {
         $this->description = $description;
     }
 
-    public function getPicture() {
+    public function getPicture()
+    {
         if (empty($this->picture)) {
             return 'http://www.moviespad.com/photos/lars-and-the-real-girl-2-d9a2f.jpeg';
         } else {
@@ -126,62 +130,73 @@ class Product {
         }
     }
 
-    public function setPicture($picture) {
+    public function setPicture($picture)
+    {
         $this->picture = $picture;
     }
 
-    public function getPrice() {
+    public function getPrice()
+    {
         return $this->price;
     }
 
-    public function setPrice($price) {
+    public function setPrice($price)
+    {
         $this->price = $price;
     }
 
-    public function getCredits() {
+    public function getCredits()
+    {
         return $this->credits;
     }
 
-    public function setCredits($credits) {
+    public function setCredits($credits)
+    {
         $this->credits = $credits;
     }
-    
-    public function getVisible() {
+
+    public function getVisible()
+    {
         return $this->visible;
     }
 
-    public function setVisible($visible) {
+    public function setVisible($visible)
+    {
         $this->visible = $visible;
     }
-    public function getCode() {
+
+    public function getCode()
+    {
         return $this->code;
     }
 
-    public function setCode($code) {
+    public function setCode($code)
+    {
         $this->code = $code;
     }
-    
+
     public function getVariants()
     {
         return $this->variants;
     }
 
-    public function getMultipleVariants() {
+    public function getMultipleVariants()
+    {
         return $this->hasMultipleVariants;
     }
 
-    public function setMultipleVariants($hasMultipleVariants) {
+    public function setMultipleVariants($hasMultipleVariants)
+    {
         $this->hasMultipleVariants = $hasMultipleVariants;
     }
 
-    
     /**
      *
      * @return integer
      */
-
     public function getId()
     {
         return $this->id;
     }
+
 }

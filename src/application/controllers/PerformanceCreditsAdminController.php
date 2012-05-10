@@ -2,13 +2,15 @@
 
 class PerformanceCreditsAdminController extends Controller_Default
 {
+
     /** @var Service_PerformanceCreditsAdmin */
     private $performanceCreditsAdminService;
 
     /** @var Service_Employee */
     private $employeeService;
 
-    public function init() {
+    public function init()
+    {
         parent::init();
 
         if (!$this->loggedSuperiorEmployee) {
@@ -21,8 +23,8 @@ class PerformanceCreditsAdminController extends Controller_Default
 
     public function indexAction()
     {
-         $employeeList = $this->performanceCreditsAdminService->getEmployeeList($this->loggedSuperiorEmployee->getId());
-         $this->view->employeeList = $employeeList;
+        $employeeList = $this->performanceCreditsAdminService->getEmployeeList($this->loggedSuperiorEmployee->getId());
+        $this->view->employeeList = $employeeList;
     }
 
     public function addAction()
@@ -32,35 +34,32 @@ class PerformanceCreditsAdminController extends Controller_Default
         $employeeInfo = $this->employeeService->getEmployeeInfo($employeeId);
 
         $adminForm = new Form_CreditsAdmin(
-            $this->loggedSuperiorEmployee->getSuperiorBalance()
+                        $this->loggedSuperiorEmployee->getSuperiorBalance()
         );
 
         $adminForm->prepare();
 
-		$showConfirmDialog = false;
+        $showConfirmDialog = false;
         if ($this->_request->isPost()) {
             if ($this->_getParam('buttoncancel')) {
                 $this->_helper->redirector->goto('index');
             }
             if ($adminForm->isValid($this->_request->getPost())) {
-				$confirmed = ($this->getRequest()->getPost('hiddenconfirm') == 'true');
-				if ($confirmed) {
-					$this->performanceCreditsAdminService->givePerformanceCredits(
-						$this->loggedSuperiorEmployee->getId(),
-						$employeeId,
-						$adminForm->getValue('creditsAmount'),
-						$adminForm->getValue('note')
-					);
-					$this->_helper->redirector->goto('index');
-				}
-				else {
-					$showConfirmDialog = true;
-				}
+                $confirmed = ($this->getRequest()->getPost('hiddenconfirm') == 'true');
+                if ($confirmed) {
+                    $this->performanceCreditsAdminService->givePerformanceCredits(
+                            $this->loggedSuperiorEmployee->getId(), $employeeId, $adminForm->getValue('creditsAmount'), $adminForm->getValue('note')
+                    );
+                    $this->_helper->redirector->goto('index');
+                } else {
+                    $showConfirmDialog = true;
+                }
             }
         }
 
-		$this->view->showConfirmDialog = $showConfirmDialog;
+        $this->view->showConfirmDialog = $showConfirmDialog;
         $this->view->adminForm = $adminForm;
         $this->view->employeeInfo = $employeeInfo;
     }
+
 }

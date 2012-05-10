@@ -2,7 +2,6 @@
 
 use Doctrine\ORM\EntityRepository;
 
-
 /**
  * Description of Product
  *
@@ -10,9 +9,10 @@ use Doctrine\ORM\EntityRepository;
  */
 class Repository_Product extends EntityRepository
 {
+
     public function fetchForHomepage()
     {
         return $this->_em->createQuery("SELECT p FROM Product p WHERE p.visible = true")->getResult();
     }
- 
+
 }

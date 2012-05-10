@@ -2,6 +2,7 @@
 
 class Service_PerformanceCreditsAdmin
 {
+
     /** @var Doctrine\ORM\EntityManager */
     private $em;
 
@@ -12,7 +13,7 @@ class Service_PerformanceCreditsAdmin
 
     public function getEmployeeList($superiorEmployeeUserId)
     {
-         $query = $this->em->createQuery("
+        $query = $this->em->createQuery("
             SELECT e
             FROM Employee e
             JOIN e.superiorEmployee se
@@ -50,4 +51,5 @@ class Service_PerformanceCreditsAdmin
         $this->em->commit();
         $this->em->flush();
     }
+
 }

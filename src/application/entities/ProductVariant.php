@@ -4,8 +4,9 @@
  * @Entity
  * @Table(name="product_variants")
  */
-class ProductVariant {
-    
+class ProductVariant
+{
+
     /**
      * @Id
      * @GeneratedValue
@@ -13,13 +14,12 @@ class ProductVariant {
      * @var integer
      */
     protected $id;
-    
+
     /**
      * @Column(type="string",nullable=true)
      * @var string
      */
     protected $name;
-    
 
     /**
      * @Column(type="text",nullable=true)
@@ -32,91 +32,97 @@ class ProductVariant {
      * @JoinColumn(name="color_id",referencedColumnName="id")
      * @var ProductColor
      */
-    
     protected $color;
-    
+
     /**
      * @ManyToOne(targetEntity="ProductSize")
      * @JoinColumn(name="size_id",referencedColumnName="id")
      * @var ProductSize
      */
-    
     protected $size;
-    
+
     /**
      * @ManyToOne(targetEntity="Product",inversedBy="variants")
      * @JoinColumn(name="product_id",referencedColumnName="id",nullable=false)
      * @var Product
      */
-    
     protected $product;
-    
 
     /**
      * @ManyToOne(targetEntity="ProductAvailability")
      * @JoinColumn(name="availability_id",referencedColumnName="id",nullable=true)
      * @var ProductAvailability
      */
-   
     protected $availability;
-    
+
     /**
      * @Column(type="integer")
      * @var integer
      */
-    
     protected $quantity;
-    
-    
-    public function getName() {
+
+    public function getName()
+    {
         return $this->name;
     }
 
-    public function setName($name) {
+    public function setName($name)
+    {
         $this->name = $name;
     }
 
-    public function getColor() {
+    public function getColor()
+    {
         return $this->color;
     }
 
-    public function setColor($color) {
+    public function setColor($color)
+    {
         $this->color = $color;
     }
 
-    public function getSize() {
+    public function getSize()
+    {
         return $this->size;
     }
 
-    public function setSize($size) {
+    public function setSize($size)
+    {
         $this->size = $size;
     }
 
-    public function getProduct() {
+    public function getProduct()
+    {
         return $this->product;
     }
 
-    public function setProduct($product) {
+    public function setProduct($product)
+    {
         $this->product = $product;
     }
 
-    public function getAvailability() {
+    public function getAvailability()
+    {
         return $this->availability;
     }
 
-    public function setAvailability($availability) {
+    public function setAvailability($availability)
+    {
         $this->availability = $availability;
     }
 
-    public function getQuantity() {
+    public function getQuantity()
+    {
         return $this->quantity;
     }
 
-    public function setQuantity($quantity) {
+    public function setQuantity($quantity)
+    {
         $this->quantity = $quantity;
     }
 
-    public function getPicture() {
+    public function getPicture()
+    {
         if (is_null($this->picture)) {
             return $this->getProduct()->getPicture();
         } else {
@@ -124,16 +130,18 @@ class ProductVariant {
         }
     }
 
-    public function setPicture($picture) {
+    public function setPicture($picture)
+    {
         $this->picture = $picture;
     }
+
     /**
      *
      * @return integer
      */
-
     public function getId()
     {
         return $this->id;
     }
+
 }

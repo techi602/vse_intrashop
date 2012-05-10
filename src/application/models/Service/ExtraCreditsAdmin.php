@@ -2,6 +2,7 @@
 
 class Service_ExtraCreditsAdmin
 {
+
     /** @var Doctrine\ORM\EntityManager */
     private $em;
 
@@ -12,7 +13,7 @@ class Service_ExtraCreditsAdmin
 
     public function getEmployeeList()
     {
-         $query = $this->em->createQuery("
+        $query = $this->em->createQuery("
             SELECT e
             FROM Employee e
         ");
@@ -29,8 +30,9 @@ class Service_ExtraCreditsAdmin
         return $employees;
     }
 
-    public function getFinantialBalance() {
-
+    public function getFinantialBalance()
+    {
+        
     }
 
     /**
@@ -50,4 +52,5 @@ class Service_ExtraCreditsAdmin
         $this->em->commit();
         $this->em->flush();
     }
+
 }

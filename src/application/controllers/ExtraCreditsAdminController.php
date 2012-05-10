@@ -2,13 +2,15 @@
 
 class ExtraCreditsAdminController extends Controller_Default
 {
+
     /** @var Service_ExtraCreditsAdmin */
     private $extraCreditsAdminService;
 
     /** @var Service_Employee */
     private $employeeService;
 
-    public function init() {
+    public function init()
+    {
         parent::init();
 
         if (!$this->loggedPersonnelOfficer) {
@@ -31,34 +33,31 @@ class ExtraCreditsAdminController extends Controller_Default
         $employeeInfo = $this->employeeService->getEmployeeInfo($employeeId);
 
         $adminForm = new Form_CreditsAdmin(
-            $this->loggedPersonnelOfficer->getPersonnelOfficerBalance()
+                        $this->loggedPersonnelOfficer->getPersonnelOfficerBalance()
         );
         $adminForm->prepare();
 
-		$showConfirmDialog = false;
+        $showConfirmDialog = false;
         if ($this->_request->isPost()) {
             if ($this->_getParam('buttoncancel')) {
                 $this->_helper->redirector->goto('index');
             }
             if ($adminForm->isValid($this->_request->getPost())) {
-				$confirmed = ($this->getRequest()->getPost('hiddenconfirm') == 'true');
-				if ($confirmed) {
-					$this->extraCreditsAdminService->giveExtraCredits(
-						$this->loggedPersonnelOfficer->getId(),
-						$employeeId,
-						$adminForm->getValue('creditsAmount'),
-						$adminForm->getValue('note')
-					);
-					$this->_helper->redirector->goto('index');
-				}
-				else {
-					$showConfirmDialog = true;
-				}
+                $confirmed = ($this->getRequest()->getPost('hiddenconfirm') == 'true');
+                if ($confirmed) {
+                    $this->extraCreditsAdminService->giveExtraCredits(
+                            $this->loggedPersonnelOfficer->getId(), $employeeId, $adminForm->getValue('creditsAmount'), $adminForm->getValue('note')
+                    );
+                    $this->_helper->redirector->goto('index');
+                } else {
+                    $showConfirmDialog = true;
+                }
             }
         }
 
-		$this->view->showConfirmDialog = $showConfirmDialog;
+        $this->view->showConfirmDialog = $showConfirmDialog;
         $this->view->adminForm = $adminForm;
         $this->view->employeeInfo = $employeeInfo;
     }
+
 }

@@ -14,14 +14,16 @@ class PersonnelOfficer extends Employee
      * @Column(type="integer")
      * @var integer
      */
-
     protected $personnelOfficerBalance;
 
-    public function getPersonnelOfficerBalance() {
+    public function getPersonnelOfficerBalance()
+    {
         return $this->personnelOfficerBalance;
     }
 
-    public function setPersonnelOfficerBalance($creditAmount) {
+    public function setPersonnelOfficerBalance($creditAmount)
+    {
         return $this->personnelOfficerBalance = $creditAmount;
     }
+
 }

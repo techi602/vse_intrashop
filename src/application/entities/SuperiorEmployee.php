@@ -14,14 +14,16 @@ class SuperiorEmployee extends Employee
      * @Column(type="integer")
      * @var integer
      */
-
     protected $superiorBalance;
 
-    public function getSuperiorBalance() {
+    public function getSuperiorBalance()
+    {
         return $this->superiorBalance;
     }
 
-    public function setSuperiorBalance($creditsAmount) {
+    public function setSuperiorBalance($creditsAmount)
+    {
         $this->superiorBalance = $creditsAmount;
     }
+
 }
