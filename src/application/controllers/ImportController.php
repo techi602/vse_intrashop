@@ -15,8 +15,10 @@ class ImportController extends Zend_Controller_Action
         
         $this->getResponse()->setBody("Import Complete")->sendResponse();
         
-        $this->_helper->layout->disableLayout();
-        $this->_helper->viewRenderer->setNoRender(true);
+        //$this->_helper->layout->disableLayout();
+        //$this->_helper->viewRenderer->setNoRender(true);
+        $this->_helper->redirector->goto('index', 'help');
+        
     }
 }
 

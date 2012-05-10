@@ -190,7 +190,7 @@ class Service_Import
         
         $boss = new SuperiorEmployee();
         $boss->setName("Johan Opršálek");
-        $boss->setEmail("johan@intrashop");
+        $boss->setEmail("admin@intrashop");
         $boss->setUsername("johan");
         $boss->setEmployedSince(new DateTime("1990-05-06"));
         $boss->setBalance(65655);
@@ -203,18 +203,38 @@ class Service_Import
         $dpt1->setBoss($boss);
         $em->persist($dpt1);
 
-        $janNovakEmployee = new PersonnelOfficer();
+        $janNovakEmployee = new Employee();
         $janNovakEmployee->setName('Jan Novák');
         $janNovakEmployee->setEmail("jan.novak@intrashop");
         $janNovakEmployee->setEmployedSince(new DateTime("2000-03-01"));
         $janNovakEmployee->setBalance(5000);
         $janNovakEmployee->setUsername('jan.novak');
         $janNovakEmployee->setEmployed(true);
-        $janNovakEmployee->setPersonnelOfficerBalance(70000);
-        $janNovakEmployee->setRoles(array($role1, $role2));
         $janNovakEmployee->setDepartment($dpt1);
-        
         $em->persist($janNovakEmployee);
+        
+        $personnel = new PersonnelOfficer();
+        $personnel->setPersonnelOfficerBalance(70000);
+        $personnel->setName('Petr Holub');
+        $personnel->setEmail('personnel@intrashop');
+        $personnel->setEmployedSince(new DateTime("1998-03-01"));
+        $personnel->setBalance(25000);
+        $personnel->setUsername('holub');
+        $personnel->setEmployed(true);
+        $personnel->setRoles(array($role1));
+        $personnel->setDepartment($dpt1);
+        $em->persist($personnel);
+        
+        $warehouser = new WarehouseKeeper();
+        $warehouser->setName('Stanislav Sekanina');
+        $warehouser->setEmail('warehouser@intrashop');
+        $warehouser->setEmployedSince(new DateTime("1995-03-01"));
+        $warehouser->setBalance(35000);
+        $warehouser->setUsername('sekanina');
+        $warehouser->setEmployed(true);
+        $warehouser->setRoles(array($role2));
+        $warehouser->setDepartment($dpt1);
+        $em->persist($warehouser);
 
         $status1 = new OrderStatus();
         $status1->setName("Nová");

@@ -32,7 +32,7 @@ class SimpleAuth implements Zend_Auth_Adapter_Interface
             $_COOKIE['login'] = $_GET['login'];
         }
         
-        $user = EntityManager::getInstance()->getRepository('Employee')->findOneBy(array('email' => $_COOKIE['login']));
+        $user = EntityManager::getInstance()->getRepository('Employee')->findOneBy(array('email' => @$_COOKIE['login']));
         
         if (is_null($user)) {
             return new Zend_Auth_Result(Zend_Auth_Result::FAILURE_IDENTITY_NOT_FOUND, array(), array("Invalid credentials"));
@@ -46,10 +46,11 @@ class Controller_Plugin_Auth extends Zend_Controller_Plugin_Abstract
 {
     public function preDispatch(Zend_Controller_Request_Abstract $request)
     {
-        if ($request->getControllerName() == 'import') {
+        if ($request->getControllerName() == 'import' || $request->getControllerName() == 'help') {
             return;
         }
-        $httpbasic = APPLICATION_ENV == 'development';
+        //$httpbasic = APPLICATION_ENV == 'development';
+        $httpbasic = false;
         
         if ($httpbasic) {
         $realm = 'intrashop';
@@ -82,6 +83,7 @@ class Controller_Plugin_Auth extends Zend_Controller_Plugin_Abstract
         
         if (!$result->isValid()) {
             $this->getResponse()->setBody("401 Unauthorized")->sendResponse();
+            
         }
         
     }
