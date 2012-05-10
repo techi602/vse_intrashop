@@ -165,7 +165,7 @@ class Order
         $this->statusChanged = $statusChanged;
     }
 
-    public function getFuck()
+    public function getOrderId()
     {
         return str_pad($this->id, 5, '0', STR_PAD_LEFT) . '/' . $this->inserted->format('Y');
     }
