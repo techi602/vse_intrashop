@@ -49,7 +49,7 @@ class Order
     protected $note;
 
     /**
-     * @ManyToOne(targetEntity="Employee", inversedBy="Order")
+     * @ManyToOne(targetEntity="Employee")
      * @JoinColumn(name="employee_id", referencedColumnName="id",nullable=false)
      * @var Employee
      */
@@ -165,7 +165,7 @@ class Order
         $this->statusChanged = $statusChanged;
     }
 
-    public function getOrderId()
+    public function getFuck()
     {
         return str_pad($this->id, 5, '0', STR_PAD_LEFT) . '/' . $this->inserted->format('Y');
     }
