@@ -11,7 +11,7 @@ class Service_Orders
         $this->em = $em;
     }
 
-    public function getUserOrderList($employeeId)
+    public function getUserOrderList(Employee $employee)
     {
         $query = $this->em->createQuery("
             SELECT o, p, s, v
@@ -23,7 +23,7 @@ class Service_Orders
             WHERE e.id = ?1
             ORDER BY o.id DESC
         ");
-        $query->setParameter(1, $employeeId);
+        $query->setParameter(1, $employee->getId());
 
         $orders = array();
 

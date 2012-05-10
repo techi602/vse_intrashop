@@ -50,6 +50,10 @@
 <?php endif ?>
 </table>
 
+<?php if (isset($this->displayConfirm)): ?>
+<a class="btn btn-primary" id="confirmbtn" href="<?php echo $this->url(array('action' => 'confirm', 'id' => $this->order['orderId'])) ?>">Potvrdit objednávku</a>
+<?php endif ?>
+
 <?php if ($this->order['orderCancellable']): ?>
 <a class="btn btn-danger" id="cancelbtn" href="<?php echo $this->url(array('action' => 'cancel', 'id' => $this->order['orderId'])) ?>">Storno</a>
 <?php endif ?>

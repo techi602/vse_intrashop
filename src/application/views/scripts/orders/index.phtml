@@ -1,4 +1,3 @@
-<?php $orderList = $this->userOrderList ?: $this->warehouseKeeperOrderList; ?>
 
 <h1>Objednávky</h1>
 
@@ -6,9 +5,9 @@
 <thead>
     <tr>
     <th>Zboží</th>
-    <?php if ($this->warehouseKeeperOrderList) { ?>
+    <?php if (isset($this->warehouser)): ?>
     <th>Zaměstnanec</th>
-    <?php } ?>
+    <?php endif ?>
     <th>Datum objednání</th>
     <th>Cena v bodech</th>
     <th>Stav objednávky</th>
@@ -17,13 +16,13 @@
 </thead>
 <tbody>
 
-<?php if ($orderList) { ?>
-<?php foreach($orderList as $order) { ?>
+<?php if ($this->list) { ?>
+<?php foreach($this->list as $order) { ?>
 <tr>
     <td>
          <?=$this->escape($order['productName']);?>
     </td>
-    <?php if ($this->warehouseKeeperOrderList): ?>
+    <?php if (isset($this->warehouser)): ?>
     <td><?= $this->escape($order['orderEmployeeName']);?></td>
     <?php endif ?>
     <td><?= $order['orderInserted']->format('d.m.y H:i');?></td>
@@ -39,7 +38,7 @@
 <?php } ?>
 <?php } else { ?>
 <tr>
-    <td style="font-style:italic" colspan="<?=$this->userOrderList? 6 : 5 ?>">Žádné objednávky.</td>
+    <td style="font-style:italic" colspan="<?=isset($this->warehouser) ? 6 : 5 ?>">Žádné objednávky.</td>
 </tr>
 <?php } ?>
 </tbody>

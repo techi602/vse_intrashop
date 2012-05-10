@@ -107,6 +107,7 @@ class Service_Order
         $this->em->beginTransaction();
 
         $order->setStatus($this->em->getRepository('OrderStatus')->findOneBy(array('code' => OrderStatus::STATUS_CONFIRMED)));
+        $order->setStatusChanged(new DateTime());
 
         $this->em->persist($order);
 
