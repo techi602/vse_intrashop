@@ -205,7 +205,7 @@ class Service_Import
         $personnel->setPersonnelOfficerBalance(70000);
         $personnel->setName('Petr Holub');
         $personnel->setEmail('personnel@intrashop');
-        $personnel->setEmployedSince(new DateTime("1998-03-01"));
+        $personnel->setEmployedSince(DateTime::createFromFormat('U', mktime(12, 0, 0, date('m'), date('d'), 2008)));
         $personnel->setBalance(25000);
         $personnel->setUsername('holub');
         $personnel->setEmployed(true);
