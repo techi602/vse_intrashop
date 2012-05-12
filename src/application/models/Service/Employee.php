@@ -24,7 +24,7 @@ class Service_Employee
 
         $employeeInfo = array(
             'employeeName' => $employee->getName(),
-            'functionName' => 'TODO',
+            'functionName' => $employee->getFunction(),
             'departmentName' => $employee->getDepartment()->getName()
         );
 
