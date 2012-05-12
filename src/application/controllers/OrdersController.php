@@ -16,8 +16,7 @@ class OrdersController extends Controller_Default
 
     public function indexAction()
     {
-        if (!User::getLoggedUser()->hasRole(UserRole::ROLE_WAREHOUSEKEEPER)) {
-            // @todo acl
+        if (!$this->loggedWarehouseKeeper) {
             throw new Zend_Acl_Exception("Access denied");
         }
         
@@ -43,7 +42,7 @@ class OrdersController extends Controller_Default
 
         $this->view->order = $this->ordersService->getOrderInfo($orderId);
         $order = $this->em->find('Order', $orderId);
-        if (User::getLoggedUser()->hasRole(UserRole::ROLE_WAREHOUSEKEEPER) && $order->getStatus()->getCode() == OrderStatus::STATUS_NEW) {
+        if ($this->loggedWarehouseKeeper && $order->getStatus()->getCode() == OrderStatus::STATUS_NEW) {
             $this->view->displayConfirm = true;
         }
     }

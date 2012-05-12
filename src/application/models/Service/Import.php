@@ -54,7 +54,6 @@ class Service_Import
             'OrderStatus',
             'Employee',
             'Order',
-            'UserRole',
             'ProductAvailability',
             'Department',
             'SuperiorEmployee',
@@ -176,16 +175,6 @@ class Service_Import
         $variant->setAvailability($availStock);
         $em->persist($variant);
 
-        $role1 = new UserRole();
-        $role1->setName("PersonalOfficer");
-        $role1->setRole(UserRole::ROLE_PERSONNELOFFICER);
-        $em->persist($role1);
-
-        $role2 = new UserRole();
-        $role2->setName("Správce skladu");
-        $role2->setRole(UserRole::ROLE_WAREHOUSEKEEPER);
-        $em->persist($role2);
-
         $boss = new SuperiorEmployee();
         $boss->setName("Johan Opršálek");
         $boss->setEmail("admin@intrashop");
@@ -193,7 +182,6 @@ class Service_Import
         $boss->setEmployedSince(new DateTime("1990-05-06"));
         $boss->setBalance(65655);
         $boss->setEmployed(true);
-        $boss->setRoles(array($role1, $role2));
         $em->persist($boss);
 
         $dpt1 = new Department();
@@ -219,7 +207,6 @@ class Service_Import
         $personnel->setBalance(25000);
         $personnel->setUsername('holub');
         $personnel->setEmployed(true);
-        $personnel->setRoles(array($role1));
         $personnel->setDepartment($dpt1);
         $em->persist($personnel);
 
@@ -230,7 +217,6 @@ class Service_Import
         $warehouser->setBalance(35000);
         $warehouser->setUsername('sekanina');
         $warehouser->setEmployed(true);
-        $warehouser->setRoles(array($role2));
         $warehouser->setDepartment($dpt1);
         $em->persist($warehouser);
 

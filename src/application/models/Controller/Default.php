@@ -103,9 +103,6 @@ class Controller_Default extends Zend_Controller_Action
     {
         $nav = array();
 
-        $user = User::getLoggedUser();
-
-
         // zamestnanec
         $nav = array_merge($nav, array(
             array(
@@ -125,7 +122,7 @@ class Controller_Default extends Zend_Controller_Action
                 ),
                 )));
 
-        if ($user->hasRole(UserRole::ROLE_WAREHOUSEKEEPER)) {
+        if ($this->loggedWarehouseKeeper) {
             $nav = array_merge($nav, array(
                 array(
                     'controller' => 'warehouse',

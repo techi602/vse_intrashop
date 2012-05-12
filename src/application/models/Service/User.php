@@ -13,28 +13,7 @@ class Service_User
 
     public function getUser($id, $desiredRole = null)
     {
-        if (is_null($desiredRole)) {
-            $entity = 'Employee';
-        } else {
-            switch ($desiredRole) {
-                case UserRole::ROLE_SUPERIOR:
-                    $entity = 'SuperiorEmployee';
-                    break;
-
-                case UserRole::ROLE_PERSONNELOFFICER:
-                    $entity = 'PersonnelOfficer';
-                    break;
-
-                case UserRole::ROLE_WAREHOUSEKEEPER:
-                    $entity = 'WarehouseKeeper';
-                    break;
-
-                default:
-                    $entity = 'Employee';
-            }
-        }
-
-        $user = $this->em->find($entity, $identifier);
+        $user = $this->em->find("Employee", $identifier);
 
         if (!is_null($user) && !is_null($desiredRole)) {
             if (!$user->hasRole($desiredRole)) {
