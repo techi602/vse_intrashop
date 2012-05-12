@@ -182,6 +182,7 @@ class Service_Import
         $boss->setEmployedSince(new DateTime("1990-05-06"));
         $boss->setBalance(65655);
         $boss->setEmployed(true);
+        $boss->setFunction("Vedoucí oddělení");
         $em->persist($boss);
 
         $dpt1 = new Department();
@@ -197,6 +198,7 @@ class Service_Import
         $janNovakEmployee->setUsername('jan.novak');
         $janNovakEmployee->setEmployed(true);
         $janNovakEmployee->setDepartment($dpt1);
+        $janNovakEmployee->setFunction("Řadový zaměstnanec");
         $em->persist($janNovakEmployee);
 
         $personnel = new PersonnelOfficer();
@@ -208,6 +210,7 @@ class Service_Import
         $personnel->setUsername('holub');
         $personnel->setEmployed(true);
         $personnel->setDepartment($dpt1);
+        $personnel->setFunction("PO");
         $em->persist($personnel);
 
         $warehouser = new WarehouseKeeper();
@@ -218,6 +221,7 @@ class Service_Import
         $warehouser->setUsername('sekanina');
         $warehouser->setEmployed(true);
         $warehouser->setDepartment($dpt1);
+        $warehouser->setFunction("Skladník");
         $em->persist($warehouser);
 
         $status1 = new OrderStatus();

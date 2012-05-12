@@ -93,6 +93,14 @@ class Employee
      */
     protected $department;
 
+   /**
+     * Funkce v oddělení
+     *
+     * @Column(type="string",nullable=false)
+     * @var string
+     */
+    protected $function;
+
     public function __construct()
     {
         $this->orders = new \Doctrine\Common\Collections\ArrayCollection();
@@ -196,6 +204,14 @@ class Employee
     public function setDismissal($dismissal)
     {
         $this->dismissal = $dismissal;
+    }
+
+    public function setFunction($function) {
+        $this->function = $function;
+    }
+
+    public function getFunction() {
+        return $this->function;
     }
 
     /**
