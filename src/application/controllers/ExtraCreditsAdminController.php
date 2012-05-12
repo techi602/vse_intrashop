@@ -33,7 +33,8 @@ class ExtraCreditsAdminController extends Controller_Default
         $employeeInfo = $this->employeeService->getEmployeeInfo($employeeId);
 
         $adminForm = new Form_CreditsAdmin(
-                        $this->loggedPersonnelOfficer->getPersonnelOfficerBalance()
+            $this->loggedPersonnelOfficer->getPersonnelOfficerBalance(),
+            'mimořádných bodů'
         );
         $adminForm->prepare();
 

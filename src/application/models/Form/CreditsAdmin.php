@@ -6,11 +6,13 @@ class Form_CreditsAdmin extends Bootstrap_Form
     const MAX_CREDIT_AMOUNT_GIVEN = 50000;
 
     private $accountBalance;
+    private $accountName;
 
-    public function __construct($accountBalance)
+    public function __construct($accountBalance, $accountName)
     {
         parent::__construct();
         $this->accountBalance = $accountBalance;
+        $this->accountName = $accountName;
     }
 
     public function prepare()
@@ -23,7 +25,7 @@ class Form_CreditsAdmin extends Bootstrap_Form
 
         if ($this->accountBalance <= self::MAX_CREDIT_AMOUNT_GIVEN) {
             $creditsAmountLessThanValidate->setMax($this->accountBalance + 1);
-            $creditsAmountLessThanValidate->setMessage("Překročena výše konta");
+            $creditsAmountLessThanValidate->setMessage("Překročena výše konta {$this->accountName}");
         } else {
             $creditsAmountLessThanValidate->setMax(self::MAX_CREDIT_AMOUNT_GIVEN + 1);
             $creditsAmountLessThanValidate->setMessage("Maximálně možno přidělit " . self::MAX_CREDIT_AMOUNT_GIVEN . " bodů");
