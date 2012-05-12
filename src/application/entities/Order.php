@@ -49,7 +49,7 @@ class Order
     protected $note;
 
     /**
-     * @ManyToOne(targetEntity="Employee", inversedBy="Order")
+     * @ManyToOne(targetEntity="Employee")
      * @JoinColumn(name="employee_id", referencedColumnName="id",nullable=false)
      * @var Employee
      */

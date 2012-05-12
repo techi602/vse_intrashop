@@ -10,23 +10,26 @@ class OrdersController extends Controller_Default
     {
         parent::init();
         $this->ordersService = new Service_Orders($this->em);
+        
+        
     }
 
     public function indexAction()
     {
-        if (User::getLoggedUser()->hasRole(UserRole::ROLE_WAREHOUSEKEEPER)) {
-            $orderList = $this->ordersService->getWarehouseKeeperOrderList();
-            $this->view->warehouseKeeperOrderList = $orderList;
-        } else {
-            throw new Zend_Acl_Exception("Accedd denied :)");
+        if (!User::getLoggedUser()->hasRole(UserRole::ROLE_WAREHOUSEKEEPER)) {
+            // @todo acl
+            throw new Zend_Acl_Exception("Access denied");
         }
+        
+        $orderList = $this->ordersService->getWarehouseKeeperOrderList();
+        $this->view->list = $orderList;
+        $this->view->warehouser = true;
     }
 
     public function employeeAction()
     {
-        $orderList = $this->ordersService->getUserOrderList($this->loggedEmployee->getId());
-        $this->view->userOrderList = $orderList;
-        $this->view->warehouseKeeperOrderList = null;
+        $orderList = $this->ordersService->getUserOrderList($this->loggedEmployee);
+        $this->view->list = $orderList;
 
         $this->_helper->ViewRenderer->render('index');
     }
@@ -39,6 +42,10 @@ class OrdersController extends Controller_Default
         //TODO: řešit jestli to je jeho nebo ne (tzn. bud je warehouse keeper, nebo je ta objednávka jeho)
 
         $this->view->order = $this->ordersService->getOrderInfo($orderId);
+        $order = $this->em->find('Order', $orderId);
+        if (User::getLoggedUser()->hasRole(UserRole::ROLE_WAREHOUSEKEEPER) && $order->getStatus()->getCode() == OrderStatus::STATUS_NEW) {
+            $this->view->displayConfirm = true;
+        }
     }
 
     public function cancelAction()
@@ -57,6 +64,20 @@ class OrdersController extends Controller_Default
         }
 
         $this->view->order = $order;
+    }
+    
+    public function confirmAction()
+    {
+        $orderId = $this->getRequest()->getParam('id');
+        
+        $order = $this->em->find('Order', $orderId);
+        $orderInfo = $this->ordersService->getOrderInfo($orderId);
+        
+        $service = new Service_Order($this->em);
+        $service->confirmOrder($order);
+        $this->addInfoMessage("Objednávka " . $orderInfo['customOrderId'] . ' byla potvrzena');
+        
+        $this->_helper->redirector->goto('detail', null, null, array('id' => $orderId));
     }
 
     public function editAction()

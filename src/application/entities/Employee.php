@@ -28,7 +28,7 @@ class Employee
      * Prihhlašovací uživatelské jméno
      * 
      * @var string
-     * @Column(type="string")
+     * @Column(type="string",unique=true)
      */
     protected $username;
 
@@ -43,7 +43,7 @@ class Employee
     /**
      *
      * @var string
-     * @Column(type="string")
+     * @Column(type="string",unique=true)
      */
     protected $email;
 
