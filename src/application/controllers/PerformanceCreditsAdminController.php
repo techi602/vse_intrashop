@@ -35,7 +35,7 @@ class PerformanceCreditsAdminController extends Controller_Default
 
         $adminForm = new Form_CreditsAdmin(
             $this->loggedSuperiorEmployee->getSuperiorBalance(),
-            'výkonových bodů'
+            'bonusových bodů'
         );
 
         $adminForm->prepare();

@@ -153,7 +153,7 @@ class Controller_Default extends Zend_Controller_Action
             $nav = array_merge($nav, array(
                 array(
                     'controller' => 'performance-credits-admin',
-                    'label' => 'Přidělit výkonové body'
+                    'label' => 'Přidělit bonusové body'
                 )
                     ));
         }
