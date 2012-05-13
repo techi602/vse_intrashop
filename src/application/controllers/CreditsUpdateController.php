@@ -5,12 +5,16 @@ class CreditsUpdateController extends Controller_Default
     /** @var Service_CreditsUpdate */
     private $creditsUpdateService;
 
+    /** @var Service_Notification */
+    private $notificationService;
+
     private $newEmployeesUserNames = array();
 
     public function init() {
         parent::init();
         //TODO: Needs to be run locally via cron only!
         $this->creditsUpdateService = new Service_CreditsUpdate($this->em);
+        $this->notificationService = new Service_Notification($this->em);
     }
 
     public function indexAction()
@@ -146,6 +150,7 @@ class CreditsUpdateController extends Controller_Default
 
                 $this->printInfo(" -> adding {$creditAmount} credits");
                 $this->creditsUpdateService->addCredits($employee['id'], $creditAmount);
+                $this->notificationService->notifyCreditsUpdate($employee['id'], $creditAmount);
             }
             $this->printInfo("\n");
         }

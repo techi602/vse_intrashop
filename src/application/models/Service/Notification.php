@@ -57,6 +57,19 @@ class Service_Notification
         $this->notify($recipientEmailAddress, $subject, $body);
     }
 
+    public function notifyCreditsUpdate($employeeId, $creditAmount)
+    {
+        $employee = $this->em->find('Employee', $employeeId);
+
+        $subject = "Přiděleny věrnostní body";
+        $recipientEmailAddress = $employee->getEmail();
+
+        $body = "";
+        $body .= "Bylo vám přiděleno {$creditAmount} věrnostních bodů.";
+
+        $this->notify($recipientEmailAddress, $subject, $body);
+    }
+
     private function notify($recipientEmailAddress, $subject, $body)
     {
         $s = "";
