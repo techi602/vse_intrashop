@@ -9,6 +9,9 @@ class ExtraCreditsAdminController extends Controller_Default
     /** @var Service_Employee */
     private $employeeService;
 
+    /** @var Service_Notification */
+    private $notificationService;
+
     public function init()
     {
         parent::init();
@@ -19,6 +22,7 @@ class ExtraCreditsAdminController extends Controller_Default
 
         $this->extraCreditsAdminService = new Service_ExtraCreditsAdmin($this->em);
         $this->employeeService = new Service_Employee($this->em);
+        $this->notificationService = new Service_Notification($this->em);
     }
 
     public function indexAction()
@@ -46,9 +50,12 @@ class ExtraCreditsAdminController extends Controller_Default
             if ($adminForm->isValid($this->_request->getPost())) {
                 $confirmed = ($this->getRequest()->getPost('hiddenconfirm') == 'true');
                 if ($confirmed) {
+                    $creditsAmount = $adminForm->getValue('creditsAmount');
+                    $note = $adminForm->getValue('note');
                     $this->extraCreditsAdminService->giveExtraCredits(
-                            $this->loggedPersonnelOfficer->getId(), $employeeId, $adminForm->getValue('creditsAmount'), $adminForm->getValue('note')
+                            $this->loggedPersonnelOfficer->getId(), $employeeId, $creditsAmount, $note
                     );
+                    $this->notificationService->notifyExtraCredits($employeeId, $creditsAmount, $note);
                     $this->_helper->redirector->goto('index');
                 } else {
                     $showConfirmDialog = true;

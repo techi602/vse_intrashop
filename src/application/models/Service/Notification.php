@@ -70,6 +70,23 @@ class Service_Notification
         $this->notify($recipientEmailAddress, $subject, $body);
     }
 
+    public function notifyExtraCredits($employeeId, $creditAmount, $note)
+    {
+        $employee = $this->em->find('Employee', $employeeId);
+
+        $subject = "Přiděleny mimořádné body";
+        $recipientEmailAddress = $employee->getEmail();
+
+        $body = "";
+        $body .= "Bylo vám přiděleno {$creditAmount} mimořádných bodů.\n";
+
+        if ($note) {
+            $body .= "Odůvodnění: {$note}\n";
+        }
+
+        $this->notify($recipientEmailAddress, $subject, $body);
+    }
+
     private function notify($recipientEmailAddress, $subject, $body)
     {
         $s = "";
