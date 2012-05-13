@@ -23,12 +23,14 @@ class OrdersController extends Controller_Default
         $orderList = $this->ordersService->getWarehouseKeeperOrderList();
         $this->view->list = $orderList;
         $this->view->warehouser = true;
+        $this->view->ask = false;
     }
 
     public function employeeAction()
     {
         $orderList = $this->ordersService->getUserOrderList($this->loggedEmployee);
         $this->view->list = $orderList;
+        $this->view->ask = true;
 
         $this->_helper->ViewRenderer->render('index');
     }
@@ -37,6 +39,8 @@ class OrdersController extends Controller_Default
     {
         $orderId = $this->getRequest()->getParam('id');
         $this->checkPermisssions($orderId);
+
+        $this->view->ask = $this->getRequest()->getParam('employee');
 
         //TODO: řešit jestli to je jeho nebo ne (tzn. bud je warehouse keeper, nebo je ta objednávka jeho)
 
@@ -53,12 +57,24 @@ class OrdersController extends Controller_Default
         $order = $this->ordersService->getOrderInfo($orderId);
         $this->checkPermisssions($orderId);
 
-        if ($this->_getParam('cancel')) {
+        $asEmployee = !!$this->_getParam('employee');
+        $redirect = false;
+
+        if ($asEmployee || $this->_getParam('cancel')) {
             $this->orderService->cancelOrder($orderId, $this->_getParam('reason'));
             $this->addInfoMessage("Objednávka " . $order['customOrderId'] . ' byla stornována');
-            $this->_helper->redirector->goto('detail', null, null, array('id' => $orderId));
+            $redirect = true;
         } if ($this->_getParam('back')) {
-            $this->_helper->redirector->goto('detail', null, null, array('id' => $orderId));
+            $redirect = true;
+        }
+
+        if ($redirect) {
+            if ($asEmployee) {
+                $this->_helper->redirector->goto('employee', null, null, array());
+            }
+            else {
+                $this->_helper->redirector->goto('index', null, null, array());
+            }
         }
 
         $this->view->order = $order;

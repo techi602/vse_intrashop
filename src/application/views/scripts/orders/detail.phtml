@@ -55,5 +55,15 @@
 <?php endif ?>
 
 <?php if ($this->order['orderCancellable']): ?>
-<a class="btn btn-danger" id="cancelbtn" href="<?php echo $this->url(array('action' => 'cancel', 'id' => $this->order['orderId'])) ?>">Storno</a>
+    <a class="btn btn-danger order-cancelButton" id="cancelbtn" href="<?php echo $this->url(array('action' => 'cancel', 'id' => $this->order['orderId'])) ?>?<?=$this->ask? "employee=true": "";?>">Storno</a>
 <?php endif ?>
+
+<?if ($this->ask) { ?>
+<script type="text/javascript">
+    $(function() {
+        $(".order-cancelButton").bind("click", function() {
+            return confirm("Opravdu stornovat?");
+        });
+    });
+</script>
+<?}?>

@@ -30,9 +30,9 @@
     <td><?= $this->escape($order['orderStatusName']);?></td>
     <td>
 		<?php if ($order['orderCancellable']): ?>
-        <a href="<?php echo $this->url(array('action' => 'cancel', 'id' => $order['orderId'])) ?>" class="btn btn-danger">Storno</a>
+        <a href="<?php echo $this->url(array('action' => 'cancel', 'id' => $order['orderId'])) ?>?<?=$this->ask? "employee=true": "";?>" class="btn btn-danger order-cancelButton">Storno</a>
 		<?php endif ?>
-        <a class="btn" href="<?php echo $this->url(array('action' => 'detail', 'id' => $order['orderId'])) ?>"><i class="icon-edit"></i> Detail</a>
+        <a class="btn" href="<?php echo $this->url(array('action' => 'detail', 'id' => $order['orderId'])) ?>?<?=$this->ask? "employee=true": "";?>"><i class="icon-edit"></i> Detail</a>
     </td>
 </tr>
 <?php } ?>
@@ -43,6 +43,16 @@
 <?php } ?>
 </tbody>
 </table>
+
+<?if ($this->ask) { ?>
+<script type="text/javascript">
+    $(function() {
+        $(".order-cancelButton").bind("click", function() {
+            return confirm("Opravdu stornovat?");
+        });
+    });
+</script>
+<?}?>
 
 
 <script type="text/javascript">
