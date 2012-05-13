@@ -16,6 +16,19 @@ class Service_Notification
         $this->notify($recipientEmailAddress, $subject, $body);
     }
 
+    public function notifyOrderReady(Employee $orderingEmployee, Order $order)
+    {
+        $recipientEmailAddress = $orderingEmployee->getEmail();
+        $subject = "Objednávka připravena k vyzvednutí";
+
+        $body = "";
+        $body .= "Následující objednané zboží je připraveno k vyzvednutí:\n";
+        $body .= "  {$order->getProductVariant()->getProduct()->getName()}\n";
+        $body .= "    varianta: {$order->getProductVariant()->getColor()}\n";
+
+        $this->notify($recipientEmailAddress, $subject, $body);
+    }
+
     private function notify($recipientEmailAddress, $subject, $body)
     {
         $s = "";
