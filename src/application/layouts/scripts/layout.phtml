@@ -48,11 +48,11 @@
                 <?php echo $this->username ?>
 
                 | <span class="credits"><?php echo $this->balance ?> bodů</span>
-                <? if ($this->personnelOfficerBalance !== null) { ?>
-                | <span class="credits"><?=$this->personnelOfficerBalance;?> mimořádných bodů</span>
+                <? if ($this->role === 'PersonnelOfficer') { ?>
+                | <span class="credits"><?=(int)$this->personnelOfficerBalance;?> mimořádných bodů</span>
                 <? } ?>
-                <? if ($this->superiorEmployeeBalance !== null) { ?>
-                | <span class="credits"><?=$this->superiorEmployeeBalance;?> bonusových bodů</span>
+                <? if ($this->role === 'SuperiorEmployee') { ?>
+                | <span class="credits"><?=(int)$this->superiorEmployeeBalance;?> bonusových bodů</span>
                 <? } ?>
 
                 |
