@@ -183,6 +183,7 @@ class Service_Import
         $boss->setBalance(65655);
         $boss->setEmployed(true);
         $boss->setFunction("Vedoucí oddělení");
+        $boss->setSuperiorBalance(17000);
         $em->persist($boss);
 
         $dpt1 = new Department();
