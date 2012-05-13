@@ -44,9 +44,21 @@
               Intrashop</a>
           <div class="nav-collapse">
               <?php echo $this->navigation()->menu()->setMaxDepth(0)->setUlClass('nav') ?>
-              <p class="navbar-text pull-right">
-                <?php echo $this->username ?>
-
+              <p class="navbar-text pull-right">               
+                <strong><?php echo $this->username ?></strong>
+                <small>
+                    <? if ($this->role === 'PersonnelOfficer') { ?>
+                    (personalista)
+                    <? } else if ($this->role === 'SuperiorEmployee') { ?>
+                    (vedoucí zaměstnanec)
+                    <? } else if ($this->role === 'WarehouseKeeper') { ?>
+                    (skladník)
+                    <? } else if ($this->role === 'Employee') { ?>
+                    (zaměstnanec)
+                    <? } else { ;?>
+                    (nepřihlášen)
+                    <? } ?>
+                </small>
                 | <span class="credits"><?php echo $this->balance ?> bodů</span>
                 <? if ($this->role === 'PersonnelOfficer') { ?>
                 | <span class="credits"><?=(int)$this->personnelOfficerBalance;?> mimořádných bodů</span>
