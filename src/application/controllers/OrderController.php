@@ -17,7 +17,7 @@ class OrderController extends Controller_Default
         parent::init();
 
         $this->orderService = new Service_Order($this->em);
-        $this->notificationService = new Service_Notification();
+        $this->notificationService = new Service_Notification($this->em);
     }
 
     public function indexAction()

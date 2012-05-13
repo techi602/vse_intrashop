@@ -2,6 +2,14 @@
 
 class Service_Notification
 {
+    /** @var Doctrine\ORM\EntityManager */
+    private $em;
+
+    public function __construct(Doctrine\ORM\EntityManager $em)
+    {
+        $this->em = $em;
+    }
+
     public function notifyOrderSuccess(Employee $employee, ProductVariant $variant, $quantity, $note = '')
     {
         $recipientEmailAddress = $employee->getEmail();
@@ -25,6 +33,26 @@ class Service_Notification
         $body .= "Následující objednané zboží je připraveno k vyzvednutí:\n";
         $body .= "  {$order->getProductVariant()->getProduct()->getName()}\n";
         $body .= "    varianta: {$order->getProductVariant()->getColor()}\n";
+
+        $this->notify($recipientEmailAddress, $subject, $body);
+    }
+
+    public function notifyOrderCancelled($orderId, $reason = null)
+    {
+        /** @var Order */
+        $order = $this->em->find('Order', $orderId);
+
+        $recipientEmailAddress = $order->getEmployee()->getEmail();
+        $subject = "Storno objednávky";
+
+        $body = "";
+        $body .= "Objednávka ze dne " . date("j. n. Y") . " s následujícím objednaným zbožím byla stornována:\n";
+        $body .= "  {$order->getProductVariant()->getProduct()->getName()}\n";
+        $body .= "    varianta: {$order->getProductVariant()->getColor()}\n";
+
+        if ($reason) {
+            $body .= "\nDůvod storna: $reason\n";
+        }
 
         $this->notify($recipientEmailAddress, $subject, $body);
     }
