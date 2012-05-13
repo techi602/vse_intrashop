@@ -178,7 +178,7 @@ class Service_Import
         $boss = new SuperiorEmployee();
         $boss->setName("Johan Opršálek");
         $boss->setEmail("admin@intrashop");
-        $boss->setUsername("johan");
+        $boss->setUsername("ioprj01");
         $boss->setEmployedSince(new DateTime("1990-05-06"));
         $boss->setBalance(65655);
         $boss->setEmployed(true);
@@ -196,10 +196,11 @@ class Service_Import
         $janNovakEmployee->setEmail("jan.novak@intrashop");
         $janNovakEmployee->setEmployedSince(new DateTime("2000-03-01"));
         $janNovakEmployee->setBalance(5000);
-        $janNovakEmployee->setUsername('jan.novak');
+        $janNovakEmployee->setUsername('inovj01');
         $janNovakEmployee->setEmployed(true);
         $janNovakEmployee->setDepartment($dpt1);
         $janNovakEmployee->setFunction("Řadový zaměstnanec");
+        $janNovakEmployee->setSuperiorEmployee($boss);
         $em->persist($janNovakEmployee);
 
         $personnel = new PersonnelOfficer();
@@ -208,7 +209,7 @@ class Service_Import
         $personnel->setEmail('personnel@intrashop');
         $personnel->setEmployedSince(DateTime::createFromFormat('U', mktime(12, 0, 0, date('m'), date('d'), 2008)));
         $personnel->setBalance(25000);
-        $personnel->setUsername('holub');
+        $personnel->setUsername('iholp01');
         $personnel->setEmployed(true);
         $personnel->setDepartment($dpt1);
         $personnel->setFunction("PO");
@@ -219,7 +220,7 @@ class Service_Import
         $warehouser->setEmail('warehouser@intrashop');
         $warehouser->setEmployedSince(new DateTime("1995-03-01"));
         $warehouser->setBalance(35000);
-        $warehouser->setUsername('sekanina');
+        $warehouser->setUsername('iseks01');
         $warehouser->setEmployed(true);
         $warehouser->setDepartment($dpt1);
         $warehouser->setFunction("Skladník");

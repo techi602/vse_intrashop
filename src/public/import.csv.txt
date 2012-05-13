@@ -1,3 +1,3 @@
-"Jan Novák",jnov,"Nákup","novak@intrashop",2012-05-08,,"Asistent"
-"František Podlipský",fpod,"Nákup","podlipsky@intrashop",2012-05-08,johan,"Marketér"
-"Naděžda Těžká",ntezx,"Nákup","nadezda@intrashop","2010-05-08",,"Marketérka"
+"Petr Novák",inovp01,"Nákup","novakpetr@intrashop",2012-05-08,,"Asistent"
+"František Podlipský",ipodf01,"Nákup","podlipsky@intrashop",2012-05-08,ioprj01,"Marketér"
+"Naděžda Těžká",itezn01,"Nákup","nadezda@intrashop","2010-05-08",,"Marketérka"
