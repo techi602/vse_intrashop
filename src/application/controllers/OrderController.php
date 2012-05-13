@@ -9,11 +9,15 @@ class OrderController extends Controller_Default
      */
     private $orderService;
 
+    /** @var Service_Notification */
+    private $notificationService;
+
     public function init()
     {
         parent::init();
 
         $this->orderService = new Service_Order($this->em);
+        $this->notificationService = new Service_Notification();
     }
 
     public function indexAction()
@@ -37,7 +41,8 @@ class OrderController extends Controller_Default
                 return;
             }
 
-            $this->orderService->createOrder(User::getLoggedUser(), $variant, $quantity, $note);
+            $this->orderService->createOrder($this->loggedEmployee, $variant, $quantity, $note);
+            $this->notificationService->notifyOrderSuccess($this->loggedEmployee, $variant, $quantity, $note);
             $this->_helper->redirector->goto('success');
             return;
         }
