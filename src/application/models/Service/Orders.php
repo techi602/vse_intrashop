@@ -89,41 +89,4 @@ class Service_Orders
             'stornoReason' => $order->getStornoReason()
         );
     }
-
-    public function cancelOrder($orderId, $reason = null)
-    {
-        $order = $this->em->find('Order', $orderId);
-
-        if ($order->getStatus()->getCode() !== OrderStatus::STATUS_NEW) {
-            throw new \Exception("Objednavku nelze stornoat");
-        }
-
-        $model = new Service_Order($this->em);
-        $model->stornoOrder($order, $reason);
-
-        /*
-          $employee = $order->getEmployee();
-          $canceledOrderStatus = $this->em->getRepository('OrderStatus')->findOneBy(array('code' => OrderStatus::STATUS_STORNO));
-
-          $orderCredits = $order->getCredits();
-          $productVariantOrderedAmount = $order->getAmount();
-          $productVariant = $order->getProductVariant();
-
-          $employee->setBalance($employee->getBalance() + $orderCredits);
-          $productVariant->setQuantity($productVariant->getQuantity() + $productVariantOrderedAmount);
-          $order->setStatus($canceledOrderStatus);
-          $order->setStatusChanged(new DateTime());
-          $order->setStornoReason($reason);
-
-          $this->em->beginTransaction();
-          $this->em->persist($employee);
-          $this->em->persist($productVariant);
-          $this->em->persist($order);
-          $this->em->commit();
-
-          $this->em->flush();
-         * 
-         */
-    }
-
 }

@@ -6,12 +6,14 @@ class OrdersController extends Controller_Default
     /** @var Service_Orders */
     private $ordersService;
 
+    /** @var Service_Order */
+    private $orderService;
+
     public function init()
     {
         parent::init();
         $this->ordersService = new Service_Orders($this->em);
-        
-        
+        $this->orderService = new Service_Order($this->em);
     }
 
     public function indexAction()
@@ -55,7 +57,7 @@ class OrdersController extends Controller_Default
 
 
         if ($this->_getParam('cancel')) {
-            $this->ordersService->cancelOrder($orderId, $this->_getParam('reason'));
+            $this->orderService->cancelOrder($orderId, $this->_getParam('reason'));
             $this->addInfoMessage("Objednávka " . $order['customOrderId'] . ' byla stornována');
             $this->_helper->redirector->goto('detail', null, null, array('id' => $orderId));
         } if ($this->_getParam('back')) {

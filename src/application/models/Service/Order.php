@@ -72,27 +72,28 @@ class Service_Order
         $this->em->commit();
     }
 
-    /**
-     * Stornuje obednavku a pricte body zpet na ucet zamestnance
-     * 
-     * @param Order $order
-     * @param string $reason duvod zamitnuti
-     */
-    public function stornoOrder(Order $order, $reason = null)
+    public function cancelOrder($orderId, $reason = null)
     {
-        $this->em->beginTransaction();
+        $order = $this->em->find('Order', $orderId);
 
-        $order->setStatus($this->em->getRepository('OrderStatus')->findOneBy(array('code' => OrderStatus::STATUS_STORNO)));
-        $order->setStatusChanged(new DateTime());
-        $order->setStornoReason($reason);
+        if (!$order->isCancellable()) {
+            throw new \Exception("Objednavku nelze stornoat");
+        }
 
         $employee = $order->getEmployee();
-        $balance = $employee->getBalance();
-        $balance += $order->getCredits();
-        $employee->setBalance($balance);
+        $canceledOrderStatus = $this->em->getRepository('OrderStatus')->findOneBy(array('code' => OrderStatus::STATUS_STORNO));
+        $orderCreditAmount = $order->getCredits();
 
+        $this->em->beginTransaction();
+
+        $order->setStatus($canceledOrderStatus);
+        $order->setStatusChanged(new DateTime());
+        $order->setStornoReason($reason);
         $this->em->persist($order);
+
+        $employee->setBalance($employee->getBalance() + $orderCreditAmount);
         $this->em->persist($employee);
+
         $this->em->flush();
         $this->em->commit();
     }
