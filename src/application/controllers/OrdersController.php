@@ -18,10 +18,8 @@ class OrdersController extends Controller_Default
 
     public function indexAction()
     {
-        if (!$this->loggedWarehouseKeeper) {
-            throw new Zend_Acl_Exception("Access denied");
-        }
-        
+        $this->checkPermisssions();
+
         $orderList = $this->ordersService->getWarehouseKeeperOrderList();
         $this->view->list = $orderList;
         $this->view->warehouser = true;
@@ -37,8 +35,8 @@ class OrdersController extends Controller_Default
 
     public function detailAction()
     {
-
         $orderId = $this->getRequest()->getParam('id');
+        $this->checkPermisssions($orderId);
 
         //TODO: řešit jestli to je jeho nebo ne (tzn. bud je warehouse keeper, nebo je ta objednávka jeho)
 
@@ -51,10 +49,9 @@ class OrdersController extends Controller_Default
 
     public function cancelAction()
     {
-        //TODO: řešit jestli to je jeho nebo ne
         $orderId = $this->getRequest()->getParam('id');
         $order = $this->ordersService->getOrderInfo($orderId);
-
+        $this->checkPermisssions($orderId);
 
         if ($this->_getParam('cancel')) {
             $this->orderService->cancelOrder($orderId, $this->_getParam('reason'));
@@ -96,4 +93,16 @@ class OrdersController extends Controller_Default
         $this->view->order = $order;
     }
 
+    private function checkPermisssions($orderId = null) {
+        if ($this->loggedWarehouseKeeper) {
+            $allowed = true;
+        }
+        else {
+            $allowed = $this->orderService->isAllowed($this->loggedEmployee->getId(), $orderId);
+        }
+
+        if (!$allowed) {
+            throw new Exception('Not allowed');
+        }
+    }
 }

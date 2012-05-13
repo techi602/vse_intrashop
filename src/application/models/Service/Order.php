@@ -122,4 +122,13 @@ class Service_Order
         $this->em->commit();
     }
 
+    public function isAllowed($employeeId, $orderId)
+    {
+        $query = $this->em->createQuery("SELECT o FROM Order o JOIN o.employee e WHERE e.id = ?1 AND o.id = ?2");
+        $query->setParameter(1, $employeeId);
+        $query->setParameter(2, $orderId);
+        $result = $query->getResult();
+
+        return !!$result;
+    }
 }
