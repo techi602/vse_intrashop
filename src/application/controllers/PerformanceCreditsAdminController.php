@@ -9,6 +9,9 @@ class PerformanceCreditsAdminController extends Controller_Default
     /** @var Service_Employee */
     private $employeeService;
 
+    /** @var Service_Notification */
+    private $notificationService;
+
     public function init()
     {
         parent::init();
@@ -19,6 +22,7 @@ class PerformanceCreditsAdminController extends Controller_Default
 
         $this->performanceCreditsAdminService = new Service_PerformanceCreditsAdmin($this->em);
         $this->employeeService = new Service_Employee($this->em);
+        $this->notificationService = new Service_Notification($this->em);
     }
 
     public function indexAction()
@@ -48,9 +52,12 @@ class PerformanceCreditsAdminController extends Controller_Default
             if ($adminForm->isValid($this->_request->getPost())) {
                 $confirmed = ($this->getRequest()->getPost('hiddenconfirm') == 'true');
                 if ($confirmed) {
+                    $creditsAmount = $adminForm->getValue('creditsAmount');
+                    $note = $adminForm->getValue('note');
                     $this->performanceCreditsAdminService->givePerformanceCredits(
-                            $this->loggedSuperiorEmployee->getId(), $employeeId, $adminForm->getValue('creditsAmount'), $adminForm->getValue('note')
+                        $this->loggedSuperiorEmployee->getId(), $employeeId, $creditsAmount, $note
                     );
+                    $this->notificationService->notifyPerformanceCredits($employeeId, $creditsAmount, $note);
                     $this->_helper->redirector->goto('index');
                 } else {
                     $showConfirmDialog = true;

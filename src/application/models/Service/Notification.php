@@ -87,6 +87,23 @@ class Service_Notification
         $this->notify($recipientEmailAddress, $subject, $body);
     }
 
+    public function notifyPerformanceCredits($employeeId, $creditAmount, $note)
+    {
+        $employee = $this->em->find('Employee', $employeeId);
+
+        $subject = "Přiděleny bonusové body";
+        $recipientEmailAddress = $employee->getEmail();
+
+        $body = "";
+        $body .= "Bylo vám přiděleno {$creditAmount} bonusových bodů.\n";
+
+        if ($note) {
+            $body .= "Odůvodnění: {$note}\n";
+        }
+
+        $this->notify($recipientEmailAddress, $subject, $body);
+    }
+
     private function notify($recipientEmailAddress, $subject, $body)
     {
         $s = "";
