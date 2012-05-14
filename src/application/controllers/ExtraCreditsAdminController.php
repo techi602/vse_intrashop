@@ -49,8 +49,8 @@ class ExtraCreditsAdminController extends Controller_Default
             }
             if ($adminForm->isValid($this->_request->getPost())) {
                 $confirmed = ($this->getRequest()->getPost('hiddenconfirm') == 'true');
+                $creditsAmount = $adminForm->getValue('creditsAmount');
                 if ($confirmed) {
-                    $creditsAmount = $adminForm->getValue('creditsAmount');
                     $note = $adminForm->getValue('note');
                     $this->extraCreditsAdminService->giveExtraCredits(
                             $this->loggedPersonnelOfficer->getId(), $employeeId, $creditsAmount, $note
@@ -59,6 +59,7 @@ class ExtraCreditsAdminController extends Controller_Default
                     $this->_helper->redirector->goto('index');
                 } else {
                     $showConfirmDialog = true;
+                    $this->view->confirmDialogCreditAmount = $creditsAmount;
                 }
             }
         }
