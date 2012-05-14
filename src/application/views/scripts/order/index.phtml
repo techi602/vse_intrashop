@@ -13,7 +13,7 @@
 
 <form method="post" action="<?php echo $this->url() ?>">
     <?php if ($this->enoughCredits): ?>
-    <?php echo $this->formSubmit('confirm', 'Závazně objednat', array('class' => 'btn btn-success')) ?>
+    <?php echo $this->formSubmit('confirm', 'Závazně objednat', array('class' => 'btn btn-success', 'onclick' => 'return window.confirm(\'Opravdu objednat?\')')) ?>
     <?php else: ?>
     <p class="warning">
         <i class="icon-warning-sign"></i>
