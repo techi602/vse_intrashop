@@ -1,5 +1,8 @@
+<?php foreach ($this->statuses as $status): ?>
+<a href="<?php echo $this->url(array('status' => $status->getId())) ?>" <?php echo $status->getId() == $this->statusId ? ' style="font-weight: bold"' : ''?>><?php echo $this->escape($status->getName()) ?></a> | 
+<?php endforeach ?>
+<a href="<?php echo $this->url(array('status' => null)) ?>" <?php echo $this->statusId ? '' : ' style="font-weight: bold"'?>>Všechny</a>
 
-<h1>Objednávky</h1>
 
 <table class="tablesorter">
 <thead>
