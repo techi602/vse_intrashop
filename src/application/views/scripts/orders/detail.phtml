@@ -54,6 +54,23 @@
 <a class="btn btn-primary" id="confirmbtn" href="<?php echo $this->url(array('action' => 'confirm', 'id' => $this->order['orderId'])) ?>">Potvrdit objednávku</a>
 <?php endif ?>
 
+<?php if (isset($this->displayPrepare)): ?>
+
+<?php if ($this->enough): ?>
+Zboží je skladem <?php echo $this->stock ?>
+
+<a class="btn btn-primary" id="preparebtn" href="<?php echo $this->url(array('action' => 'prepare', 'id' => $this->order['orderId'])) ?>">Potvrdit k převzetí</a>
+
+<?php else: ?>
+Zboží není skladem
+<?php endif ?>
+
+
+
+
+<?php endif ?>
+
+
 <?php if ($this->order['orderCancellable']): ?>
     <a class="btn btn-danger order-cancelButton" id="cancelbtn" href="<?php echo $this->url(array('action' => 'cancel', 'id' => $this->order['orderId'])) ?>?<?=$this->ask? "employee=true": "";?>">Storno</a>
 <?php endif ?>

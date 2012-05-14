@@ -178,10 +178,15 @@ class Order
     {
         return $this->id;
     }
+    
+    /**
+     * 
+     * @return boolean
+     */
 
     public function isCancellable()
     {
-        return $this->getStatus()->getCode() === OrderStatus::STATUS_NEW;
+        return $this->getStatus()->getCode() === OrderStatus::STATUS_NEW || $this->getStatus()->getCode() == OrderStatus::STATUS_PREPARED;
     }
 
 }

@@ -32,6 +32,21 @@ class Service_Order
 
         return $balance >= $totalCredits;
     }
+    
+    public function isAvailableOnStock(Order $order)
+    {
+        $service = new Service_ProductVariant($this->em);
+        
+        return $service->isAvailableOnStock($order->getProductVariant(), $order->getAmount());
+    }
+    
+    public function getStock(Order $order)
+    {
+        $service = new Service_ProductVariant($this->em);
+        
+        return $service->getQuantity($order->getProductVariant());
+    }
+    
 
     /**
      * Vytvori obednavku
@@ -48,7 +63,7 @@ class Service_Order
             throw new InvalidArgumentException('Quantity must be > 0');
         }
 
-        $this->em->beginTransaction();
+        $this->em->getConnection()->beginTransaction();
 
         $credits = $variant->getProduct()->getCredits() * $quantity;
 
@@ -68,8 +83,10 @@ class Service_Order
         $employee->setBalance($balance);
 
         $this->em->persist($employee);
-        $this->em->commit();
+        $this->em->getConnection()->commit();
         $this->em->flush();
+        
+        return $order;
     }
 
     public function cancelOrder($orderId, $reason = null)
@@ -81,10 +98,17 @@ class Service_Order
         }
 
         $employee = $order->getEmployee();
+
+        if ($order->getStatus()->getCode() != OrderStatus::STATUS_NEW) {
+            $qty =  $order->getProductVariant()->getQuantity();
+            $qty +=  $order->getAmount();
+            $order->getProductVariant()->setQuantity($qty);
+        }
+        
         $canceledOrderStatus = $this->em->getRepository('OrderStatus')->findOneBy(array('code' => OrderStatus::STATUS_STORNO));
         $orderCreditAmount = $order->getCredits();
 
-        $this->em->beginTransaction();
+        $this->em->getConnection()->beginTransaction();
 
         $order->setStatus($canceledOrderStatus);
         $order->setStatusChanged(new DateTime());
@@ -94,31 +118,56 @@ class Service_Order
         $employee->setBalance($employee->getBalance() + $orderCreditAmount);
         $this->em->persist($employee);
 
-        $this->em->commit();
+        $this->em->getConnection()->commit();
+        $this->em->flush();
+    }
+    
+    /**
+     * 
+     * @param Order $order
+     */
+    
+    public function prepareOrder(Order $order)
+    {
+        $this->em->getConnection()->beginTransaction();
+        
+        $order->setStatus($this->em->getRepository('OrderStatus')->findOneBy(array('code' => OrderStatus::STATUS_PREPARED)));
+        $order->setStatusChanged(new DateTime());
+        
+        $this->em->persist($order);
+        
+        $variant = $order->getProductVariant();
+        $qty = $variant->getQuantity();
+        $qty -= $order->getAmount();
+        $variant->setQuantity($qty);
+        
+        $this->em->persist($variant);
+        $this->em->getConnection()->commit();
         $this->em->flush();
     }
 
     /**
-     * Potvrdi obednavku a provede vyskladneni produktu na skladu
+     * Potvrdi obednavku a 
      * 
      * @param Order $order 
      */
     public function confirmOrder(Order $order)
     {
-        $this->em->beginTransaction();
+        $this->em->getConnection()->beginTransaction();
 
         $order->setStatus($this->em->getRepository('OrderStatus')->findOneBy(array('code' => OrderStatus::STATUS_CONFIRMED)));
         $order->setStatusChanged(new DateTime());
 
         $this->em->persist($order);
-
+/*
         $variant = $order->getProductVariant();
         $qty = $variant->getQuantity();
         $qty -= $order->getAmount();
         $variant->setQuantity($qty);
-
         $this->em->persist($variant);
-        $this->em->commit();
+*/
+        
+        $this->em->getConnection()->commit();
         $this->em->flush();
     }
 

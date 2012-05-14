@@ -230,6 +230,11 @@ class Service_Import
         $status1->setName("Nová");
         $status1->setCode(OrderStatus::STATUS_NEW);
         $em->persist($status1);
+        
+        $status4 = new OrderStatus();
+        $status4->setName("Připravená k převzetí");
+        $status4->setCode(OrderStatus::STATUS_PREPARED);
+        $em->persist($status4);
 
         $status2 = new OrderStatus();
         $status2->setName("Vyřízená");

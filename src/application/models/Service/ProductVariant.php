@@ -37,4 +37,16 @@ class Service_ProductVariant
 
         return $variant->getQuantity() - $qty;
     }
+    
+    /**
+     * 
+     * @param ProductVariant $variant
+     * @param integer $quantity
+     * @return boolean
+     */
+    
+    public function isAvailableOnStock(ProductVariant $variant, $quantity)
+    {
+        return $this->getQuantity($variant) >= $quantity;
+    }
 }

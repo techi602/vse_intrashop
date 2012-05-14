@@ -2,10 +2,19 @@
 
 class IndexController extends Controller_Default
 {
+    public function init()
+    {
+        
+        if (!Zend_Auth::getInstance()->hasIdentity()) {
+            
+        }
+        
+        parent::init();
+    }
 
     public function indexAction()
     {
-        $user = User::getLoggedUser();
+        
     }
 
     public function catalogAction()

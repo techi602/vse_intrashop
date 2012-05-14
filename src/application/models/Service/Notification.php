@@ -24,16 +24,31 @@ class Service_Notification
         $this->notify($recipientEmailAddress, $subject, $body);
     }
 
-    public function notifyOrderReady(Employee $orderingEmployee, Order $order)
+    public function notifyOrderReady(Order $order)
     {
+        $orderingEmployee = $order->getEmployee();
         $recipientEmailAddress = $orderingEmployee->getEmail();
-        $subject = "Objednávka připravena k vyzvednutí";
+        $subject = "Objednávka " . $order->getOrderId() . " připravena k vyzvednutí";
 
         $body = "";
         $body .= "Následující objednané zboží je připraveno k vyzvednutí:\n";
         $body .= "  {$order->getProductVariant()->getProduct()->getName()}\n";
         $body .= "    varianta: {$order->getProductVariant()->getColor()}\n";
 
+        $this->notify($recipientEmailAddress, $subject, $body);
+    }
+    
+    public function notifyOrderConfirmed(Order $order)
+    {
+        $orderingEmployee = $order->getEmployee();
+        $recipientEmailAddress = $orderingEmployee->getEmail();
+        $subject = "Objednávka " . $order->getOrderId() . " byla vyřízena";
+    
+        $body = "";
+        $body .= "Následující objednané zboží je připraveno k vyzvednutí:\n";
+        $body .= "  {$order->getProductVariant()->getProduct()->getName()}\n";
+        $body .= "    varianta: {$order->getProductVariant()->getColor()}\n";
+    
         $this->notify($recipientEmailAddress, $subject, $body);
     }
 
@@ -43,7 +58,7 @@ class Service_Notification
         $order = $this->em->find('Order', $orderId);
 
         $recipientEmailAddress = $order->getEmployee()->getEmail();
-        $subject = "Storno objednávky";
+        $subject = "Storno objednávky " . $order->getOrderId();
 
         $body = "";
         $body .= "Objednávka ze dne " . date("j. n. Y") . " s následujícím objednaným zbožím byla stornována:\n";
@@ -113,7 +128,16 @@ class Service_Notification
         $s .= "Body:\n";
         $s .= $body;
         $s .= "\n~~~\n";
+        
+        
 
-        file_put_contents(EMAIL_DUMP_PATH, $s, FILE_APPEND);
+        file_put_contents(dirname($_SERVER['PHP_SELF']) . '/emails.txt', $s, FILE_APPEND);
+        
+        $mail = new Zend_Mail('UTF-8');
+        $mail->setBodyText($s);
+        $mail->setSubject($subject);
+        $mail->addTo("intrashop_sw_projekt@googlegroups.com");
+        $mail->setFrom("intrashop_sw_projekt@googlegroups.com", "Intrashop");
+        $mail->send();
     }
 }

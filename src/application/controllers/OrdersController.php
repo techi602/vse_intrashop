@@ -20,6 +20,7 @@ class OrdersController extends Controller_Default
         $this->notificationService = new Service_Notification($this->em);
         $this->view->statuses = $this->em->getRepository('OrderStatus')->findAll();
         $this->view->statusId = $this->_getParam('status');
+        
     }
 
     public function indexAction()
@@ -30,6 +31,9 @@ class OrdersController extends Controller_Default
         $this->view->list = $orderList;
         $this->view->warehouser = true;
         $this->view->ask = false;
+        
+        $this->view->title = $title;
+        
     }
 
     public function employeeAction()
@@ -52,8 +56,15 @@ class OrdersController extends Controller_Default
 
         $this->view->order = $this->ordersService->getOrderInfo($orderId);
         $order = $this->em->find('Order', $orderId);
-        if ($this->loggedWarehouseKeeper && $order->getStatus()->getCode() == OrderStatus::STATUS_NEW) {
+        if ($this->loggedWarehouseKeeper && $order->getStatus()->getCode() == OrderStatus::STATUS_PREPARED) {
             $this->view->displayConfirm = true;
+        }
+        
+        if ($this->loggedWarehouseKeeper && $order->getStatus()->getCode() == OrderStatus::STATUS_NEW) {
+            $this->view->displayPrepare = true;
+
+            $this->view->enough = $this->orderService->isAvailableOnStock($order);
+            $this->view->stock = $this->orderService->getStock($order);
         }
     }
 
@@ -88,6 +99,21 @@ class OrdersController extends Controller_Default
         $this->view->order = $order;
     }
     
+    public function prepareAction()
+    {
+        $orderId = $this->getRequest()->getParam('id');
+    
+        $order = $this->em->find('Order', $orderId);
+        $orderInfo = $this->ordersService->getOrderInfo($orderId);
+    
+        $service = new Service_Order($this->em);
+        $service->prepareOrder($order);
+        $this->addInfoMessage("Objednávka " . $orderInfo['customOrderId'] . ' byla potvrzena k převzetí');
+        $this->notificationService->notifyOrderReady($order);
+    
+        $this->_helper->redirector->goto('detail', null, null, array('id' => $orderId));
+    }
+    
     public function confirmAction()
     {
         $orderId = $this->getRequest()->getParam('id');
@@ -98,6 +124,7 @@ class OrdersController extends Controller_Default
         $service = new Service_Order($this->em);
         $service->confirmOrder($order);
         $this->addInfoMessage("Objednávka " . $orderInfo['customOrderId'] . ' byla potvrzena');
+        $this->notificationService->notifyOrderConfirmed($order);
         
         $this->_helper->redirector->goto('detail', null, null, array('id' => $orderId));
     }
