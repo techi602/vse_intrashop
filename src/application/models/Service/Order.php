@@ -68,8 +68,8 @@ class Service_Order
         $employee->setBalance($balance);
 
         $this->em->persist($employee);
-        $this->em->flush();
         $this->em->commit();
+        $this->em->flush();
     }
 
     public function cancelOrder($orderId, $reason = null)
@@ -94,8 +94,8 @@ class Service_Order
         $employee->setBalance($employee->getBalance() + $orderCreditAmount);
         $this->em->persist($employee);
 
-        $this->em->flush();
         $this->em->commit();
+        $this->em->flush();
     }
 
     /**
@@ -118,8 +118,8 @@ class Service_Order
         $variant->setQuantity($qty);
 
         $this->em->persist($variant);
-        $this->em->flush();
         $this->em->commit();
+        $this->em->flush();
     }
 
     public function isAllowed($employeeId, $orderId)
