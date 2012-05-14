@@ -11,8 +11,28 @@ class Service_Orders
         $this->em = $em;
     }
 
-    public function getUserOrderList(Employee $employee)
+    public function getUserOrderList(Employee $employee, OrderStatus $status = null)
     {
+        $qb = $this->em->createQueryBuilder();
+        $qb->select(array('o', 'p', 's', 'v', 'e'));
+        $qb->from('Order', 'o');
+        $qb->join('o.employee', 'e');
+        $qb->join('o.productVariant', 'v');
+        $qb->join('v.product', 'p');
+        $qb->join('o.status', 's');
+        $qb->where('e = ?1');
+        $qb->orderBy('o.id', 'DESC');
+        $qb->setParameter(1, $employee);
+        
+        if (!is_null($status)) {
+            
+            $qb->andWhere('s = ?2');
+            $qb->setParameter(2, $status);
+        }
+        
+        $query = $qb->getQuery();
+        
+/*        
         $query = $this->em->createQuery("
             SELECT o, p, s, v
             FROM Order o
@@ -23,7 +43,8 @@ class Service_Orders
             WHERE e.id = ?1
             ORDER BY o.id DESC
         ");
-        $query->setParameter(1, $employee->getId());
+        */
+        //$query->setParameter(1, $employee->getId());
 
         $orders = array();
 
@@ -41,8 +62,24 @@ class Service_Orders
         return $orders;
     }
 
-    public function getWarehouseKeeperOrderList()
+    public function getWarehouseKeeperOrderList(OrderStatus $status = null)
     {
+        $qb = $this->em->createQueryBuilder();
+        $qb->select(array('o', 'p', 's', 'v', 'e'));
+        $qb->from('Order', 'o');
+        $qb->join('o.employee', 'e');
+        $qb->join('o.productVariant', 'v');
+        $qb->join('v.product', 'p');
+        $qb->join('o.status', 's');
+        $qb->orderBy('o.id', 'DESC');
+        
+        if (!is_null($status)) {
+            $qb->andWhere('s = ?1');
+            $qb->setParameter(1, $status);
+        }
+        
+        $query = $qb->getQuery();
+        /*
         $query = $this->em->createQuery("
             SELECT o, p, s, v
             FROM Order o
@@ -52,7 +89,7 @@ class Service_Orders
             JOIN o.status s
 
             ORDER BY o.id DESC        ");
-
+*/
         $orders = array();
 
         foreach ($query->getResult() as $order) {

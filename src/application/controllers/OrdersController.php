@@ -18,13 +18,15 @@ class OrdersController extends Controller_Default
         $this->ordersService = new Service_Orders($this->em);
         $this->orderService = new Service_Order($this->em);
         $this->notificationService = new Service_Notification($this->em);
+        $this->view->statuses = $this->em->getRepository('OrderStatus')->findAll();
+        $this->view->statusId = $this->_getParam('status');
     }
 
     public function indexAction()
     {
         $this->checkPermisssions();
 
-        $orderList = $this->ordersService->getWarehouseKeeperOrderList();
+        $orderList = $this->ordersService->getWarehouseKeeperOrderList($this->em->find('OrderStatus', (int)$this->_getParam('status')));
         $this->view->list = $orderList;
         $this->view->warehouser = true;
         $this->view->ask = false;
@@ -32,7 +34,7 @@ class OrdersController extends Controller_Default
 
     public function employeeAction()
     {
-        $orderList = $this->ordersService->getUserOrderList($this->loggedEmployee);
+        $orderList = $this->ordersService->getUserOrderList($this->loggedEmployee, $this->em->find('OrderStatus', (int)$this->_getParam('status')));
         $this->view->list = $orderList;
         $this->view->ask = true;
 
