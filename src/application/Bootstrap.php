@@ -3,6 +3,25 @@
 
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
+    protected function _initEmailDumpPath()
+    {
+        $dirName = $this->getOption('publicDirName');
+        if (!$dirName) {
+            throw new Exception("Missing publicDirName configuration in application.ini");
+        }
+
+        $supposedPath = APPLICATION_PATH . "/../{$dirName}";
+        $path = realpath($supposedPath);
+
+        if (!$path) {
+            throw new Exception("Path '{$supposedPath}' does not exist");
+        }
+
+        define('EMAIL_DUMP_PATH', ($path) . "/emails.txt");
+
+
+    }
+
     protected function _initAutoload()
     {
         

@@ -253,7 +253,7 @@ class Service_Import
 
         $em->flush();
 
-        $emailFile = fopen(APPLICATION_PATH . "/../public/emails.txt", "w");
+        $emailFile = fopen(EMAIL_DUMP_PATH, "w");
         fwrite($emailFile, "~~~\n");
         fclose($emailFile);
     }

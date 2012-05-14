@@ -114,6 +114,6 @@ class Service_Notification
         $s .= $body;
         $s .= "\n~~~\n";
 
-        file_put_contents(APPLICATION_PATH . "/../intrashop/emails.txt", $s, FILE_APPEND);
+        file_put_contents(EMAIL_DUMP_PATH, $s, FILE_APPEND);
     }
 }
