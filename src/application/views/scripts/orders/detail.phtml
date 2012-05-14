@@ -62,7 +62,10 @@ Zboží je skladem <?php echo $this->stock ?>
 <a class="btn btn-primary" id="preparebtn" href="<?php echo $this->url(array('action' => 'prepare', 'id' => $this->order['orderId'])) ?>">Potvrdit k převzetí</a>
 
 <?php else: ?>
-Zboží není skladem
+<p class="warning">
+        <i class="icon-warning-sign"></i>
+        Požadované množství není aktuálně skladem. Nutno objednat</p>
+
 <?php endif ?>
 
 

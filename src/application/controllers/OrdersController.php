@@ -26,6 +26,8 @@ class OrdersController extends Controller_Default
     public function indexAction()
     {
         $this->checkPermisssions();
+        
+        $title = 'Seznam objednávek';
 
         $orderList = $this->ordersService->getWarehouseKeeperOrderList($this->em->find('OrderStatus', (int)$this->_getParam('status')));
         $this->view->list = $orderList;
@@ -33,14 +35,20 @@ class OrdersController extends Controller_Default
         $this->view->ask = false;
         
         $this->view->title = $title;
+        $this->view->headTitle($title);
         
     }
 
     public function employeeAction()
     {
+        $title = 'Objednávky zaměstnance';
+        
         $orderList = $this->ordersService->getUserOrderList($this->loggedEmployee, $this->em->find('OrderStatus', (int)$this->_getParam('status')));
         $this->view->list = $orderList;
         $this->view->ask = true;
+        
+        $this->view->title = $title;
+        $this->view->headTitle($title);
 
         $this->_helper->ViewRenderer->render('index');
     }

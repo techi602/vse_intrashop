@@ -4,6 +4,8 @@
             <th>Kod</th>
             <th>Nazev</th>
             <th>Cena</th>
+            <th>Body</th>
+            <th>Viditelný</th>
             <th>Akce</th>
         </tr>
     </thead>
@@ -14,6 +16,8 @@
             <td><?php echo $product['code'] ?></td>
             <td><?php echo $product['name'] ?></td>
             <td><?php echo $product['price'] ?></td>
+            <td><?php echo $product['credits'] ?></td>
+            <td><?php echo $product['visible'] ? 'ano' : 'ne' ?></td>
             
             <td><a class="btn" href="<?php echo $this->url(array('action' => 'edit', 'id' => $product['id'])) ?>"><i class="icon-edit"></i>
 Upravit</a></td>

@@ -5,9 +5,15 @@ class WarehouseController extends Controller_Default
 
     public function indexAction()
     {
+        $title = "Katalog produktů";
+        
         $query = $this->em->createQuery("SELECT p FROM Product p");
         $products = $query->getArrayResult();
         $this->view->products = $products;
+        
+        $this->view->title = $title;
+        $this->view->headTitle($title);
+        
     }
     
     public function listAction()
@@ -24,7 +30,8 @@ class WarehouseController extends Controller_Default
         
         $this->view->qty = $qty;
         $this->view->warehouse = $warehouse;
-        $title = 'Sklad';
+        
+        $title = 'Dostupnost';
         
         $this->view->title = $title;
         $this->view->headTitle($title);

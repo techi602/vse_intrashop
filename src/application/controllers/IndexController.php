@@ -19,7 +19,11 @@ class IndexController extends Controller_Default
 
     public function catalogAction()
     {
+        $title = 'Katalog produktů';
+        
         $this->view->products = $this->em->getRepository('Product')->fetchForHomepage();
+        $this->view->title = $title;
+        $this->view->headTitle($title);
     }
 
 }
