@@ -9,6 +9,26 @@ class WarehouseController extends Controller_Default
         $products = $query->getArrayResult();
         $this->view->products = $products;
     }
+    
+    public function listAction()
+    {
+        $service = new Service_Warehouse($this->em);
+        $variantService = new Service_ProductVariant($this->em);
+        
+        $warehouse = $service->fetchProductVariantsAvailability();
+        
+        $qty = array();
+        foreach ($warehouse as $variant) {
+            $qty[$variant->getId()] = $variantService->getQuantity($variant);
+        }
+        
+        $this->view->qty = $qty;
+        $this->view->warehouse = $warehouse;
+        $title = 'Sklad';
+        
+        $this->view->title = $title;
+        $this->view->headTitle($title);
+    }
 
     public function editAction()
     {
@@ -111,7 +131,8 @@ class WarehouseController extends Controller_Default
 
         $this->view->form = $form;
         $this->view->product = $product;
-        $this->view->headTitle($product->getName() ? $product->getName() : 'Nový produkt');
+        $this->view->headTitle($title);
+        $this->view->title = $product->getName() ? $product->getName() : 'Nový produkt';
     }
 
 }

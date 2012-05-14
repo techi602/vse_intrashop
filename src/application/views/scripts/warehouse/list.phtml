@@ -1,0 +1,37 @@
+<table class="tablesorter table" id="catalog">
+    <thead>
+        <tr>
+            <th>Kod</th>
+            <th>Nazev</th>
+            <th>Skladem</th>
+            <th>Aktuální dostupnost</th>
+            <th>Akce</th>
+        </tr>
+    </thead>
+    
+    <tbody>
+        <?php foreach ($this->warehouse as $variant): ?>
+        <tr>
+            <td><?php echo $variant->getProduct()->getCode() ?></td>
+            <td><?php echo $variant->getName() ?></td>
+            <td><?php echo $variant->getQuantity() ?></td>
+            <td><?php echo $this->qty[$variant->getId()] ?></td>
+            
+            <td><a class="btn" href="<?php echo $this->url(array('action' => 'edit', 'id' => $variant->getProduct()->getId())) ?>"><i class="icon-edit"></i>
+Upravit</a></td>
+        </tr>
+        <?php endforeach ?>
+        
+    </tbody>
+    
+</table>
+
+<script type="text/javascript">
+    
+    $(document).ready(function() { 
+    $("table").tablesorter({ 
+        sortList: [[0,0]] 
+    }); 
+}); 
+    
+    </script>

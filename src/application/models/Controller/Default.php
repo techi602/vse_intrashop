@@ -35,6 +35,8 @@ class Controller_Default extends Zend_Controller_Action
         $this->initViewVariables();
         $this->initNavigation();
         $this->view->addHelperPath(APPLICATION_PATH . '/views/helpers/', 'Default_Helper');
+        
+        $this->view->headTitle('Intrashop');
     }
 
     /**
@@ -127,8 +129,13 @@ class Controller_Default extends Zend_Controller_Action
                         array(
                             'controller' => 'warehouse',
                             'action' => 'index',
-                            'label' => 'Katalog',
+                            'label' => 'Katalog produktů',
                         ),
+                            array(
+                                    'controller' => 'warehouse',
+                                    'action' => 'list',
+                                    'label' => 'Dostupnost',
+                            ),
                         array(
                             'controller' => 'warehouse',
                             'action' => 'edit',

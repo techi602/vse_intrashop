@@ -227,7 +227,7 @@ class Service_Import
         $em->persist($warehouser);
 
         $status1 = new OrderStatus();
-        $status1->setName("Nová");
+        $status1->setName("Odeslána");
         $status1->setCode(OrderStatus::STATUS_NEW);
         $em->persist($status1);
         

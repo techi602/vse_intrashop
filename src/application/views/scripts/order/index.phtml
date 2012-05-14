@@ -12,6 +12,15 @@
 </p>
 
 <form method="post" action="<?php echo $this->url() ?>">
+
+
+<?php if (!$this->enoughStock): ?>
+<p class="warning">
+        <i class="icon-warning-sign"></i>
+        Požadované množství není aktuálně skladem</p>
+<?php endif ?>
+
+
     <?php if ($this->enoughCredits): ?>
     <?php echo $this->formSubmit('confirm', 'Závazně objednat', array('class' => 'btn btn-success', 'onclick' => 'return window.confirm(\'Opravdu objednat?\')')) ?>
     <?php else: ?>

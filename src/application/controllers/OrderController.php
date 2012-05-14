@@ -46,6 +46,10 @@ class OrderController extends Controller_Default
             $this->_helper->redirector->goto('success');
             return;
         }
+        
+        $variantService = new Service_ProductVariant($this->em);
+        
+        $this->view->enoughStock = $variantService->isAvailableOnStock($variant, $quantity);
 
         $this->view->variant = $variant;
         $this->view->product = $product;
