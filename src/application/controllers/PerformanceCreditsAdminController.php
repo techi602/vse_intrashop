@@ -51,8 +51,8 @@ class PerformanceCreditsAdminController extends Controller_Default
             }
             if ($adminForm->isValid($this->_request->getPost())) {
                 $confirmed = ($this->getRequest()->getPost('hiddenconfirm') == 'true');
+                $creditsAmount = $adminForm->getValue('creditsAmount');
                 if ($confirmed) {
-                    $creditsAmount = $adminForm->getValue('creditsAmount');
                     $note = $adminForm->getValue('note');
                     $this->performanceCreditsAdminService->givePerformanceCredits(
                         $this->loggedSuperiorEmployee->getId(), $employeeId, $creditsAmount, $note
@@ -61,6 +61,7 @@ class PerformanceCreditsAdminController extends Controller_Default
                     $this->_helper->redirector->goto('index');
                 } else {
                     $showConfirmDialog = true;
+                    $this->view->confirmDialogCreditAmount = $creditsAmount;
                 }
             }
         }

@@ -13,7 +13,7 @@
 <? if($this->showConfirmDialog) { ?>
 <script type="text/javascript">
 $(function() {
-	if(confirm('Skutečně přidělit?')) {
+	if(confirm('Skutečně přidělit <?=$this->confirmDialogCreditAmount;?> bodů?')) {
 		$('#hiddenconfirm').val('true');
 		$('#buttondetail').click();
 	}
